@@ -1,2 +1,2 @@
 # Cadence
-ISC4U Term Project
+ICS4U Term Project
