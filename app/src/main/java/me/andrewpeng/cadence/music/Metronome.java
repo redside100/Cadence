@@ -1,0 +1,35 @@
+package me.andrewpeng.cadence.music;
+
+
+public class Metronome {
+
+    private Conductor conductor;
+    private double songPosition = 0;
+    private double markers[];
+    private double noteDelayMs;
+
+    public Metronome(Conductor conductor){
+        this.conductor = conductor;
+        markers = new double[(int) (conductor.getSongLength() / conductor.getBeatLength() + 0.5)];
+        noteDelayMs = conductor.getNoteTravelTicks() / 60 * 1000;
+        for (int i = 0; i < markers.length; i++){
+            // This waits 4 beats before the first notes arrive
+            int pad = (int) (2 * conductor.getBeatmap().getSubBeats());
+            markers[i] = (conductor.getBeatLength() * (i + pad)) - noteDelayMs;
+        }
+    }
+
+    public void update(){
+
+        songPosition = conductor.getMediaPlayer().getCurrentPosition() - conductor.getBeatmap().getStartOffset();
+
+        for (int i = 0; i < markers.length; i++) {
+            if (songPosition > markers[i]){
+                markers[i] = Double.MAX_VALUE;
+                conductor.nextNote();
+                break;
+            }
+        }
+    }
+
+}
