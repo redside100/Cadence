@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import me.andrewpeng.cadence.music.Conductor;
+import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
 
 public class MainView extends View {
@@ -19,9 +20,11 @@ public class MainView extends View {
         this.height = height;
         this.width = width;
         loop = new Loop(this);
-        renderer = new Renderer(getContext(), width, height);
+        renderer = new Renderer(getContext(), width, height, ScreenState.HOME);
         new Reader(getContext());
+        new AssetLoader(getContext(), width, height);
         conductor = new Conductor(width, height);
+
     }
 
     @Override

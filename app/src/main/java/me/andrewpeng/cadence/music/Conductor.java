@@ -26,33 +26,13 @@ public class Conductor {
     public double songLength;
     public double beatLength;
     public int noteTravelTicks;
+    public boolean playing = false;
 
     private Metronome metronome;
 
     public Conductor(int width, int height){
         this.width = width;
         this.height = height;
-
-        // Test beatmap loading
-        beatmap = new Beatmap("beatmaps/popcornfunk/popcornfunk.png", "beatmaps/popcornfunk/info.ini", "beatmaps/popcornfunk/popcornfunk.wav");
-
-        // Load beatmap song into media player
-        AssetFileDescriptor afd = beatmap.getSongAFD();
-        try{
-            if (!mp.isPlaying()){
-                mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-                mp.prepare();
-            }
-        }catch(IOException e){}
-
-        this.songLength = mp.getDuration() - beatmap.getStartOffset() - beatmap.getEndOffset();
-        this.beatLength = 60000 / beatmap.getBPM() / beatmap.getSubBeats();
-        this.noteTravelTicks = (int) (90 / beatmap.getNoteSpeed());
-
-        // Set up metronome to know when to spawn the next note
-        metronome = new Metronome(this);
-        mp.start();
-
     }
 
     public double getSongLength(){
@@ -76,17 +56,17 @@ public class Conductor {
 
 
     public void tick() {
-
-        // Update metronome, and look for any notes that are going out of bounds
-        metronome.update();
-        ArrayList<Note> temp = new ArrayList<>(activeNotes);
-        for (Note note : temp) {
-            note.tick();
-            if (note.getY1() > height) {
-                activeNotes.remove(note);
+        if (playing){
+            // Update metronome, and look for any notes that are going out of bounds
+            metronome.update();
+            ArrayList<Note> temp = new ArrayList<>(activeNotes);
+            for (Note note : temp) {
+                note.tick();
+                if (note.getY1() > height) {
+                    activeNotes.remove(note);
+                }
             }
         }
-
     }
 
     public void nextNote(){
@@ -110,16 +90,44 @@ public class Conductor {
         mp.start();
     }
 
+    public void loadMap(Beatmap beatmap){
+
+        // Load beatmap song into media player
+        AssetFileDescriptor afd = beatmap.getSongAFD();
+        try{
+            if (!mp.isPlaying()){
+                mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                mp.prepare();
+            }
+        }catch(IOException e){}
+
+        this.songLength = mp.getDuration() - beatmap.getStartOffset() - beatmap.getEndOffset();
+        this.beatLength = 60000 / beatmap.getBPM() / beatmap.getSubBeats();
+        this.noteTravelTicks = (int) (90 / beatmap.getNoteSpeed());
+
+        // Set up metronome to know when to spawn the next note
+        metronome = new Metronome(this);
+        mp.start();
+        playing = true;
+
+
+        // Test beatmap loading
+//        String name = "popcornfunk";
+//        beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
+    }
+
     // Just drawing notes here
     public void render(Canvas graphics, Paint paint){
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.BLACK);
-        for (Note note : activeNotes){
-            paint.setAlpha(note.getAlpha());
-            graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
-            paint.setAlpha(255);
+        if (playing){
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.BLACK);
+            for (Note note : activeNotes){
+                paint.setAlpha(note.getAlpha());
+                graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
+                paint.setAlpha(255);
+            }
+            paint.setStyle(Paint.Style.STROKE);
         }
-        paint.setStyle(Paint.Style.STROKE);
     }
 
 
@@ -141,19 +149,21 @@ public class Conductor {
     }
 
     public void touch(MotionEvent e, int pointerIndex){
-        // Check if touch in bounds of note
-        ArrayList<Note> temp = new ArrayList<>(activeNotes);
-        for (Note note : temp){
-            // Touch within note
-            if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
-                    note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
+        if (playing){
+            // Check if touch in bounds of note
+            ArrayList<Note> temp = new ArrayList<>(activeNotes);
+            for (Note note : temp){
+                // Touch within note
+                if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
+                        note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
 
-                int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.3);
-                // Note within score area (0.3 padding timing window)
-                if (MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)){
-                    note.fadeOut(15);
+                    int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.3);
+                    // Note within score area (0.3 padding timing window)
+                    if (MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)){
+                        note.fadeOut(15);
+                    }
+
                 }
-
             }
         }
     }
