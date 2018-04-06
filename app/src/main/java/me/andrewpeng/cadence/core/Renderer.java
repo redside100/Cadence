@@ -7,11 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import me.andrewpeng.cadence.objects.AnimatedTextManager;
+import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
 public class Renderer {
-    int width, height;
+    public static int width, height;
     public static int scoreX1, scoreX2, scoreY1, scoreY2;
     public static ScreenState state;
     public Renderer(Context context, int width, int height, ScreenState state){
@@ -32,6 +34,7 @@ public class Renderer {
             case HOME:
                 Bitmap background = AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND);
                 graphics.drawBitmap(background, 0, 0, paint);
+                centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
                 break;
             case MENU:
                 centerText("hi this is a menu", graphics, width / 2, height / 2, paint, 15, Color.BLACK);
@@ -55,6 +58,22 @@ public class Renderer {
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
                 break;
         }
+
+        AnimatedTextManager.render(graphics, paint);
+    }
+
+    public void tick(){
+        AnimatedTextManager.tick();
+    }
+
+    public static void changeState(ScreenState newState){
+        state = newState;
+        AnimatedTextManager.texts.clear();
+        switch(newState){
+            case HOME:
+                new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01));
+                break;
+        }
     }
 
     public static void centerText(String text, Canvas graphics, int x, int y, Paint paint, int textSize, int color){
@@ -62,8 +81,9 @@ public class Renderer {
         // Modify text size and color
         float old = paint.getTextSize();
         paint.setColor(color);
-        paint.setTextSize(MainView.scale(textSize, graphics));
-
+        float scaledTextSize = MainView.scale(textSize, graphics);
+        paint.setTextSize(scaledTextSize);
+        paint.setShadowLayer(20, 0, 0, Color.BLACK);
         // Get bounds
         Rect bounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), bounds);
@@ -79,7 +99,6 @@ public class Renderer {
         paint.setTextSize(old);
         paint.setColor(Color.WHITE);
     }
-
     public static void fadeToNextScreen(ScreenState state){
 
 

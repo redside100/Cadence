@@ -3,6 +3,7 @@ package me.andrewpeng.cadence.core;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -15,16 +16,18 @@ public class MainView extends View {
     private Renderer renderer;
     private Conductor conductor;
     private Loop loop;
+    public Typeface font;
     public MainView(Context context, int width, int height){
         super(context);
         this.height = height;
         this.width = width;
         loop = new Loop(this);
         renderer = new Renderer(getContext(), width, height, ScreenState.HOME);
+        renderer.changeState(ScreenState.HOME);
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
         conductor = new Conductor(width, height);
-
+        font = Typeface.createFromAsset(context.getAssets(), "fonts/Carson.otf");
     }
 
     @Override
@@ -32,6 +35,7 @@ public class MainView extends View {
         // Where everything is drawn
         super.onDraw(canvas);
         Paint paint = new Paint();
+        paint.setTypeface(font);
         canvas.drawPaint(paint);
 
         renderer.render(canvas, paint);
@@ -61,6 +65,7 @@ public class MainView extends View {
     }
 
     public void tick(){
+        renderer.tick();
         conductor.tick();
     }
     public void render(){
