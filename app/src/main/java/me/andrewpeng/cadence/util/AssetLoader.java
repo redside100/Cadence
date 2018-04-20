@@ -24,6 +24,7 @@ public class AssetLoader {
 
     private void load(){
         images.put(ImageAsset.HOME_BACKGROUND, getImageAsset("backgrounds/main_background.png"));
+        images.put(ImageAsset.TEST_BUTTON, getImageAsset("buttons/testButton.png"));
     }
 
     private Bitmap getImageAsset(String url){

@@ -17,13 +17,14 @@ public class MainView extends View {
     private Conductor conductor;
     private Loop loop;
     public Typeface font;
+    public static boolean canTouch = true;
     public MainView(Context context, int width, int height){
         super(context);
         this.height = height;
         this.width = width;
         loop = new Loop(this);
         renderer = new Renderer(getContext(), width, height, ScreenState.HOME);
-        renderer.changeState(ScreenState.HOME);
+        renderer.next(ScreenState.HOME);
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
         conductor = new Conductor(width, height);
@@ -45,14 +46,27 @@ public class MainView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent e){
-        switch(e.getAction() & e.getActionMasked()){
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_POINTER_DOWN:
-                for (int i = 0; i < e.getPointerCount(); i++){
-                    conductor.touch(e, i);
-                }
+        if (canTouch){
+            switch(e.getAction() & e.getActionMasked()){
+                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    for (int i = 0; i < e.getPointerCount(); i++){
+                        conductor.touch(e, i);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    Renderer.touch(e);
+                    break;
+            }
         }
         return true;
+    }
+
+    public static void disableTouch(){
+        canTouch = false;
+    }
+    public static void enableTouch(){
+        canTouch = true;
     }
 
     public void resume(){

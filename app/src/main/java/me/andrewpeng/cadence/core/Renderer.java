@@ -6,8 +6,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.MotionEvent;
 
+import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.AnimatedTextManager;
+import me.andrewpeng.cadence.objects.Button;
+import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
@@ -15,7 +19,14 @@ import me.andrewpeng.cadence.util.ImageAsset;
 public class Renderer {
     public static int width, height;
     public static int scoreX1, scoreX2, scoreY1, scoreY2;
-    public static ScreenState state;
+    public static ScreenState state = ScreenState.HOME;
+
+    public static boolean transition = false;
+    public static boolean fadeIn = false;
+    public static boolean fadeOut = false;
+    public static int transitionAlpha = 0;
+    public static ScreenState nextState;
+
     public Renderer(Context context, int width, int height, ScreenState state){
         this.width = width;
         this.height = height;
@@ -27,17 +38,18 @@ public class Renderer {
     }
 
     public void render(Canvas graphics, Paint paint){
+
         // Background
         paint.setColor(Color.WHITE);
         graphics.drawRect(new Rect(0, 0, width, height), paint);
         switch(state){
             case HOME:
-                Bitmap background = AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND);
-                graphics.drawBitmap(background, 0, 0, paint);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
                 break;
             case MENU:
-                centerText("hi this is a menu", graphics, width / 2, height / 2, paint, 15, Color.BLACK);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                centerText("hi this is a menu", graphics, width / 2, height / 2, paint, 15, Color.WHITE);
                 break;
             case SETTINGS:
                 break;
@@ -60,18 +72,87 @@ public class Renderer {
         }
 
         AnimatedTextManager.render(graphics, paint);
+        ButtonManager.render(graphics, paint);
+
+        // Check for transitioning process (always last, since the white rectangle should draw over everything)
+        if (transition){
+            // White screen fade
+            paint.setColor(Color.WHITE);
+            int oldAlpha = paint.getAlpha();
+            paint.setAlpha(transitionAlpha);
+            graphics.drawRect(new Rect(0, 0, width, height), paint);
+            paint.setAlpha(oldAlpha);
+        }
     }
 
     public void tick(){
+
+        // Handle screen transitioning
+        int transitionInc = 15;
+        if (transition){
+            // Check fading in
+            if (fadeIn){
+                // Increase alpha of transition overlay
+                if (transitionAlpha + transitionInc < 255){
+                    transitionAlpha += transitionInc;
+                }else{
+                    // Once alpha is max, switch to the next screen state and start fading out
+                    transitionAlpha = 255;
+                    fadeIn = false;
+                    fadeOut = true;
+                    next(nextState);
+                }
+
+                // Check fading out
+            }else if (fadeOut){
+
+                // Decrease alpha of transition overlay
+                if (transitionAlpha - transitionInc > 0){
+                    transitionAlpha -= transitionInc;
+                }else{
+                    // Once alpha is 0, end the transition process, and re enable touch
+                    transitionAlpha = 0;
+                    fadeOut = false;
+                    transition = false;
+                    MainView.enableTouch();
+                }
+            }
+        }
+
+        // Don't forget to tick managers
         AnimatedTextManager.tick();
+        ButtonManager.tick();
     }
 
+    public static void touch(MotionEvent e){
+        switch(state){
+            case HOME:
+                changeState(ScreenState.MENU);
+                break;
+            case MENU:
+                changeState(ScreenState.HOME);
+                break;
+            case CUTSCENE:
+                // TODO
+                break;
+        }
+    }
     public static void changeState(ScreenState newState){
-        state = newState;
+        nextState = newState;
+        transition = true;
+        fadeIn = true;
+        MainView.disableTouch();
+    }
+    public static void next(ScreenState newState){
         AnimatedTextManager.texts.clear();
+        ButtonManager.buttons.clear();
+        state = newState;
         switch(newState){
             case HOME:
-                new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01));
+                new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01), 255);
+                break;
+            case MENU:
+                new Button(AssetLoader.getImageAssetFromMemory(ImageAsset.TEST_BUTTON), width / 2, (int) (height * 0.75), 255);
                 break;
         }
     }
@@ -98,6 +179,10 @@ public class Renderer {
         // Reset paint
         paint.setTextSize(old);
         paint.setColor(Color.WHITE);
+    }
+
+    public static void centerBitmap(Bitmap bitmap, Canvas graphics, int x, int y, Paint paint){
+
     }
     public static void fadeToNextScreen(ScreenState state){
 

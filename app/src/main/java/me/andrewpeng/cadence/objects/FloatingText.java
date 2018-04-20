@@ -6,8 +6,8 @@ public class FloatingText extends AnimatedText{
     int count = 0;
     int originalY;
 
-    public FloatingText(String text, int x, int y, int textSize, int color, int ticksInOneCycle, int amplitude){
-        super(text, x, y, textSize, color, 0);
+    public FloatingText(String text, int x, int y, int textSize, int color, int ticksInOneCycle, int amplitude, int alpha){
+        super(text, x, y, textSize, color, alpha);
         originalY = y;
         this.ticksInOneCycle = ticksInOneCycle;
         this.amplitude = amplitude;
