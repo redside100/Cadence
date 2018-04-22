@@ -13,6 +13,7 @@ import me.andrewpeng.cadence.objects.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
+import me.andrewpeng.cadence.objects.StateChangeButton;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -24,6 +25,10 @@ public class Renderer {
     public static boolean transition = false;
     public static boolean fadeIn = false;
     public static boolean fadeOut = false;
+
+    // Enable to show positioning lines
+    public static boolean debug = false;
+
     public static int transitionAlpha = 0;
     public static ScreenState nextState;
 
@@ -49,7 +54,9 @@ public class Renderer {
                 break;
             case MENU:
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("hi this is a menu", graphics, width / 2, height / 2, paint, 15, Color.WHITE);
+                centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
+                centerText("v 1.0 Alpha", graphics, (int) (width * 0.13), (int) (height * 0.99), paint, 10, Color.WHITE);
+                centerText("ICS4U", graphics, (int) (width * 0.92), (int) (height * 0.99), paint, 10, Color.WHITE);
                 break;
             case SETTINGS:
                 break;
@@ -83,6 +90,18 @@ public class Renderer {
             graphics.drawRect(new Rect(0, 0, width, height), paint);
             paint.setAlpha(oldAlpha);
         }
+
+        if (debug){
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(MainView.scale((float) 0.5, graphics));
+            for (int i = 1; i <= 100; i++){
+                int position = (int) (width * (double) i / 100);
+                int hPosition = (int) (height * (double) i / 100);
+                graphics.drawLine(position, 0, position, height, paint);
+                graphics.drawLine(0, hPosition, width, hPosition, paint);
+            }
+        }
+
     }
 
     public void tick(){
@@ -125,12 +144,10 @@ public class Renderer {
     }
 
     public static void touch(MotionEvent e){
+        ButtonManager.touch(e);
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);
-                break;
-            case MENU:
-                changeState(ScreenState.HOME);
                 break;
             case CUTSCENE:
                 // TODO
@@ -152,7 +169,7 @@ public class Renderer {
                 new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01), 255);
                 break;
             case MENU:
-                new Button(AssetLoader.getImageAssetFromMemory(ImageAsset.TEST_BUTTON), width / 2, (int) (height * 0.75), 255);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SONG_SELECTION_BUTTON),width / 2, (int) (height * 0.4), 255, ScreenState.HOME);
                 break;
         }
     }
@@ -182,10 +199,6 @@ public class Renderer {
     }
 
     public static void centerBitmap(Bitmap bitmap, Canvas graphics, int x, int y, Paint paint){
-
-    }
-    public static void fadeToNextScreen(ScreenState state){
-
 
     }
 }
