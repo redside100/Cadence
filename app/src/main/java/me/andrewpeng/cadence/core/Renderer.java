@@ -61,6 +61,15 @@ public class Renderer {
             case SETTINGS:
                 break;
             case CREDITS:
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                centerText("Credits", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
+                centerText("Programming", graphics, width / 2, (int) (height * 0.35), paint, 14, Color.WHITE);
+                centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 10, Color.WHITE);
+                centerText("Story", graphics, width / 2, (int) (height * 0.5), paint, 14, Color.WHITE);
+                centerText("Zelia Feng", graphics, width / 2, (int) (height * 0.55), paint, 10, Color.WHITE);
+                centerText("Manager", graphics, width / 2, (int) (height * 0.65), paint, 14, Color.WHITE);
+                centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 10, Color.WHITE);
+
                 break;
             case PLAY:
 
@@ -94,11 +103,13 @@ public class Renderer {
         if (debug){
             paint.setColor(Color.BLACK);
             paint.setStrokeWidth(MainView.scale((float) 0.5, graphics));
-            for (int i = 1; i <= 100; i++){
+            for (int i = 0; i <= 100; i += 5){
                 int position = (int) (width * (double) i / 100);
                 int hPosition = (int) (height * (double) i / 100);
                 graphics.drawLine(position, 0, position, height, paint);
+                centerText((double) i / 100 + "", graphics, position, (int) (height * 0.04), paint, 5, Color.BLACK);
                 graphics.drawLine(0, hPosition, width, hPosition, paint);
+                centerText((double) i / 100 + "", graphics, (int) (width * 0.02), hPosition, paint, 5, Color.BLACK);
             }
         }
 
@@ -170,6 +181,11 @@ public class Renderer {
                 break;
             case MENU:
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SONG_SELECTION_BUTTON),width / 2, (int) (height * 0.4), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SETTINGS_BUTTON), (int) (width * 0.26), (int) (height * 0.68), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.CREDITS_BUTTON), (int) (width * 0.74), (int) (height * 0.68), 255, ScreenState.CREDITS);
+                break;
+            case CREDITS:
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, (int) (height * 0.85), 255, ScreenState.MENU);
                 break;
         }
     }
@@ -178,6 +194,7 @@ public class Renderer {
 
         // Modify text size and color
         float old = paint.getTextSize();
+        int oldColor = paint.getColor();
         paint.setColor(color);
         float scaledTextSize = MainView.scale(textSize, graphics);
         paint.setTextSize(scaledTextSize);
@@ -195,7 +212,24 @@ public class Renderer {
 
         // Reset paint
         paint.setTextSize(old);
-        paint.setColor(Color.WHITE);
+        paint.setColor(oldColor);
+    }
+
+    public static void writeText(String text, Canvas graphics, int x, int y, Paint paint, int textSize, int color){
+        // Modify text size and color
+        float old = paint.getTextSize();
+        int oldColor = paint.getColor();
+        paint.setColor(color);
+        float scaledTextSize = MainView.scale(textSize, graphics);
+        paint.setTextSize(scaledTextSize);
+        paint.setShadowLayer(20, 0, 0, Color.BLACK);
+
+        // Draw text (now centered)
+        graphics.drawText(text, x, y, paint);
+
+        // Reset paint
+        paint.setTextSize(old);
+        paint.setColor(oldColor);
     }
 
     public static void centerBitmap(Bitmap bitmap, Canvas graphics, int x, int y, Paint paint){
