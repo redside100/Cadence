@@ -29,6 +29,8 @@ public class AssetLoader {
         images.put(ImageAsset.CREDITS_BUTTON, getImageAsset("buttons/credits.png"));
         images.put(ImageAsset.SETTINGS_BUTTON, getImageAsset("buttons/settings.png"));
         images.put(ImageAsset.OK_BUTTON, getImageAsset("buttons/ok.png"));
+        images.put(ImageAsset.LEFT_ARROW_BUTTON, getImageAsset("buttons/leftArrow.png"));
+        images.put(ImageAsset.RIGHT_ARROW_BUTTON, getImageAsset("buttons/rightArrow.png"));
     }
 
     private Bitmap getImageAsset(String url){

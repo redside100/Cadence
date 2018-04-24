@@ -28,6 +28,9 @@ public class Conductor {
     public int noteTravelTicks;
     public boolean playing = false;
 
+    public static int volume = 100;
+    public static int fxVolume = 100;
+
     private Metronome metronome;
 
     public Conductor(int width, int height){
@@ -81,6 +84,26 @@ public class Conductor {
             }
             currentGeneralBeat++;
         }
+    }
+
+    public static void setVolume(int newVol){
+        if (newVol >= 0 && newVol <= 100){
+            volume = newVol;
+        }
+    }
+
+    public static void setFxVolume(int newVol){
+        if (newVol >= 0 && newVol <= 100){
+            fxVolume = newVol;
+        }
+    }
+
+    public static int getVolume(){
+        return volume;
+    }
+
+    public static int getFxVolume(){
+        return fxVolume;
     }
 
     public void pause(){

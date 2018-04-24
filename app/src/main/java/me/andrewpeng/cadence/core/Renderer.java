@@ -8,12 +8,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.StateChangeButton;
+import me.andrewpeng.cadence.objects.VolumeControlButton;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -49,29 +51,55 @@ public class Renderer {
         graphics.drawRect(new Rect(0, 0, width, height), paint);
         switch(state){
             case HOME:
+
+                // Outer space background + title
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
                 break;
+
             case MENU:
+
+                // Outer space background, title, and footers
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
                 centerText("v 1.0 Alpha", graphics, (int) (width * 0.13), (int) (height * 0.99), paint, 10, Color.WHITE);
                 centerText("ICS4U", graphics, (int) (width * 0.92), (int) (height * 0.99), paint, 10, Color.WHITE);
                 break;
+
             case SETTINGS:
+
+                // Outer space background, title, and options
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                centerText("Settings", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
+                writeText("Music Volume", graphics, (int) (width * 0.15), (int) (height * 0.3), paint, 12, Color.WHITE);
+                writeText("FX Volume", graphics, (int) (width * 0.15), (int) (height * 0.4), paint, 12, Color.WHITE);
+                writeText("Judge Difficulty", graphics, (int) (width * 0.15), (int) (height * 0.5), paint, 12, Color.WHITE);
+                writeText("Erase Data (!)", graphics, (int) (width * 0.15), (int) (height * 0.6), paint, 12, Color.rgb(255, 100, 100));
+                writeText("Misc", graphics, (int) (width * 0.15), (int) (height * 0.7), paint, 12, Color.WHITE);
+
+                // Volume display
+                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 12, Color.WHITE);
+
+                // FX vol display
+                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 12, Color.WHITE);
                 break;
+
             case CREDITS:
+
+                // Outer space background, title, and credits
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerText("Credits", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
                 centerText("Programming", graphics, width / 2, (int) (height * 0.35), paint, 14, Color.WHITE);
                 centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 10, Color.WHITE);
                 centerText("Story", graphics, width / 2, (int) (height * 0.5), paint, 14, Color.WHITE);
-                centerText("Zelia Feng", graphics, width / 2, (int) (height * 0.55), paint, 10, Color.WHITE);
+                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 10, Color.WHITE);
                 centerText("Manager", graphics, width / 2, (int) (height * 0.65), paint, 14, Color.WHITE);
                 centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 10, Color.WHITE);
-
                 break;
+
             case PLAY:
+
+                // Probably gonna change this later TODO
 
                 // Lines
                 paint.setColor(Color.BLACK);
@@ -87,6 +115,7 @@ public class Renderer {
                 break;
         }
 
+        // Render animated text objects and buttons
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
 
@@ -100,6 +129,7 @@ public class Renderer {
             paint.setAlpha(oldAlpha);
         }
 
+        // Debug lines (for width and height scale)
         if (debug){
             paint.setColor(Color.BLACK);
             paint.setStrokeWidth(MainView.scale((float) 0.5, graphics));
@@ -154,6 +184,7 @@ public class Renderer {
         ButtonManager.tick();
     }
 
+    // This touch event is for action down
     public static void touch(MotionEvent e){
         ButtonManager.touch(e);
         switch(state){
@@ -171,21 +202,45 @@ public class Renderer {
         fadeIn = true;
         MainView.disableTouch();
     }
+
+
     public static void next(ScreenState newState){
         AnimatedTextManager.texts.clear();
         ButtonManager.buttons.clear();
         state = newState;
         switch(newState){
             case HOME:
+
+                // Floating text
                 new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01), 255);
                 break;
+
             case MENU:
+
+                // Menu buttons
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SONG_SELECTION_BUTTON),width / 2, (int) (height * 0.4), 255, ScreenState.HOME);
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SETTINGS_BUTTON), (int) (width * 0.26), (int) (height * 0.68), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SETTINGS_BUTTON), (int) (width * 0.26), (int) (height * 0.68), 255, ScreenState.SETTINGS);
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.CREDITS_BUTTON), (int) (width * 0.74), (int) (height * 0.68), 255, ScreenState.CREDITS);
                 break;
+
             case CREDITS:
+
+                // Back to menu button
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, (int) (height * 0.85), 255, ScreenState.MENU);
+                break;
+
+            case SETTINGS:
+
+                // Back to menu button
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, (int) (height * 0.85), 255, ScreenState.MENU);
+
+                // Music volume control buttons
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.285), 255, false, false);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.285), 255, true, false);
+
+                // FX volume control buttons
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.385), 255, false, true);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.385), 255, true, true);
                 break;
         }
     }
@@ -232,6 +287,7 @@ public class Renderer {
         paint.setColor(oldColor);
     }
 
+    // TODO
     public static void centerBitmap(Bitmap bitmap, Canvas graphics, int x, int y, Paint paint){
 
     }
