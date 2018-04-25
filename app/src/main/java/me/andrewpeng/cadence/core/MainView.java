@@ -23,11 +23,11 @@ public class MainView extends View {
         this.height = height;
         this.width = width;
         loop = new Loop(this);
-        renderer = new Renderer(getContext(), width, height, ScreenState.HOME);
+        conductor = new Conductor(width, height);
+        renderer = new Renderer(getContext(), width, height, ScreenState.HOME, conductor);
         renderer.next(ScreenState.HOME);
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
-        conductor = new Conductor(width, height);
         font = Typeface.createFromAsset(context.getAssets(), "fonts/Carson.otf");
     }
 
@@ -40,7 +40,6 @@ public class MainView extends View {
         canvas.drawPaint(paint);
 
         renderer.render(canvas, paint);
-        conductor.render(canvas, paint);
     }
 
 

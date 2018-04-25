@@ -23,7 +23,10 @@ public class AssetLoader {
     }
 
     private void load(){
+        // Backgrounds
         images.put(ImageAsset.HOME_BACKGROUND, getImageAsset("backgrounds/main_background.png"));
+
+        // Buttons
         images.put(ImageAsset.TEST_BUTTON, getImageAsset("buttons/testButton.png"));
         images.put(ImageAsset.SONG_SELECTION_BUTTON, getImageAsset("buttons/songSelection.png"));
         images.put(ImageAsset.CREDITS_BUTTON, getImageAsset("buttons/credits.png"));
@@ -31,6 +34,11 @@ public class AssetLoader {
         images.put(ImageAsset.OK_BUTTON, getImageAsset("buttons/ok.png"));
         images.put(ImageAsset.LEFT_ARROW_BUTTON, getImageAsset("buttons/leftArrow.png"));
         images.put(ImageAsset.RIGHT_ARROW_BUTTON, getImageAsset("buttons/rightArrow.png"));
+
+        // Icons
+        images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));
+
+
     }
 
     private Bitmap getImageAsset(String url){

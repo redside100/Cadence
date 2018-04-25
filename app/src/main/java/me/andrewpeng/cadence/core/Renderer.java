@@ -11,9 +11,11 @@ import android.view.MotionEvent;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.AnimatedTextManager;
+import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
+import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.StateChangeButton;
 import me.andrewpeng.cadence.objects.VolumeControlButton;
 import me.andrewpeng.cadence.util.AssetLoader;
@@ -33,8 +35,9 @@ public class Renderer {
 
     public static int transitionAlpha = 0;
     public static ScreenState nextState;
+    public static Conductor conductor;
 
-    public Renderer(Context context, int width, int height, ScreenState state){
+    public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
         this.width = width;
         this.height = height;
         scoreX1 = (int) (width * 0.005);
@@ -42,6 +45,7 @@ public class Renderer {
         scoreY1 = (int) (height * 0.69);
         scoreY2 = (int) (height * 0.81);
         this.state = state;
+        this.conductor = conductor;
     }
 
     public void render(Canvas graphics, Paint paint){
@@ -97,12 +101,23 @@ public class Renderer {
                 centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 10, Color.WHITE);
                 break;
 
+
+            case SONG_SELECTION:
+
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
+               // writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
+                writeText(GameValues.getMusicNotes() + "", graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
+
+                break;
             case PLAY:
 
                 // Probably gonna change this later TODO
 
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+
                 // Lines
-                paint.setColor(Color.BLACK);
+                paint.setColor(Color.WHITE);
                 paint.setStrokeWidth(MainView.scale((float) 1.2, graphics));
                 for (int i = 0; i < 3; i++){
                     int quarter = width / 4;
@@ -112,6 +127,17 @@ public class Renderer {
                 // Score area
                 paint.setStyle(Paint.Style.STROKE);
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+
+                if (conductor.playing){
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setColor(Color.WHITE);
+                    for (Note note : conductor.activeNotes){
+                        paint.setAlpha(note.getAlpha());
+                        graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
+                        paint.setAlpha(255);
+                    }
+                    paint.setStyle(Paint.Style.STROKE);
+                }
                 break;
         }
 
@@ -123,10 +149,13 @@ public class Renderer {
         if (transition){
             // White screen fade
             paint.setColor(Color.WHITE);
+            Paint.Style old = paint.getStyle();
+            paint.setStyle(Paint.Style.FILL);
             int oldAlpha = paint.getAlpha();
             paint.setAlpha(transitionAlpha);
             graphics.drawRect(new Rect(0, 0, width, height), paint);
             paint.setAlpha(oldAlpha);
+            paint.setStyle(old);
         }
 
         // Debug lines (for width and height scale)
@@ -204,11 +233,16 @@ public class Renderer {
     }
 
 
+    // Handle on state change events (create buttons, etc.)
     public static void next(ScreenState newState){
         AnimatedTextManager.texts.clear();
         ButtonManager.buttons.clear();
+        if (conductor.playing){
+            conductor.stop();
+        }
         state = newState;
         switch(newState){
+
             case HOME:
 
                 // Floating text
@@ -218,7 +252,7 @@ public class Renderer {
             case MENU:
 
                 // Menu buttons
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SONG_SELECTION_BUTTON),width / 2, (int) (height * 0.4), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SONG_SELECTION_BUTTON),width / 2, (int) (height * 0.4), 255, ScreenState.SONG_SELECTION);
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SETTINGS_BUTTON), (int) (width * 0.26), (int) (height * 0.68), 255, ScreenState.SETTINGS);
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.CREDITS_BUTTON), (int) (width * 0.74), (int) (height * 0.68), 255, ScreenState.CREDITS);
                 break;
@@ -241,6 +275,22 @@ public class Renderer {
                 // FX volume control buttons
                 new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.385), 255, false, true);
                 new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.385), 255, true, true);
+                break;
+
+            case SONG_SELECTION:
+
+                // For now, just have a button that plays the only beatmap available (popcorn funk)
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
+                break;
+
+            case PLAY:
+
+                // TODO fix everything ;-;
+                String name = "popcornfunk";
+                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
+                conductor.loadMap(beatmap);
+
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
         }
     }
@@ -289,6 +339,8 @@ public class Renderer {
 
     // TODO
     public static void centerBitmap(Bitmap bitmap, Canvas graphics, int x, int y, Paint paint){
-
+        int newX = x - (bitmap.getWidth() / 2);
+        int newY = y - (bitmap.getHeight() / 2);
+        graphics.drawBitmap(bitmap, newX, newY, paint);
     }
 }

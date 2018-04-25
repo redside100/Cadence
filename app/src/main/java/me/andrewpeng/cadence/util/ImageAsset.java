@@ -9,5 +9,6 @@ public enum ImageAsset {
     SETTINGS_BUTTON,
     OK_BUTTON,
     LEFT_ARROW_BUTTON,
-    RIGHT_ARROW_BUTTON
+    RIGHT_ARROW_BUTTON,
+    MUSIC_NOTE_ICON
 }

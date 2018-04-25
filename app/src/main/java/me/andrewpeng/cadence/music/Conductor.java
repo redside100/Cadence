@@ -113,8 +113,18 @@ public class Conductor {
         mp.start();
     }
 
+    public void stop(){
+        mp.stop();
+        mp.reset();
+        metronome = null;
+        playing = false;
+        activeNotes.clear();
+        currentGeneralBeat = 0;
+    }
+
     public void loadMap(Beatmap beatmap){
 
+        this.beatmap = beatmap;
         // Load beatmap song into media player
         AssetFileDescriptor afd = beatmap.getSongAFD();
         try{
@@ -139,18 +149,18 @@ public class Conductor {
 //        beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
     }
 
-    // Just drawing notes here
+    // TODO change note drawing to be handled in renderer
     public void render(Canvas graphics, Paint paint){
-        if (playing){
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(Color.BLACK);
-            for (Note note : activeNotes){
-                paint.setAlpha(note.getAlpha());
-                graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
-                paint.setAlpha(255);
-            }
-            paint.setStyle(Paint.Style.STROKE);
-        }
+//        if (playing){
+//            paint.setStyle(Paint.Style.FILL);
+//            paint.setColor(Color.WHITE);
+//            for (Note note : activeNotes){
+//                paint.setAlpha(note.getAlpha());
+//                graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
+//                paint.setAlpha(255);
+//            }
+//            paint.setStyle(Paint.Style.STROKE);
+//        }
     }
 
 
@@ -171,6 +181,7 @@ public class Conductor {
         activeNotes.add(note);
     }
 
+
     public void touch(MotionEvent e, int pointerIndex){
         if (playing){
             // Check if touch in bounds of note
@@ -180,7 +191,7 @@ public class Conductor {
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
                         note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
 
-                    int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.3);
+                    int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
                     // Note within score area (0.3 padding timing window)
                     if (MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)){
                         note.fadeOut(15);
