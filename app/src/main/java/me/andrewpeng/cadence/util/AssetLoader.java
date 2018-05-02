@@ -38,6 +38,12 @@ public class AssetLoader {
         // Icons
         images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));
 
+        //Particle
+        images.put(ImageAsset.PARTICLE,getImageAsset("particles/star_pink.png"));
+
+        //Gradient
+        images.put(ImageAsset.GRADIENT, getImageAsset("particles/Gradient.png"));
+
 
     }
 
