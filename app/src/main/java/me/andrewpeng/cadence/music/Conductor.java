@@ -16,6 +16,8 @@ import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Note;
+import me.andrewpeng.cadence.objects.Particle;
+import me.andrewpeng.cadence.objects.ParticleManager;
 
 public class Conductor {
     int width, height;
@@ -30,6 +32,8 @@ public class Conductor {
 
     public static int volume = 100;
     public static int fxVolume = 100;
+
+    public ParticleManager particleManager;
 
     private Metronome metronome;
 
@@ -186,6 +190,7 @@ public class Conductor {
         if (playing){
             // Check if touch in bounds of note
             ArrayList<Note> temp = new ArrayList<>(activeNotes);
+            ArrayList<Particle> temp1 = new ArrayList<>(ParticleManager.particles);
             for (Note note : temp){
                 // Touch within note
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
@@ -193,12 +198,23 @@ public class Conductor {
 
                     int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
                     // Note within score area (0.3 padding timing window)
-                    if (MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)){
+                    if (scoreArea(note,pad)){
                         note.fadeOut(15);
+                        /*for(Particle particle: temp1) {
+                            particle.tick();
+                        }*/
                     }
-
                 }
             }
+        }
+    }
+
+    public boolean scoreArea(Note note, int pad) {
+        if(MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

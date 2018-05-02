@@ -10,5 +10,7 @@ public enum ImageAsset {
     OK_BUTTON,
     LEFT_ARROW_BUTTON,
     RIGHT_ARROW_BUTTON,
-    MUSIC_NOTE_ICON
+    MUSIC_NOTE_ICON,
+    PARTICLE,
+    GRADIENT
 }

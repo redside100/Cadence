@@ -15,6 +15,7 @@ import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
+import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.StateChangeButton;
 import me.andrewpeng.cadence.objects.VolumeControlButton;
@@ -36,6 +37,7 @@ public class Renderer {
     public static int transitionAlpha = 0;
     public static ScreenState nextState;
     public static Conductor conductor;
+    public static Gradient gradient;
 
     public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
         this.width = width;
@@ -58,47 +60,47 @@ public class Renderer {
 
                 // Outer space background + title
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
+                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
                 break;
 
             case MENU:
 
                 // Outer space background, title, and footers
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("Cadence", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
-                centerText("v 1.0 Alpha", graphics, (int) (width * 0.13), (int) (height * 0.99), paint, 10, Color.WHITE);
-                centerText("ICS4U", graphics, (int) (width * 0.92), (int) (height * 0.99), paint, 10, Color.WHITE);
+                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
+                centerText("v1.0 Alpha", graphics, (int) (width * 0.155), (int) (height * 0.99), paint, 17, Color.WHITE);
+                centerText("ICS4U", graphics, (int) (width * 0.9), (int) (height * 0.99), paint, 17, Color.WHITE);
                 break;
 
             case SETTINGS:
 
                 // Outer space background, title, and options
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("Settings", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
-                writeText("Music Volume", graphics, (int) (width * 0.15), (int) (height * 0.3), paint, 12, Color.WHITE);
-                writeText("FX Volume", graphics, (int) (width * 0.15), (int) (height * 0.4), paint, 12, Color.WHITE);
-                writeText("Judge Difficulty", graphics, (int) (width * 0.15), (int) (height * 0.5), paint, 12, Color.WHITE);
-                writeText("Erase Data (!)", graphics, (int) (width * 0.15), (int) (height * 0.6), paint, 12, Color.rgb(255, 100, 100));
-                writeText("Misc", graphics, (int) (width * 0.15), (int) (height * 0.7), paint, 12, Color.WHITE);
+                centerText("SETTINGS", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
+                writeText("Music Volume", graphics, (int) (width * 0.15), (int) (height * 0.3), paint, 20, Color.WHITE);
+                writeText("FX Volume", graphics, (int) (width * 0.15), (int) (height * 0.4), paint, 20, Color.WHITE);
+                writeText("Judge Difficulty", graphics, (int) (width * 0.15), (int) (height * 0.5), paint, 20, Color.WHITE);
+                writeText("Erase Data (!)", graphics, (int) (width * 0.15), (int) (height * 0.6), paint, 20, Color.rgb(255, 100, 100));
+                writeText("Misc", graphics, (int) (width * 0.15), (int) (height * 0.7), paint, 20, Color.WHITE);
 
                 // Volume display
-                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 12, Color.WHITE);
+                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 20, Color.WHITE);
 
                 // FX vol display
-                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 12, Color.WHITE);
+                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 20, Color.WHITE);
                 break;
 
             case CREDITS:
 
                 // Outer space background, title, and credits
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("Credits", graphics, width / 2, height / 4, paint, 30, Color.WHITE);
-                centerText("Programming", graphics, width / 2, (int) (height * 0.35), paint, 14, Color.WHITE);
-                centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 10, Color.WHITE);
-                centerText("Story", graphics, width / 2, (int) (height * 0.5), paint, 14, Color.WHITE);
-                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 10, Color.WHITE);
-                centerText("Manager", graphics, width / 2, (int) (height * 0.65), paint, 14, Color.WHITE);
-                centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 10, Color.WHITE);
+                centerText("CREDITS", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
+                centerText("PROGRAMMING", graphics, width / 2, (int) (height * 0.35), paint, 20, Color.WHITE);
+                centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 15, Color.WHITE);
+                centerText("STORY", graphics, width / 2, (int) (height * 0.5), paint, 20, Color.WHITE);
+                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 15, Color.WHITE);
+                centerText("MANAGER", graphics, width / 2, (int) (height * 0.65), paint, 20, Color.WHITE);
+                centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 15, Color.WHITE);
                 break;
 
 
@@ -106,8 +108,8 @@ public class Renderer {
 
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
-               // writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
-                writeText(GameValues.getMusicNotes() + "", graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
+                writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 20, Color.WHITE);
+//                writeText(GameValues.getMusicNotes() + "", graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
 
                 break;
             case PLAY:
@@ -127,6 +129,10 @@ public class Renderer {
                 // Score area
                 paint.setStyle(Paint.Style.STROKE);
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+
+                /*if(gradient.isTouched) {
+                    graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT),0,0,paint);
+                }*/
 
                 if (conductor.playing){
                     paint.setStyle(Paint.Style.FILL);
@@ -246,7 +252,7 @@ public class Renderer {
             case HOME:
 
                 // Floating text
-                new FloatingText("Tap to Start", width / 2, (int) (height * 0.8), 15, Color.WHITE, 240, (int) (height * 0.01), 255);
+                new FloatingText("< Tap To Start >", width / 2, (int) (height * 0.8), 20, Color.WHITE, 240, (int) (height * 0.01), 255);
                 break;
 
             case MENU:

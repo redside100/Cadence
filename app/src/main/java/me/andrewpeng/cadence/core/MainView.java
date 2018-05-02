@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import me.andrewpeng.cadence.music.Conductor;
+import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
 
@@ -15,6 +16,7 @@ public class MainView extends View {
     int height, width;
     private Renderer renderer;
     private Conductor conductor;
+    private Gradient gradient;
     private Loop loop;
     public Typeface font;
     public static boolean canTouch = true;
@@ -28,7 +30,7 @@ public class MainView extends View {
         renderer.next(ScreenState.HOME);
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
-        font = Typeface.createFromAsset(context.getAssets(), "fonts/Carson.otf");
+        font = Typeface.createFromAsset(context.getAssets(), "fonts/Asgalt-Regular.ttf");
     }
 
     @Override
@@ -51,6 +53,7 @@ public class MainView extends View {
                 case MotionEvent.ACTION_POINTER_DOWN:
                     for (int i = 0; i < e.getPointerCount(); i++){
                         conductor.touch(e, i);
+                        //gradient.touch(e, i);
                     }
                     break;
                 case MotionEvent.ACTION_UP:
