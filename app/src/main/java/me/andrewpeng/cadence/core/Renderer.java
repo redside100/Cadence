@@ -9,16 +9,14 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import me.andrewpeng.cadence.music.Conductor;
-import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
-import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.objects.Note;
-import me.andrewpeng.cadence.objects.StateChangeButton;
-import me.andrewpeng.cadence.objects.VolumeControlButton;
+import me.andrewpeng.cadence.buttons.StateChangeButton;
+import me.andrewpeng.cadence.buttons.VolumeControlButton;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 

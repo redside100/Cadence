@@ -1,10 +1,11 @@
-package me.andrewpeng.cadence.objects;
+package me.andrewpeng.cadence.buttons;
 
 import android.graphics.Bitmap;
 
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.core.ScreenState;
 import me.andrewpeng.cadence.music.Conductor;
+import me.andrewpeng.cadence.objects.Button;
 
 
 public class VolumeControlButton extends Button {
