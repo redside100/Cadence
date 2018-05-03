@@ -4,15 +4,19 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.Gradient;
+import me.andrewpeng.cadence.objects.Spinner;
+import me.andrewpeng.cadence.objects.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
 
-public class MainView extends View {
+public class MainView extends View implements GestureDetector.OnGestureListener {
     int height, width;
     private Renderer renderer;
     private Conductor conductor;
@@ -20,17 +24,37 @@ public class MainView extends View {
     private Loop loop;
     public Typeface font;
     public static boolean canTouch = true;
+
+    public GestureDetector gestureDetector;
     public MainView(Context context, int width, int height){
+
         super(context);
+
+        // Init height / width
         this.height = height;
         this.width = width;
+
+        // Init game loop, conductor, and renderer
         loop = new Loop(this);
         conductor = new Conductor(width, height);
         renderer = new Renderer(getContext(), width, height, ScreenState.HOME, conductor);
+<<<<<<< HEAD
         Renderer.next(ScreenState.HOME);
+=======
+
+        // Set first state to HOME without triggering screen transition animation
+        renderer.next(ScreenState.HOME);
+
+        // Init reader and asset loader (only one time)
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
+
+        // Init font
         font = Typeface.createFromAsset(context.getAssets(), "fonts/Asgalt-Regular.ttf");
+
+        // Init gesture detector
+        gestureDetector = new GestureDetector(this);
     }
 
     @Override
@@ -47,8 +71,14 @@ public class MainView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent e){
+
+        // Check if touch is enabled
         if (canTouch){
+
+            // Take a look at the action (and masked action if multiple touches)
             switch(e.getAction() & e.getActionMasked()){
+
+                // For conductor purposes (when the user first taps on the screen)
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_POINTER_DOWN:
                     for (int i = 0; i < e.getPointerCount(); i++){
@@ -56,10 +86,15 @@ public class MainView extends View {
                         //gradient.touch(e, i);
                     }
                     break;
+
+                // For renderer purposes (when the user lets go of the screen), usually for buttons
                 case MotionEvent.ACTION_UP:
                     Renderer.touch(e);
                     break;
             }
+
+            // Pass off the motion event to detect for gestures (swipes, flings, etc.)
+            gestureDetector.onTouchEvent(e);
         }
         return true;
     }
@@ -101,4 +136,36 @@ public class MainView extends View {
         return x1 >= ax1 && x1 <= ax2 && y1 >= ay1 && y1 <= ay2 && x2 > ax1 && x2 < ax2 && y2 >= ay1 && y2 <= ay2;
     }
 
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        // Pass off info to spinners
+        SpinnerManager.swipe(motionEvent, motionEvent1, v, v1);
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+        return false;
+    }
 }
