@@ -19,7 +19,7 @@ public class Gradient {
     public boolean fading;
 
     public int fadeTick = 0;
-    public int maxFadeTick = 25;
+    public int maxFadeTick = 30;
 
     public Gradient(Bitmap bitmap, int x, int y, int speed, int alpha, boolean fading) {
         this.bitmap = bitmap;
@@ -69,13 +69,9 @@ public class Gradient {
         fading = false;
     }
 
-    public boolean isTouched() {
-        return isTouched;
-    }
-
     public void tick() {
         if (isTouched) {
-            fadeTick++;
+            fadeTick+=2;
             if(fadeTick < maxFadeTick) {
                 if (!fading) {
                     alpha += speed;
@@ -89,7 +85,7 @@ public class Gradient {
             else {
                 alpha = 0;
                 fadeTick = 0;
-                maxFadeTick = 25;
+                maxFadeTick = 30;
                 isTouched = false;
             }
 
