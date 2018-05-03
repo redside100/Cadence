@@ -210,11 +210,6 @@ public class Conductor {
     }
 
     public boolean scoreArea(Note note, int pad) {
-        if(MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad);
     }
 }

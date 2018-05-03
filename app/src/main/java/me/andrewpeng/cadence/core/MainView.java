@@ -27,7 +27,7 @@ public class MainView extends View {
         loop = new Loop(this);
         conductor = new Conductor(width, height);
         renderer = new Renderer(getContext(), width, height, ScreenState.HOME, conductor);
-        renderer.next(ScreenState.HOME);
+        Renderer.next(ScreenState.HOME);
         new Reader(getContext());
         new AssetLoader(getContext(), width, height);
         font = Typeface.createFromAsset(context.getAssets(), "fonts/Asgalt-Regular.ttf");

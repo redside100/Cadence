@@ -79,10 +79,7 @@ public class Animator {
     }
 
     public boolean isFinished() {
-        if(frames.size() == currentframe)
-            return true;
-        else
-            return false;
+        return frames.size() == currentframe;
     }
 }
 

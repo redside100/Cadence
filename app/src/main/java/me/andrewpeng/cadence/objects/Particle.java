@@ -105,11 +105,7 @@ public class Particle extends Entity{
     }
 
     public boolean isDead() {
-        if(alive) {
-            return false;
-        }
-        else
-            return true;
+        return !alive;
     }
 
     public void destroy() {
