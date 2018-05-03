@@ -16,7 +16,7 @@ public class AssetLoader {
     private double originalWidth = 1080;
     private double originalHeight = 1920;
     public AssetLoader(Context context, int width, int height){
-        this.assets = context.getAssets();
+        assets = context.getAssets();
         this.height = height;
         this.width = width;
         load();

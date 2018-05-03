@@ -8,31 +8,21 @@
     <list default="true" id="11c81614-46b8-4b94-9253-22c40a28edb1" name="Default" comment="" />
 =======
     <list default="true" id="a68c826d-c6ba-46c0-a466-35058ee6bc8d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/fonts/Aaargh.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/fonts/Asgalt-Regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/particles/star_pink.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/fonts/TallFilmsExpanded.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-26-11-13-53-930.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-26-11-13-53-930.rawproto" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-26-11-14-01-899.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/build/android-profile/profile-2018-04-26-11-14-01-899.rawproto" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/GradientManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/fileHashes.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/fileHashes/resourceHashesCache.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/fileHashes/resourceHashesCache.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/fileSnapshots.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" afterPath="$PROJECT_DIR$/.gradle/4.1/taskHistory/taskHistory.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/particles/Gradient.png" afterPath="$PROJECT_DIR$/app/src/main/assets/particles/Gradient.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ParticleManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ParticleManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/Animator.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/Animator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/AssetLoader.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/AssetLoader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/ImageAsset.java" afterPath="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/ImageAsset.java" />
     </list>
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -58,6 +48,14 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
 <<<<<<< HEAD
+      <file leaf-file-name="Conductor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="69" column="36" lean-forward="false" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
+              <folding />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="StateChangeButton.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/StateChangeButton.java">
@@ -82,10 +80,18 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               </folding>
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="Gradient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="545">
+              <caret line="82" column="38" lean-forward="false" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="Animator.java" pinned="false" current-in-tab="false">
@@ -105,8 +111,11 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
             <state relative-caret-position="735">
               <caret line="61" column="23" lean-forward="false" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1444#1445#0" expanded="true" />
+                <element signature="e#1476#1477#0" expanded="true" />
               </folding>
 <<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
@@ -128,6 +137,10 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="popcornfunk.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/assets/beatmaps/popcornfunk/popcornfunk.png">
+=======
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -138,25 +151,41 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
       <file leaf-file-name="musicNote.png" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/assets/icons/musicNote.png">
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
           <provider selected="true" editor-type-id="images">
             <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java">
+      <file leaf-file-name="Note.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Note.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="509">
+              <caret line="34" column="9" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+=======
             <state relative-caret-position="210">
               <caret line="32" column="86" lean-forward="false" selection-start-line="32" selection-start-column="86" selection-end-line="32" selection-end-column="86" />
 <<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="Particle.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="61" column="23" lean-forward="false" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="MainView.java" pinned="false" current-in-tab="true">
@@ -177,10 +206,19 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="FloatingText.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/FloatingText.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="2" lean-forward="false" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+              <folding />
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="Button.java" pinned="false" current-in-tab="false">
@@ -206,10 +244,21 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               </folding>
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="Button.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Button.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="Note.java" pinned="false" current-in-tab="false">
@@ -230,10 +279,21 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="GradientManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/GradientManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="32" column="180" lean-forward="false" selection-start-line="32" selection-start-column="180" selection-end-line="32" selection-end-column="180" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="AnimatedTextManager.java" pinned="false" current-in-tab="false">
@@ -254,10 +314,18 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="Renderer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2408">
+              <caret line="301" column="0" lean-forward="false" selection-start-line="301" selection-start-column="0" selection-end-line="301" selection-end-column="0" />
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="GameValues.java" pinned="false" current-in-tab="false">
@@ -277,11 +345,22 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="ButtonManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ButtonManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="Loop.java" pinned="false" current-in-tab="false">
@@ -302,6 +381,7 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
               <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
             </state>
           </provider>
         </entry>
@@ -323,6 +403,9 @@
       <find>fadeout</find>
       <find>isplaying</find>
       <find>touch</find>
+      <find>button</find>
+      <find>ImageAsset.GRADIENT</find>
+      <find>tick</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -2050,10 +2133,11 @@
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/ImageAsset.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/AssetLoader.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/GradientManager.java" />
       </list>
     </option>
   </component>
@@ -2080,6 +2164,10 @@
     </navigator>
     <panes>
 <<<<<<< HEAD
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
       <pane id="PackagesPane" />
 =======
@@ -2088,6 +2176,7 @@
 =======
       <pane id="ProjectPane" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2120,38 +2209,6 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Cadence" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fonts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Cadence" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -2172,10 +2229,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="cadence" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2246,7 +2299,10 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -2257,13 +2313,15 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
       <pane id="Scratches" />
       <pane id="ProjectPane" />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="device.picker.selection" value="Nexus_5X_API_P" />
-    <property name="SearchEverywhereHistoryKey" value="tick&#9;PSI&#9;JAVA://me.andrewpeng.cadence.core.Renderer#tick&#10;update&#9;PSI&#9;JAVA://me.andrewpeng.cadence.music.Metronome#update&#10;render&#9;PSI&#9;JAVA://me.andrewpeng.cadence.core.Renderer#render" />
+    <property name="device.picker.selection" value="127.0.0.1:62001" />
+    <property name="SearchEverywhereHistoryKey" value="trigger&#9;PSI&#9;JAVA://me.andrewpeng.cadence.objects.Button#trigger&#10;tick&#9;PSI&#9;JAVA://me.andrewpeng.cadence.core.Renderer#tick&#10;update&#9;PSI&#9;JAVA://me.andrewpeng.cadence.music.Metronome#update&#10;render&#9;PSI&#9;JAVA://me.andrewpeng.cadence.core.Renderer#render" />
     <property name="android.profiler.active" value="true" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -2355,6 +2413,9 @@
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
 <<<<<<< HEAD
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525355314638" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271969278" />
 =======
@@ -2363,6 +2424,7 @@
 =======
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271908592" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2411,6 +2473,9 @@
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
 <<<<<<< HEAD
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525355314638" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271969278" />
 =======
@@ -2419,6 +2484,7 @@
 =======
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271908592" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2581,6 +2647,9 @@
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
 <<<<<<< HEAD
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525355314638" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271969281" />
 =======
@@ -2589,6 +2658,7 @@
 =======
         <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1525271908593" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       </method>
     </configuration>
     <list size="1">
@@ -2653,6 +2723,10 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
 <<<<<<< HEAD
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5176731" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991204" sideWeight="0.48232695" order="2" side_tool="false" content_ui="tabs" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5042644" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.4936034" order="2" side_tool="false" content_ui="tabs" />
@@ -2681,16 +2755,16 @@
 =======
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5088365" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.49116346" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.49116346" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.4970545" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5029455" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2496318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2714,20 +2788,28 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
 =======
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32991204" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java">
@@ -2839,6 +2921,7 @@
         </state>
       </provider>
     </entry>
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
@@ -2873,7 +2956,7 @@
         <state relative-caret-position="195">
           <caret line="16" column="45" lean-forward="false" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2883,10 +2966,16 @@
         <state relative-caret-position="405">
           <caret line="33" column="33" lean-forward="false" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
 <<<<<<< HEAD
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+=======
+<<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
           <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
         </state>
       </provider>
     </entry>
@@ -2993,6 +3082,9 @@
       </provider>
     </entry>
 <<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/fonts/TallFilmsExpanded.ttf" />
+=======
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/FloatingText.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -3012,6 +3104,7 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
       </provider>
     </entry>
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
@@ -3132,7 +3225,7 @@
         <state relative-caret-position="195">
           <caret line="16" column="45" lean-forward="true" selection-start-line="16" selection-start-column="45" selection-end-line="16" selection-end-column="45" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3142,10 +3235,16 @@
         <state relative-caret-position="405">
           <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
 <<<<<<< HEAD
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+=======
+<<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
           <folding />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
         </state>
       </provider>
     </entry>
@@ -3328,13 +3427,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ParticleSystem.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/GameValues.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -3349,48 +3441,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/FloatingText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="2" lean-forward="false" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/fonts/TallFilmsExpanded.ttf">
-      <provider selected="true" editor-type-id="fontseditor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Button.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="45" column="23" lean-forward="false" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ButtonManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="18" column="9" lean-forward="false" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/fonts/TallFilmsExpanded.ttf" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Metronome.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Note.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="64" column="35" lean-forward="false" selection-start-line="64" selection-start-column="35" selection-end-line="64" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -3416,34 +3472,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/beatmaps/popcornfunk/popcornfunk.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/icons/musicNote.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="61" column="23" lean-forward="false" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ParticleManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="29" column="9" lean-forward="false" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/util/AssetLoader.java">
@@ -3458,14 +3489,75 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
-<<<<<<< HEAD
->>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
-=======
->>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/particles/Gradient.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="32" column="86" lean-forward="false" selection-start-line="32" selection-start-column="86" selection-end-line="32" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ParticleManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="29" column="9" lean-forward="false" selection-start-line="29" selection-start-column="9" selection-end-line="29" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/StateChangeButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="13" column="5" lean-forward="false" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-26/android.jar!/android/os/Binder.class">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="261">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+=======
+        <state relative-caret-position="210">
+          <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+<<<<<<< HEAD
+>>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+=======
+>>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/ButtonManager.java">
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java">
@@ -3476,29 +3568,64 @@
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java">
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        <state relative-caret-position="270">
+          <caret line="24" column="9" lean-forward="false" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Particle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="61" column="23" lean-forward="false" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Button.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/beatmaps/popcornfunk/popcornfunk.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/FloatingText.java">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="285">
+          <caret line="19" column="2" lean-forward="false" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="2" />
+=======
         <state relative-caret-position="2520">
           <caret line="204" column="27" lean-forward="false" selection-start-line="204" selection-start-column="27" selection-end-line="204" selection-end-column="27" />
 <<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Note.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="509">
+          <caret line="34" column="9" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
         <state relative-caret-position="543">
@@ -3511,12 +3638,17 @@
         <state relative-caret-position="60">
           <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/MainView.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/music/Conductor.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="194">
+          <caret line="69" column="36" lean-forward="false" selection-start-line="69" selection-start-column="36" selection-end-line="69" selection-end-column="36" />
+=======
 <<<<<<< HEAD
 <<<<<<< HEAD
         <state relative-caret-position="356">
@@ -3526,19 +3658,47 @@
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
         <state relative-caret-position="210">
           <caret line="32" column="86" lean-forward="false" selection-start-line="32" selection-start-column="86" selection-end-line="32" selection-end-column="86" />
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/core/Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="2408">
+          <caret line="301" column="0" lean-forward="false" selection-start-line="301" selection-start-column="0" selection-end-line="301" selection-end-column="0" />
+=======
         <state relative-caret-position="303">
           <caret line="115" column="0" lean-forward="true" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
 <<<<<<< HEAD
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
 =======
 >>>>>>> d7dcf106ec2dadd873b23d8e32caed7f9b9d4dd6
+>>>>>>> c417512ff4f573f67cec1918877d8f8811c0252a
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/Gradient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="545">
+          <caret line="82" column="38" lean-forward="false" selection-start-line="82" selection-start-column="38" selection-end-line="82" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1444#1445#0" expanded="true" />
+            <element signature="e#1476#1477#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/me/andrewpeng/cadence/objects/GradientManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="32" column="180" lean-forward="false" selection-start-line="32" selection-start-column="180" selection-end-line="32" selection-end-column="180" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

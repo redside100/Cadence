@@ -14,6 +14,7 @@ import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
+import me.andrewpeng.cadence.objects.GradientManager;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
@@ -35,17 +36,16 @@ public class Renderer {
     public static int transitionAlpha = 0;
     public static ScreenState nextState;
     public static Conductor conductor;
-    public static Gradient gradient;
 
     public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
-        this.width = width;
-        this.height = height;
+        Renderer.width = width;
+        Renderer.height = height;
         scoreX1 = (int) (width * 0.005);
         scoreX2 = (int) (width * 0.995);
         scoreY1 = (int) (height * 0.69);
         scoreY2 = (int) (height * 0.81);
-        this.state = state;
-        this.conductor = conductor;
+        Renderer.state = state;
+        Renderer.conductor = conductor;
     }
 
     public void render(Canvas graphics, Paint paint){
@@ -135,7 +135,7 @@ public class Renderer {
                 if (conductor.playing){
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(Color.WHITE);
-                    for (Note note : conductor.activeNotes){
+                    for (Note note : Conductor.activeNotes){
                         paint.setAlpha(note.getAlpha());
                         graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
                         paint.setAlpha(255);
@@ -148,6 +148,7 @@ public class Renderer {
         // Render animated text objects and buttons
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
+        GradientManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -215,11 +216,13 @@ public class Renderer {
         // Don't forget to tick managers
         AnimatedTextManager.tick();
         ButtonManager.tick();
+        GradientManager.tick();
     }
 
     // This touch event is for action down
     public static void touch(MotionEvent e){
         ButtonManager.touch(e);
+        GradientManager.touch(e);
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);
@@ -241,6 +244,7 @@ public class Renderer {
     public static void next(ScreenState newState){
         AnimatedTextManager.texts.clear();
         ButtonManager.buttons.clear();
+        GradientManager.gradients.clear();
         if (conductor.playing){
             conductor.stop();
         }
@@ -294,6 +298,10 @@ public class Renderer {
                 Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
                 conductor.loadMap(beatmap);
 
+                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width*0,(int)(height * 0.497),9,0, false);
+                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
+                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
+                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
         }

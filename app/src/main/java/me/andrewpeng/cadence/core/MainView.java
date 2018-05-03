@@ -38,6 +38,7 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         loop = new Loop(this);
         conductor = new Conductor(width, height);
         renderer = new Renderer(getContext(), width, height, ScreenState.HOME, conductor);
+        Renderer.next(ScreenState.HOME);
 
         // Set first state to HOME without triggering screen transition animation
         renderer.next(ScreenState.HOME);
