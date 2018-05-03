@@ -81,8 +81,6 @@ public class Particle extends Entity{
 
     }
 
-    public void trigger() {}
-
     public void setDirection(int choice) {
         switch (choice) {
             case 1:
