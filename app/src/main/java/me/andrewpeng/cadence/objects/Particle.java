@@ -13,7 +13,7 @@ public class Particle extends Entity{
     public Bitmap bitmap;
     public int x, y;
     public int ax1, ax2, ay1, ay2;
-    public int speed = 1;
+    public int speed;
     public int UP = 1;
     public int DOWN = 2;
     public int RIGHT = 3;
@@ -25,6 +25,8 @@ public class Particle extends Entity{
 
     public boolean alive = true;
 
+    public boolean isAnimating = false;
+
     public Particle(Bitmap bitmap, int x, int y, int alpha, int choice){
         super(x, y, alpha);
         this.bitmap = bitmap;
@@ -34,6 +36,7 @@ public class Particle extends Entity{
         ay1 = this.y;
         ax2 = ax1 + bitmap.getWidth();
         ay2 = ay1 + bitmap.getHeight();
+        this.speed = (int)(Math.random()*4+1);
         setDirection(choice);
         ParticleManager.particles.add(this);
     }
@@ -57,26 +60,28 @@ public class Particle extends Entity{
 
     @Override
     public void tick() {
-        if(fadeTick < maxFadeTick) {
-            alpha -= (255/maxFadeTick);
-            fadeTick++;
-        }
-        else {
-            destroy();
-        }
-        switch (getDirection()) {
-            case 1:
-               y += speed;
-               break;
-            case 2:
-                y-=speed;
-                break;
-            case 3:
-                x += speed;
-                break;
-            case 4:
-                x -= speed;
-                break;
+        if(isAnimating) {
+            if (fadeTick < maxFadeTick) {
+                alpha -= (255 / maxFadeTick);
+                fadeTick++;
+            } else {
+                destroy();
+                isAnimating = false;
+            }
+            switch (getDirection()) {
+                case 1:
+                    y += speed;
+                    break;
+                case 2:
+                    y -= speed;
+                    break;
+                case 3:
+                    x += speed;
+                    break;
+                case 4:
+                    x -= speed;
+                    break;
+            }
         }
 
     }
@@ -98,6 +103,11 @@ public class Particle extends Entity{
         }
     }
 
+    public void animate() {
+        isAnimating = true;
+        alpha = 255;
+    }
+
     public int getDirection() {
         return direction;
     }
@@ -113,7 +123,7 @@ public class Particle extends Entity{
     public void draw(Canvas canvas, Paint paint) {
         if (bitmap != null){
             int oldAlpha = paint.getAlpha();
-            paint.setAlpha(super.alpha);
+            paint.setAlpha(alpha);
             canvas.drawBitmap(bitmap, x, y, paint);
             paint.setAlpha(oldAlpha);
         }

@@ -18,6 +18,7 @@ import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.objects.ParticleManager;
+import me.andrewpeng.cadence.objects.Score;
 
 public class Conductor {
     int width, height;
@@ -32,8 +33,6 @@ public class Conductor {
 
     public static int volume = 100;
     public static int fxVolume = 100;
-
-    public ParticleManager particleManager;
 
     private Metronome metronome;
 
@@ -200,9 +199,10 @@ public class Conductor {
                     // Note within score area (0.3 padding timing window)
                     if (scoreArea(note,pad)){
                         note.fadeOut(15);
-                        /*for(Particle particle: temp1) {
-                            particle.tick();
-                        }*/
+                        Score.setScore(Score.addScore(1));
+                        for(Particle particle: temp1) {
+                            particle.animate();
+                        }
                     }
                 }
             }

@@ -18,7 +18,9 @@ import me.andrewpeng.cadence.objects.GradientManager;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
+import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.objects.ParticleManager;
+import me.andrewpeng.cadence.objects.Score;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -139,6 +141,9 @@ public class Renderer {
                     }
                     paint.setStyle(Paint.Style.STROKE);
                 }
+
+                //Score Value
+                centerText(Score.getScore() + "",graphics,width/2,height/16,paint,15,Color.WHITE);
                 break;
         }
 
@@ -215,12 +220,14 @@ public class Renderer {
         AnimatedTextManager.tick();
         ButtonManager.tick();
         GradientManager.tick();
+        ParticleManager.tick();
     }
 
     // This touch event is for action down
     public static void touch(MotionEvent e){
         ButtonManager.touch(e);
         GradientManager.touch(e);
+        ParticleManager.touch(e);
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);
@@ -243,6 +250,8 @@ public class Renderer {
         AnimatedTextManager.texts.clear();
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
+        ParticleManager.particles.clear();
+
         if (conductor.playing){
             conductor.stop();
         }
@@ -295,6 +304,11 @@ public class Renderer {
                 String name = "popcornfunk";
                 Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
                 conductor.loadMap(beatmap);
+
+                //Creates a set of 16 particles to be used for animation
+                for(int i = 0; i <= 16; i++) {
+                    ParticleManager.particles.add(new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0,1));
+                }
 
                 //Creates the gradients that will appear if a finger has touched the score area
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width*0,(int)(height * 0.497),9,0, false);
