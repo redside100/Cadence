@@ -18,8 +18,12 @@ import me.andrewpeng.cadence.objects.GradientManager;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
+<<<<<<< HEAD
 import me.andrewpeng.cadence.objects.Spinner;
 import me.andrewpeng.cadence.objects.SpinnerManager;
+=======
+import me.andrewpeng.cadence.objects.ParticleManager;
+>>>>>>> 4b386b54d0c6fe226ad51ba5469a5bd54b2bf24d
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -130,10 +134,6 @@ public class Renderer {
                 paint.setStyle(Paint.Style.STROKE);
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
 
-                /*if(gradient.isTouched) {
-                    graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT),0,0,paint);
-                }*/
-
                 if (conductor.playing){
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(Color.WHITE);
@@ -151,7 +151,11 @@ public class Renderer {
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
+<<<<<<< HEAD
         SpinnerManager.render(graphics, paint);
+=======
+        ParticleManager.render(graphics, paint);
+>>>>>>> 4b386b54d0c6fe226ad51ba5469a5bd54b2bf24d
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -317,6 +321,7 @@ public class Renderer {
                 Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
                 conductor.loadMap(beatmap);
 
+                //Creates the gradients that will appear if a finger has touched the score area
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width*0,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
