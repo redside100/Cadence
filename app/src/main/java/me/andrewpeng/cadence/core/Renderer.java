@@ -18,6 +18,8 @@ import me.andrewpeng.cadence.objects.GradientManager;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
+import me.andrewpeng.cadence.objects.Spinner;
+import me.andrewpeng.cadence.objects.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -149,6 +151,7 @@ public class Renderer {
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
+        SpinnerManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -217,6 +220,7 @@ public class Renderer {
         AnimatedTextManager.tick();
         ButtonManager.tick();
         GradientManager.tick();
+        SpinnerManager.tick();
     }
 
     // This touch event is for action down
@@ -288,7 +292,22 @@ public class Renderer {
             case SONG_SELECTION:
 
                 // For now, just have a button that plays the only beatmap available (popcorn funk)
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
+//                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
+
+                // Test out the new spinners
+                String[] list = {
+                        "Element 1",
+                        "Element 2",
+                        "Element 3",
+                        "Element 4",
+                        "Element 5",
+                        "Element 6",
+                        "Element 7",
+                        "Element 8",
+                        "Element 9",
+                        "Element 10",
+                };
+                new Spinner(0, height / 2, width, height, list);
                 break;
 
             case PLAY:
