@@ -263,11 +263,9 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
-<<<<<<< HEAD
         //ScoreMessageManager.scoreMessages.clear();
-=======
         SpinnerManager.spinners.clear();
->>>>>>> b6ab339e188683e6fe58c58f2f5de670e29bdeb3
+
 
         if (conductor.playing || conductor.preview){
             conductor.stop();
@@ -352,15 +350,13 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
 
-<<<<<<< HEAD
+
                 //Creates the score message on the side
                 new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.7),0);
                 new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.7),0);
                 new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.7),0);
                 new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.7),0);
 
-=======
->>>>>>> b6ab339e188683e6fe58c58f2f5de670e29bdeb3
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
         }
