@@ -23,8 +23,8 @@ public class Beatmap {
     // URL of the wav/mp3 file
     public String songLocation;
     // AFD of wav/mp3 file
-    public AssetFileDescriptor afd;
-    public Beatmap(String beatLocation, String infoLocation, String songLocation){
+    public AssetFileDescriptor afd, afdPreview;
+    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation){
 
         ArrayList<String> info = Reader.getTextContents(infoLocation);
         for (String line : info){
@@ -59,11 +59,13 @@ public class Beatmap {
         this.beats = Reader.getBeatConfiguration(beatLocation);
         this.songLocation = songLocation;
         this.afd = Reader.getSoundFile(songLocation);
+        this.afdPreview = Reader.getSoundFile(previewLocation);
 
     }
     public AssetFileDescriptor getSongAFD(){
         return afd;
     }
+    public AssetFileDescriptor getPreviewAFD() {return afdPreview; }
     public String getSongLocation(){
         return songLocation;
     }

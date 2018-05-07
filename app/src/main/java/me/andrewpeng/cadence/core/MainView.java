@@ -52,6 +52,9 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
 
         // Init gesture detector
         gestureDetector = new GestureDetector(this);
+
+        // Load beatmaps
+        conductor.initBeatmaps();
     }
 
     @Override

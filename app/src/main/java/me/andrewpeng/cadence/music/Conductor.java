@@ -25,20 +25,36 @@ public class Conductor {
     public static ArrayList<Note> activeNotes = new ArrayList<>();
     public MediaPlayer mp = new MediaPlayer();
     public int currentGeneralBeat = 0;
-    public Beatmap beatmap;
+    public Beatmap currentBeatmap;
     public double songLength;
     public double beatLength;
     public int noteTravelTicks;
     public boolean playing = false;
+    public boolean preview = false;
 
     public static int volume = 100;
     public static int fxVolume = 100;
 
     private Metronome metronome;
 
+    public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
+
     public Conductor(int width, int height){
         this.width = width;
         this.height = height;
+    }
+
+    // MUST INITIALIZE AFTER READER IS INITIALIZED
+    public void initBeatmaps(){
+        String[] names = {"popcornfunk", "shelter", "test"};
+        for (String name : names){
+            beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
+                    "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav"));
+        }
+    }
+
+    public static ArrayList<Beatmap> getBeatmapList(){
+        return beatmapList;
     }
 
     public double getSongLength(){
@@ -51,7 +67,7 @@ public class Conductor {
         return currentGeneralBeat;
     }
     public Beatmap getBeatmap(){
-        return beatmap;
+        return currentBeatmap;
     }
     public MediaPlayer getMediaPlayer(){
         return mp;
@@ -78,7 +94,7 @@ public class Conductor {
     public void nextNote(){
         // When called by the metronome, spawn the notes of the corresponding row of the beatmap,
         // increment the main beat count
-        int beats[][] = beatmap.getBeats();
+        int beats[][] = currentBeatmap.getBeats();
         if (currentGeneralBeat < beats.length){
             for (int i = 0; i < beats[currentGeneralBeat].length; i++){
                 if (beats[currentGeneralBeat][i] == 1){
@@ -121,13 +137,32 @@ public class Conductor {
         mp.reset();
         metronome = null;
         playing = false;
+        preview = false;
         activeNotes.clear();
         currentGeneralBeat = 0;
     }
 
+    public void playPreview(Beatmap beatmap){
+        this.currentBeatmap = beatmap;
+        // Load beatmap preview into media player
+        AssetFileDescriptor afd = beatmap.getPreviewAFD();
+        try{
+            if (mp.isPlaying()){
+                mp.stop();
+                mp.reset();
+            }
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mp.prepare();
+        }catch(IOException e){}
+
+        mp.setLooping(true);
+        mp.start();
+        preview = true;
+    }
+
     public void loadMap(Beatmap beatmap){
 
-        this.beatmap = beatmap;
+        this.currentBeatmap = beatmap;
         // Load beatmap song into media player
         AssetFileDescriptor afd = beatmap.getSongAFD();
         try{
@@ -143,6 +178,7 @@ public class Conductor {
 
         // Set up metronome to know when to spawn the next note
         metronome = new Metronome(this);
+        mp.setLooping(false);
         mp.start();
         playing = true;
 

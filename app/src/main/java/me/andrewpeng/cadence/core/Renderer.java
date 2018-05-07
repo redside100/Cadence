@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
@@ -41,6 +43,7 @@ public class Renderer {
     public static int transitionAlpha = 0;
     public static ScreenState nextState;
     public static Conductor conductor;
+    public static Spinner songSelectionSpinner = null;
 
     public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
         Renderer.width = width;
@@ -112,7 +115,6 @@ public class Renderer {
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
                 writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 20, Color.WHITE);
-//                writeText(GameValues.getMusicNotes() + "", graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 12, Color.WHITE);
 
                 break;
             case PLAY:
@@ -255,8 +257,9 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
+        SpinnerManager.spinners.clear();
 
-        if (conductor.playing){
+        if (conductor.playing || conductor.preview){
             conductor.stop();
         }
         state = newState;
@@ -301,32 +304,35 @@ public class Renderer {
                 // For now, just have a button that plays the only beatmap available (popcorn funk)
 //                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
 
-                // Test out the new spinners
-                String[] list = {
-                        "Element 1",
-                        "Element 2",
-                        "Element 3",
-                        "Element 4",
-                        "Element 5",
-                        "Element 6",
-                        "Element 7",
-                        "Element 8",
-                        "Element 9",
-                        "Element 10",
-                };
-                new Spinner(0, height / 2, width, height, list);
+                // Get all the available beatmaps, and compile their names into a list
+                ArrayList<Beatmap> maps = Conductor.getBeatmapList();
+                String[] list = new String[maps.size()];
+
+                for (int i = 0; i < Conductor.getBeatmapList().size(); i++){
+                    list[i] = maps.get(i).getName();
+                }
+
+                // Create a new spinner with the names
+                songSelectionSpinner = new Spinner(0, height / 2, width, height, list);
+
+                // Be sure the update the spinner to make the conductor play the preview
+                updateSpinner();
+
+                // Back button
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.HOME);
+
                 break;
 
             case PLAY:
 
                 // TODO fix everything ;-;
-                String name = "popcornfunk";
-                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
-                conductor.loadMap(beatmap);
+//                String name = "popcornfunk";
+//                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
+//                conductor.loadMap(beatmap);
 
                 //Creates a set of 16 particles to be used for animation
                 for(int i = 0; i <= 16; i++) {
-                    ParticleManager.particles.add(new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0,1));
+                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0,1);
                 }
 
                 //Creates the gradients that will appear if a finger has touched the score area
@@ -334,8 +340,16 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
+
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
+        }
+    }
+
+    public static void updateSpinner(){
+        if (songSelectionSpinner != null){
+            int position = songSelectionSpinner.getPosition();
+            conductor.playPreview(Conductor.getBeatmapList().get(position));
         }
     }
 
