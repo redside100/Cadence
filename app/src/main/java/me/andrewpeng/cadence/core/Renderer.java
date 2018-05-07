@@ -21,6 +21,8 @@ import me.andrewpeng.cadence.buttons.VolumeControlButton;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.objects.ParticleManager;
 import me.andrewpeng.cadence.objects.Score;
+import me.andrewpeng.cadence.objects.ScoreMessage;
+import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.objects.Spinner;
 import me.andrewpeng.cadence.objects.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
@@ -155,6 +157,7 @@ public class Renderer {
         GradientManager.render(graphics, paint);
         SpinnerManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
+        ScoreMessageManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -225,6 +228,8 @@ public class Renderer {
         GradientManager.tick();
         ParticleManager.tick();
         SpinnerManager.tick();
+        ScoreMessageManager.tick();
+
     }
 
     // This touch event is for action down
@@ -232,6 +237,7 @@ public class Renderer {
         ButtonManager.touch(e);
         GradientManager.touch(e);
         ParticleManager.touch(e);
+        ScoreMessageManager.touch(e);
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);
@@ -255,6 +261,7 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
+        //ScoreMessageManager.scoreMessages.clear();
 
         if (conductor.playing){
             conductor.stop();
@@ -266,6 +273,7 @@ public class Renderer {
 
                 // Floating text
                 new FloatingText("< Tap To Start >", width / 2, (int) (height * 0.8), 20, Color.WHITE, 240, (int) (height * 0.01), 255);
+
                 break;
 
             case MENU:
@@ -334,6 +342,13 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
+
+                //Creates the score message on the side
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.7),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.7),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.7),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.7),0);
+
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
         }

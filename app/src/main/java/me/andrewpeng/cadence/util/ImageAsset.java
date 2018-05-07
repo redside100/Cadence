@@ -12,5 +12,9 @@ public enum ImageAsset {
     RIGHT_ARROW_BUTTON,
     MUSIC_NOTE_ICON,
     PARTICLE,
-    GRADIENT
+    GRADIENT,
+    SCORE0,
+    SCORE100,
+    SCORE200,
+    SCORE300
 }
