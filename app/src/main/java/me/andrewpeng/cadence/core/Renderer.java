@@ -263,7 +263,7 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
-        //ScoreMessageManager.scoreMessages.clear();
+        ScoreMessageManager.scoreMessages.clear();
         SpinnerManager.spinners.clear();
 
 
@@ -311,10 +311,10 @@ public class Renderer {
             case SONG_SELECTION:
 
                 // For now, just have a button that plays the only beatmap available (popcorn funk)
-//                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
 
                 // Get all the available beatmaps, and compile their names into a list
-                ArrayList<Beatmap> maps = Conductor.getBeatmapList();
+               /* ArrayList<Beatmap> maps = Conductor.getBeatmapList();
                 String[] list = new String[maps.size()];
 
                 for (int i = 0; i < Conductor.getBeatmapList().size(); i++){
@@ -328,7 +328,7 @@ public class Renderer {
                 updateSpinner();
 
                 // Back button
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.HOME); */
 
                 break;
 
@@ -352,10 +352,10 @@ public class Renderer {
 
 
                 //Creates the score message on the side
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.7),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.7),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.7),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.7),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.9),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.9),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.9),0);
+                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.9),0);
 
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;

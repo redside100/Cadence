@@ -236,9 +236,6 @@ public class Conductor {
                     if (scoreArea(note,pad)){
                         note.fadeOut(15);
                         Score.setScore(Score.addScore(1));
-                        for(Particle particle: temp1) {
-                            particle.animate();
-                        }
                     }
                 }
             }

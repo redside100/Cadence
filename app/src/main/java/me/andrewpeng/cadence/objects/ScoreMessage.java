@@ -3,6 +3,7 @@ package me.andrewpeng.cadence.objects;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * Created by isaacleung on 2018-05-07.
@@ -23,9 +24,12 @@ public class ScoreMessage extends Entity{
 
     public void tick() {
         if(isTouched) {
-            fadeIn(9);
-            fadeOut(9);
-            isTouched = false;
+            if(alpha == 255) {
+                alpha -= 10;
+            }
+            else {
+                alpha += 10;
+            }
         }
     }
 
