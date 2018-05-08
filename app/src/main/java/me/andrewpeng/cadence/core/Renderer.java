@@ -159,7 +159,7 @@ public class Renderer {
         GradientManager.render(graphics, paint);
         SpinnerManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
-        ScoreMessageManager.render(graphics, paint);
+//        ScoreMessageManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -239,7 +239,7 @@ public class Renderer {
         ButtonManager.touch(e);
         GradientManager.touch(e);
         ParticleManager.touch(e);
-        ScoreMessageManager.touch(e);
+
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);

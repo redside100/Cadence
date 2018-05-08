@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.music.Conductor;
 
 /**
  * Created by isaacleung on 2018-05-02.
