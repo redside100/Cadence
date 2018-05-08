@@ -3,6 +3,8 @@ package me.andrewpeng.cadence.util;
 public enum ImageAsset {
     HOME_BACKGROUND,
     HOME_TITLE,
+    SPINNER_BORDER,
+    BLACK_BACKDROP,
     TEST_BUTTON,
     SONG_SELECTION_BUTTON,
     CREDITS_BUTTON,
@@ -12,5 +14,5 @@ public enum ImageAsset {
     RIGHT_ARROW_BUTTON,
     MUSIC_NOTE_ICON,
     PARTICLE,
-    GRADIENT
+    GRADIENT,
 }

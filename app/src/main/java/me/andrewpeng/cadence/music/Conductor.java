@@ -3,9 +3,7 @@ package me.andrewpeng.cadence.music;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 
@@ -17,7 +15,7 @@ import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
-import me.andrewpeng.cadence.objects.ParticleManager;
+import me.andrewpeng.cadence.managers.ParticleManager;
 import me.andrewpeng.cadence.objects.Score;
 
 public class Conductor {

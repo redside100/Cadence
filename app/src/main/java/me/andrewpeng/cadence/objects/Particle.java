@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import me.andrewpeng.cadence.managers.ParticleManager;
+
 /**
  * Created by isaacleung on 2018-04-26.
  */

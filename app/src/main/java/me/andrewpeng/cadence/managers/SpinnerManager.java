@@ -1,4 +1,4 @@
-package me.andrewpeng.cadence.objects;
+package me.andrewpeng.cadence.managers;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
+import me.andrewpeng.cadence.objects.Spinner;
 
 public class SpinnerManager {
     public static ArrayList<Spinner> spinners = new ArrayList<>();

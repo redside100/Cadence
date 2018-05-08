@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import me.andrewpeng.cadence.managers.GradientManager;
+
 /**
  * A Gradient that appears only if your finger has touched the score area
  * Created by isaacleung on 2018-05-01.

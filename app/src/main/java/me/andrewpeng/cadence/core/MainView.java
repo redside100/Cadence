@@ -4,15 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.Gradient;
-import me.andrewpeng.cadence.objects.Spinner;
-import me.andrewpeng.cadence.objects.SpinnerManager;
+import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
 
@@ -53,7 +51,8 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         // Init gesture detector
         gestureDetector = new GestureDetector(this);
 
-        // Load beatmaps
+        // Load beatmaps (add twice for now, to get a full list)
+        conductor.initBeatmaps();
         conductor.initBeatmaps();
     }
 
