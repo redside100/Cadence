@@ -17,6 +17,8 @@ import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
 import me.andrewpeng.cadence.objects.Score;
+import me.andrewpeng.cadence.objects.ScoreMessage;
+import me.andrewpeng.cadence.objects.ScoreMessageManager;
 
 public class Conductor {
     int width, height;
@@ -229,21 +231,19 @@ public class Conductor {
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
                         note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
 
-                    int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
+                    int pad0 = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
                     // Note within score area (0.3 padding timing window)
-                    if (scoreArea(note,pad)){
+                    if (scoreArea(note,pad0)) {
                         note.fadeOut(15);
                         Score.setScore(Score.addScore(1));
-                        for(Particle particle: temp1) {
-                            particle.animate();
-                        }
                     }
                 }
             }
         }
     }
 
-    public boolean scoreArea(Note note, int pad) {
+
+    public static boolean scoreArea(Note note, int pad) {
         return MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad);
     }
 }

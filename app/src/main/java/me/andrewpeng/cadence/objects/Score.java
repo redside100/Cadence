@@ -1,7 +1,6 @@
 package me.andrewpeng.cadence.objects;
 
 import me.andrewpeng.cadence.core.GameValues;
-import me.andrewpeng.cadence.music.Conductor;
 
 /**
  * Created by isaacleung on 2018-05-04.
@@ -18,7 +17,7 @@ public class Score {
 
     public static void setScore(int newScore) {
         //TODO This is only default, implement more than one score finish pls
-        
+
         int delay = 30;
         int currentdelay = 0;
         for(int i = 0;i < getAddedScore();i++) {

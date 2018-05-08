@@ -1,5 +1,7 @@
 package me.andrewpeng.cadence.objects;
 
+import android.util.Log;
+
 public class Entity {
     public int x, y, alpha;
     private boolean fadeIn = false;

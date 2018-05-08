@@ -46,6 +46,11 @@ public class AssetLoader {
         //Gradient
         images.put(ImageAsset.GRADIENT, getImageAsset("particles/Gradient.png"));
 
+        //Score Messages
+        images.put(ImageAsset.SCORE0, getImageAsset("scores/hit0.png"));
+        images.put(ImageAsset.SCORE100, getImageAsset("scores/hit100.png"));
+        images.put(ImageAsset.SCORE200, getImageAsset("scores/hit200.png"));
+        images.put(ImageAsset.SCORE300, getImageAsset("scores/hit300.png"));
 
     }
 

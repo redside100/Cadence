@@ -15,4 +15,11 @@ public enum ImageAsset {
     MUSIC_NOTE_ICON,
     PARTICLE,
     GRADIENT,
+<<<<<<< HEAD
+=======
+    SCORE0,
+    SCORE100,
+    SCORE200,
+    SCORE300
+>>>>>>> cdb65c994c6f2758e791da27d5eb727bc02ec58f
 }
