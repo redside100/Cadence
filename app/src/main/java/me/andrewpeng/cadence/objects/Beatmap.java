@@ -1,6 +1,7 @@
 package me.andrewpeng.cadence.objects;
 
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,15 @@ public class Beatmap {
     public int[][] beats;
     // URL of the wav/mp3 file
     public String songLocation;
+    // Difficulty of the song (0 = Novice, 1 = Easy, 2 = Medium, 3 = Hard)
+    public int difficulty;
     // AFD of wav/mp3 file
     public AssetFileDescriptor afd, afdPreview;
-    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation){
+
+    public Bitmap album;
+    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album){
+
+        this.album = album;
 
         ArrayList<String> info = Reader.getTextContents(infoLocation);
         for (String line : info){
@@ -51,6 +58,9 @@ public class Beatmap {
                     break;
                 case "notespeed":
                     noteSpeed = Double.parseDouble(value);
+                    break;
+                case "difficulty":
+                    difficulty = Integer.parseInt(value);
                     break;
 
             }
@@ -93,5 +103,7 @@ public class Beatmap {
     public String getArtist(){
         return artist;
     }
+    public int getDifficulty(){ return difficulty; }
+    public Bitmap getAlbumBitmap(){ return album; }
 
 }

@@ -12,9 +12,9 @@ import java.util.HashMap;
 public class AssetLoader {
     private static AssetManager assets;
     private static HashMap<ImageAsset, Bitmap> images = new HashMap<>();
-    private int height, width;
-    private double originalWidth = 1080;
-    private double originalHeight = 1920;
+    private static int height, width;
+    private static double originalWidth = 1080;
+    private static double originalHeight = 1920;
     public AssetLoader(Context context, int width, int height){
         assets = context.getAssets();
         this.height = height;
@@ -54,7 +54,7 @@ public class AssetLoader {
 
     }
 
-    private Bitmap getImageAsset(String url){
+    public static Bitmap getImageAsset(String url){
         Bitmap bitmap;
         int beats[][] = null;
         try {
