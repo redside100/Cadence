@@ -60,6 +60,8 @@ public class ScoreMessageManager {
                         index =3;
                     }
                 }
+                Score.addScore(index);
+                Score.setScore();
                 scoreMessages.get(index).animate();
 
             }
