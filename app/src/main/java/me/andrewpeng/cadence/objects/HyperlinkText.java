@@ -36,7 +36,6 @@ public class HyperlinkText {
         test.setSpan(new URLSpan(URL),12,15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
-
     }
 
     public static void render(Canvas graphics, Paint paint) {

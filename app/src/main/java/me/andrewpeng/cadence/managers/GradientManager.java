@@ -8,11 +8,8 @@ import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
-<<<<<<< HEAD:app/src/main/java/me/andrewpeng/cadence/managers/GradientManager.java
 import me.andrewpeng.cadence.objects.Gradient;
-=======
 import me.andrewpeng.cadence.music.Conductor;
->>>>>>> cdb65c994c6f2758e791da27d5eb727bc02ec58f:app/src/main/java/me/andrewpeng/cadence/objects/GradientManager.java
 
 /**
  * Created by isaacleung on 2018-05-02.
