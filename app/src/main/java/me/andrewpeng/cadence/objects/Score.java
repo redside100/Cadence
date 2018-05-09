@@ -1,5 +1,7 @@
 package me.andrewpeng.cadence.objects;
 
+import android.os.Handler;
+
 import me.andrewpeng.cadence.core.GameValues;
 
 /**
@@ -15,35 +17,29 @@ public class Score {
     public static int goodcount = 0;
     public static int misscount = 0;
 
-    public static void setScore(int newScore) {
+    public Runnable runnable;
+    public Handler handler;
+
+    public static boolean run = false;
+
+    public static boolean setScore() {
         //TODO This is only default, implement more than one score finish pls
-
-        int delay = 30;
-        int currentdelay = 0;
-        for(int i = 0;i < getAddedScore();i++) {
-            if(currentdelay == delay) {
-                int addScore = 1;
-                score = score + addScore;
-                currentdelay = 0;
-            }
-            currentdelay++;
-
-        }
-
-        perfcount++;
-
+        run = true;
+        return run;
     }
+
     public static int getScore() {
         return score;
     }
 
-    public static int addScore(int pad) {
-        //TODO Judge scoring based on the padding
-        switch (pad) {
-            case 1: addedScore = GameValues.getPerfect();
+    public static void addScore(int index) {
+        switch (index) {
+            case 0: addedScore = GameValues.getMiss();
+            case 1: addedScore = GameValues.getGood();
+            case 2: addedScore = GameValues.getGreat();
+            case 3: addedScore = GameValues.getPerfect();
 
         }
-        return addedScore;
     }
 
     public static int getAddedScore() {
@@ -51,7 +47,20 @@ public class Score {
     }
 
     public void tick() {
-
+        //TODO tick method to tick the addedscore to score
+        handler = new Handler();
+        if(run) {
+            for (int i = 0; i < addedScore; i++) {
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        score++;
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+            }
+        }
+        run = false;
     }
 
 }

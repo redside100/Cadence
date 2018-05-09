@@ -237,7 +237,6 @@ public class Conductor {
                     // Note within score area (0.3 padding timing window)
                     if (scoreArea(note,pad0)) {
                         note.fadeOut(15);
-                        Score.setScore(Score.addScore(1));
                     }
                 }
             }

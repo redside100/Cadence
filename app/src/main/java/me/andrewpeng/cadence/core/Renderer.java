@@ -177,7 +177,7 @@ public class Renderer {
                 // Score area
                 paint.setStyle(Paint.Style.STROKE);
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
-
+                
                 if (conductor.playing){
                     paint.setStyle(Paint.Style.FILL);
                     paint.setColor(Color.WHITE);
