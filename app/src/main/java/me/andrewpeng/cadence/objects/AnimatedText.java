@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.managers.AnimatedTextManager;
 
 public class AnimatedText extends Entity{
     public String text;

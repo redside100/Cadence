@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import me.andrewpeng.cadence.managers.ButtonManager;
+
 public class Button extends Entity{
     public Bitmap bitmap;
     public int x, y;

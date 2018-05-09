@@ -11,22 +11,22 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import me.andrewpeng.cadence.music.Conductor;
-import me.andrewpeng.cadence.objects.AnimatedTextManager;
+import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
-import me.andrewpeng.cadence.objects.ButtonManager;
+import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
-import me.andrewpeng.cadence.objects.GradientManager;
+import me.andrewpeng.cadence.managers.GradientManager;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
 import me.andrewpeng.cadence.objects.Particle;
-import me.andrewpeng.cadence.objects.ParticleManager;
+import me.andrewpeng.cadence.managers.ParticleManager;
 import me.andrewpeng.cadence.objects.Score;
 import me.andrewpeng.cadence.objects.ScoreMessage;
 import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.objects.Spinner;
-import me.andrewpeng.cadence.objects.SpinnerManager;
+import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -115,9 +115,12 @@ public class Renderer {
             case SONG_SELECTION:
 
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.BLACK_BACKDROP), 0, height / 2, paint);
+                // Make sure to render spinners BEFORE the border, so that the text will be rendered behind if going out of bounds
+                SpinnerManager.render(graphics, paint);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.SPINNER_BORDER), 0, height / 2, paint);
                 centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
                 writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 20, Color.WHITE);
-
                 break;
             case PLAY:
 
@@ -149,7 +152,7 @@ public class Renderer {
                 }
 
                 //Score Value
-                centerText(Score.getScore() + "",graphics,width/2,height/16,paint,15,Color.WHITE);
+                centerText(Score.getScore() + "", graphics,width/2,height/16,paint,15,Color.WHITE);
                 break;
         }
 
@@ -157,7 +160,6 @@ public class Renderer {
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
-        SpinnerManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
 //        ScoreMessageManager.render(graphics, paint);
 
@@ -322,7 +324,7 @@ public class Renderer {
                 }
 
                 // Create a new spinner with the names
-                songSelectionSpinner = new Spinner(0, height / 2, width, height, list);
+                songSelectionSpinner = new Spinner(0, (int) (height * 0.56), width, height, list);
 
                 // Be sure the update the spinner to make the conductor play the preview
                 updateSpinner();

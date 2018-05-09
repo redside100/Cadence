@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 
 import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.managers.SpinnerManager;
 
 public class Spinner{
     public String[] list;
@@ -112,7 +113,7 @@ public class Spinner{
 
                 // Tell the renderer that it's been spun
                 Renderer.updateSpinner();
-                
+
             }
         }
     }
