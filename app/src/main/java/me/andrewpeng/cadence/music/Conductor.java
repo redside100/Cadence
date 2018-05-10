@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.objects.Beatmap;
+import me.andrewpeng.cadence.objects.Combo;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
@@ -235,6 +236,10 @@ public class Conductor {
                     // Note within score area (0.3 padding timing window)
                     if (scoreArea(note,pad0)) {
                         note.fadeOut(15);
+                        Combo.addCombo();
+                    }
+                    else {
+                        Combo.combo = 0;
                     }
                 }
             }
