@@ -1,5 +1,8 @@
 package me.andrewpeng.cadence.util;
 
+/**
+ * Holds the various images that will be loaded through the AssetLoader class
+ */
 public enum ImageAsset {
     HOME_BACKGROUND,
     HOME_TITLE,

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import me.andrewpeng.cadence.core.Renderer;
 
 /**
+ * Keeps track of the current combo number that the player is currently at
  * Created by isaacleung on 2018-05-09.
  */
 

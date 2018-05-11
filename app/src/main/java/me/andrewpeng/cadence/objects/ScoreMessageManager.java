@@ -11,6 +11,7 @@ import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.music.Conductor;
 
 /**
+ * Manages the messages that will be displayed once the user has tapped a note
  * Created by isaacleung on 2018-05-07.
  */
 

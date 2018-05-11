@@ -12,6 +12,7 @@ import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.music.Conductor;
 
 /**
+ * Manages the different gradients that should be displayed based on the lane
  * Created by isaacleung on 2018-05-02.
  */
 

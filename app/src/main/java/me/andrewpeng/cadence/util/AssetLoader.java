@@ -22,7 +22,10 @@ public class AssetLoader {
         load();
     }
 
-    private void load(){
+    /**
+     * Loads the images so it can be accessed whenever we need to render
+     */
+    private void load() {
         // Backgrounds
         images.put(ImageAsset.HOME_BACKGROUND, getImageAsset("backgrounds/main_background.png"));
         images.put(ImageAsset.SPINNER_BORDER, getImageAsset("backgrounds/spinnerBorder.png"));
@@ -41,7 +44,7 @@ public class AssetLoader {
         images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));
 
         //Particle
-        images.put(ImageAsset.PARTICLE,getImageAsset("particles/star_pink.png"));
+        images.put(ImageAsset.PARTICLE, getImageAsset("particles/star_pink.png"));
 
         //Gradient
         images.put(ImageAsset.GRADIENT, getImageAsset("particles/Gradient.png"));
@@ -54,6 +57,11 @@ public class AssetLoader {
 
     }
 
+    /**
+     * Creates the initial bitmap so that it can be stored into memory
+     * @param url Location where the bitmap is found
+     * @return
+     */
     public static Bitmap getImageAsset(String url){
         Bitmap bitmap;
         int beats[][] = null;
@@ -70,6 +78,11 @@ public class AssetLoader {
         return null;
     }
 
+    /**
+     * Gets the bitmap that you want to use from memory (from the ImageAsset class)
+     * @param imageAsset Image from the ImageAsset class
+     * @return
+     */
     public static Bitmap getImageAssetFromMemory(ImageAsset imageAsset){
         return images.containsKey(imageAsset) ? images.get(imageAsset) : null;
     }

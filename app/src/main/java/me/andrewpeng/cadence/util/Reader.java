@@ -20,6 +20,11 @@ public class Reader {
         assets = context.getAssets();
     }
 
+    /**
+     * Opens the music file that will correspond to the beatmap
+     * @param url The location where the wav file is found
+     * @return
+     */
     public static AssetFileDescriptor getSoundFile(String url){
         try{
             return assets.openFd(url);
@@ -28,6 +33,12 @@ public class Reader {
         }
         return null;
     }
+
+    /**
+     * Will read the description of the song (ex. name.ini)
+     * @param url The link where the file is found
+     * @return The info about the song
+     */
     public static ArrayList<String> getTextContents(String url){
         ArrayList<String> lines = new ArrayList<>();
         try{
@@ -42,6 +53,12 @@ public class Reader {
         }
         return lines;
     }
+
+    /**
+     * Will load the beatmap based on the colour of the pixels displayed in the png file
+     * @param url Gets the bitmap based on the location
+     * @return A new bitmap from the png file where the blanks and notes are assigned
+     */
     public static int[][] getBeatConfiguration(String url){
             Bitmap bitmap;
             int beats[][] = null;

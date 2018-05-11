@@ -13,18 +13,33 @@ import me.andrewpeng.cadence.objects.Button;
 public class ButtonManager {
 
     public static ArrayList<Button> buttons = new ArrayList<>();
+
+    /**
+     * Render the button onto the canvas where you can see the button
+     * @param graphics Canvas
+     * @param paint Paint
+     */
     public static void render(Canvas graphics, Paint paint){
         ArrayList<Button> temp = new ArrayList<>(buttons);
         for (Button button : temp){
             button.render(graphics, paint);
         }
     }
+
+    /**
+     * Uses the tick function of the button
+     */
     public static void tick(){
         ArrayList<Button> temp = new ArrayList<>(buttons);
         for (Button button : temp){
             button.tick();
         }
     }
+
+    /**
+     * Determines whether the button should assume its proper function based on bounds
+     * @param e Motion event triggered by touch
+     */
     public static void touch(MotionEvent e){
         // Loop through all active buttons
         for (Button button : buttons){

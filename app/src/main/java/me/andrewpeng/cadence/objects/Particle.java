@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import me.andrewpeng.cadence.managers.ParticleManager;
 
 /**
+ * Creates a particle that will disperse at different speeds
  * Created by isaacleung on 2018-04-26.
  */
 
@@ -28,6 +29,7 @@ public class Particle extends Entity{
     public boolean alive = true;
 
     public boolean isAnimating = false;
+
 
     public Particle(Bitmap bitmap, int x, int y, int alpha, int choice){
         super(x, y, alpha);

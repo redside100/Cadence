@@ -29,6 +29,15 @@ public class Beatmap {
     public AssetFileDescriptor afd, afdPreview;
 
     public Bitmap album;
+
+    /**
+     * Create a new beatmap
+     * @param beatLocation Location where the png file is located
+     * @param infoLocation Location where the ini file is located
+     * @param songLocation Location where the wav file is located
+     * @param previewLocation Location where the preview wav file is located
+     * @param album The album that the song will be put to
+     */
     public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album){
 
         this.album = album;
