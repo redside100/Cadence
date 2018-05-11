@@ -20,6 +20,7 @@ import me.andrewpeng.cadence.managers.ParticleManager;
 import me.andrewpeng.cadence.objects.Score;
 import me.andrewpeng.cadence.objects.ScoreMessage;
 import me.andrewpeng.cadence.objects.ScoreMessageManager;
+import me.andrewpeng.cadence.util.AssetLoader;
 
 public class Conductor {
     int width, height;
@@ -50,7 +51,8 @@ public class Conductor {
         String[] names = {"popcornfunk", "shelter", "test"};
         for (String name : names){
             beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
-                    "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav"));
+                    "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
+                    AssetLoader.getImageAsset("beatmaps/" + name + "/album.png")));
         }
     }
 

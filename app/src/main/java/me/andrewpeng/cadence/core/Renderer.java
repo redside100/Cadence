@@ -10,10 +10,12 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
+import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.GradientManager;
@@ -116,11 +118,47 @@ public class Renderer {
 
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.BLACK_BACKDROP), 0, height / 2, paint);
+
                 // Make sure to render spinners BEFORE the border, so that the text will be rendered behind if going out of bounds
                 SpinnerManager.render(graphics, paint);
+
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.SPINNER_BORDER), 0, height / 2, paint);
+
+                // Note count
                 centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
                 writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 20, Color.WHITE);
+
+                // Song name and artist
+                if (songSelectionSpinner != null){
+                    Beatmap currentBeatmap = Conductor.getBeatmapList().get(songSelectionSpinner.getPosition());
+                    writeText(currentBeatmap.getName(), graphics, (int) (width * 0.025), (int) (height * 0.45), paint, 16, Color.WHITE);
+                    writeText(currentBeatmap.getArtist(), graphics, (int) (width * 0.025), (int) (height * 0.49), paint, 16, Color.WHITE);
+
+                    paint.setTextAlign(Paint.Align.RIGHT);
+                    String difficulty = "";
+                    int color = 0;
+                    switch(currentBeatmap.getDifficulty()){
+                        case 0:
+                            difficulty = "Novice";
+                            color = Color.MAGENTA;
+                            break;
+                        case 1:
+                            difficulty = "Easy";
+                            color = Color.GREEN;
+                            break;
+                        case 2:
+                            difficulty = "Medium";
+                            color = Color.YELLOW;
+                            break;
+                        case 3:
+                            difficulty = "Hard";
+                            color = Color.RED;
+                            break;
+                    }
+                    writeText(difficulty, graphics, (int) (width * 0.975), (int) (height * 0.45), paint, 16, color);
+                    writeText("Grade: N/A", graphics, (int) (width * 0.975), (int) (height * 0.49), paint, 16, Color.WHITE);
+                    paint.setTextAlign(Paint.Align.LEFT);
+                }
                 break;
             case PLAY:
 
@@ -161,6 +199,7 @@ public class Renderer {
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
+        FadingImageManager.render(graphics, paint);
 //        ScoreMessageManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
@@ -233,6 +272,7 @@ public class Renderer {
         ParticleManager.tick();
         SpinnerManager.tick();
         ScoreMessageManager.tick();
+        FadingImageManager.tick();
 
     }
 
@@ -267,6 +307,7 @@ public class Renderer {
         ParticleManager.particles.clear();
         ScoreMessageManager.scoreMessages.clear();
         SpinnerManager.spinners.clear();
+        FadingImageManager.fadingImages.clear();
 
 
         if (conductor.playing || conductor.preview){
@@ -316,7 +357,7 @@ public class Renderer {
                 //new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
 
                 // Get all the available beatmaps, and compile their names into a list
-                ArrayList<Beatmap> maps = Conductor.getBeatmapList();
+               ArrayList<Beatmap> maps = Conductor.getBeatmapList();
                 String[] list = new String[maps.size()];
 
                 for (int i = 0; i < Conductor.getBeatmapList().size(); i++){
@@ -367,7 +408,12 @@ public class Renderer {
     public static void updateSpinner(){
         if (songSelectionSpinner != null){
             int position = songSelectionSpinner.getPosition();
-            conductor.playPreview(Conductor.getBeatmapList().get(position));
+            Beatmap currentBeatmap = Conductor.getBeatmapList().get(position);
+            conductor.playPreview(currentBeatmap);
+            for (FadingImage image : FadingImageManager.fadingImages){
+                image.fadeOut(20);
+            }
+            new FadingImage(currentBeatmap.getAlbumBitmap(), width / 2, (int) (height * 0.25), 0).fadeIn(20);
         }
     }
 
