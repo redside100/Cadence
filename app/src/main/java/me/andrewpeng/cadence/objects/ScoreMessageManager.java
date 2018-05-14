@@ -21,7 +21,7 @@ public class ScoreMessageManager {
     public static void render(Canvas graphics, Paint paint) {
         ArrayList<ScoreMessage> temp = new ArrayList<>(scoreMessages);
         for(ScoreMessage scoreMessage: temp) {
-            if(scoreMessage.isTouched == true) {
+            if(scoreMessage.isTouched) {
                 scoreMessages.get(index).render(graphics,paint);
             }
         }

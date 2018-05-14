@@ -1,9 +1,8 @@
 package me.andrewpeng.cadence.objects;
 
-import android.util.Log;
-
 public class Entity {
     public int x, y, alpha;
+    public int maxAlpha = 255;
     private boolean fadeIn = false;
     private boolean fadeOut = false;
     private int fadeTicks = 0;
@@ -28,16 +27,19 @@ public class Entity {
     public void setAlpha(int alpha){
         this.alpha = alpha;
     }
+    public void setMaxAlpha(int alpha){ this.maxAlpha = maxAlpha; }
     public void tick(){
-        int amount = 255 / fadeTicks;
+
         if (fadeIn){
-            if (alpha + amount < 255){
+            int amount = maxAlpha / fadeTicks;
+            if (alpha + amount < maxAlpha){
                 alpha += amount;
             }else{
-                alpha = 255;
+                alpha = maxAlpha;
                 fadeIn = false;
             }
         }else if (fadeOut){
+            int amount = maxAlpha / fadeTicks;
             if (alpha - amount > 0){
                 alpha -= amount;
             }else{
@@ -48,7 +50,7 @@ public class Entity {
 
     }
     public void fadeIn(int ticks){
-        if (alpha < 255){
+        if (alpha < maxAlpha){
             fadeTicks = ticks;
             fadeIn = true;
         }

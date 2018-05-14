@@ -48,6 +48,7 @@ public class Renderer {
     public static ScreenState nextState;
     public static Conductor conductor;
     public static Spinner songSelectionSpinner = null;
+    public static int songSelectionPosition = 0;
 
     public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
         Renderer.width = width;
@@ -130,6 +131,7 @@ public class Renderer {
 
                 // Song name and artist
                 if (songSelectionSpinner != null){
+
                     Beatmap currentBeatmap = Conductor.getBeatmapList().get(songSelectionSpinner.getPosition());
                     writeText(currentBeatmap.getName(), graphics, (int) (width * 0.025), (int) (height * 0.45), paint, 16, Color.WHITE);
                     writeText(currentBeatmap.getArtist(), graphics, (int) (width * 0.025), (int) (height * 0.49), paint, 16, Color.WHITE);
@@ -279,7 +281,6 @@ public class Renderer {
     // This touch event is for action down
     public static void touch(MotionEvent e){
         ButtonManager.touch(e);
-        GradientManager.touch(e);
         ParticleManager.touch(e);
 
         switch(state){
@@ -371,7 +372,7 @@ public class Renderer {
                 updateSpinner();
 
                 // Back button
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.HOME);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.PLAY);
 
                 break;
 
@@ -381,6 +382,9 @@ public class Renderer {
 //                String name = "popcornfunk";
 //                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
 //                conductor.loadMap(beatmap);
+
+                Beatmap beatmap = Conductor.getBeatmapList().get(songSelectionPosition);
+                conductor.loadMap(beatmap);
 
                 //Creates a set of 16 particles to be used for animation
                 for(int i = 0; i <= 16; i++) {
@@ -408,6 +412,7 @@ public class Renderer {
     public static void updateSpinner(){
         if (songSelectionSpinner != null){
             int position = songSelectionSpinner.getPosition();
+            songSelectionPosition = position;
             Beatmap currentBeatmap = Conductor.getBeatmapList().get(position);
             conductor.playPreview(currentBeatmap);
             for (FadingImage image : FadingImageManager.fadingImages){

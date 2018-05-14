@@ -12,18 +12,14 @@ import me.andrewpeng.cadence.managers.GradientManager;
  */
 
 
-public class Gradient {
+public class Gradient extends Entity{
 
     public Bitmap bitmap;
-    public int x, y;
     public int speed;
-    public int alpha;
 
-    public boolean isTouched = false;
+
     public boolean fading;
-
     public int fadeTick = 0;
-    public int maxFadeTick = 30;
 
     /**
      *
@@ -35,12 +31,12 @@ public class Gradient {
      * @param fading determines if the gradient is fading
      */
     public Gradient(Bitmap bitmap, int x, int y, int speed, int alpha, boolean fading) {
+        super(x, y, alpha);
         this.bitmap = bitmap;
-        this.x = x;
-        this.y = y;
         this.speed = speed;
-        this.alpha = alpha;
         this.fading = fading;
+
+        super.setMaxAlpha(195);
         GradientManager.gradients.add(this);
     }
 
@@ -89,7 +85,7 @@ public class Gradient {
      * @return the transparency of the gradient
      */
     public int getAlpha() {
-        return alpha;
+        return super.alpha;
     }
 
     /**
@@ -100,7 +96,7 @@ public class Gradient {
     public void render(Canvas graphics, Paint paint) {
         if (bitmap != null) {
             int oldAlpha = paint.getAlpha();
-            paint.setAlpha(alpha);
+            paint.setAlpha(super.alpha);
             graphics.drawBitmap(bitmap, x, y, paint);
             paint.setAlpha(oldAlpha);
         }
@@ -110,33 +106,24 @@ public class Gradient {
      * Lets the gradient proceed in a fade in/out animation
      */
     public void animate() {
-        isTouched = true;
-        fading = false;
+        if (!fading){
+            fadeIn(8);
+            fading = true;
+        }
     }
 
     /**
      * The gradient fades in/out in
      */
     public void tick() {
-        if (isTouched) {
-            fadeTick+=2;
-            if(fadeTick < maxFadeTick) {
-                if (!fading) {
-                    alpha += speed;
-                    if (getAlpha() >= 255 && fadeTick == 12) {
-                        fading = true;
-                    }
-                } else {
-                    alpha -= speed;
-                }
-            }
-            else {
-                alpha = 0;
+        super.tick();
+        if (fading){
+            fadeTick++;
+            if (fadeTick == 8){
+                fadeOut(8);
                 fadeTick = 0;
-                maxFadeTick = 30;
-                isTouched = false;
+                fading = false;
             }
-
         }
     }
 }

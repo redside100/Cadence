@@ -8,6 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import me.andrewpeng.cadence.managers.GradientManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.SpinnerManager;
@@ -86,6 +87,7 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                     for (int i = 0; i < e.getPointerCount(); i++){
                         conductor.touch(e, i);
                         ScoreMessageManager.touch(e, i);
+                        GradientManager.touch(e, i);
                     }
                     break;
 
