@@ -1,14 +1,19 @@
 package me.andrewpeng.cadence.core;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
     private MainView mainView;
+
+    public static boolean itdoes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

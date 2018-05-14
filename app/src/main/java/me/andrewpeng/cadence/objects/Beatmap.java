@@ -1,6 +1,7 @@
 package me.andrewpeng.cadence.objects;
 
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,24 @@ public class Beatmap {
     public int[][] beats;
     // URL of the wav/mp3 file
     public String songLocation;
+    // Difficulty of the song (0 = Novice, 1 = Easy, 2 = Medium, 3 = Hard)
+    public int difficulty;
     // AFD of wav/mp3 file
-    public AssetFileDescriptor afd;
-    public Beatmap(String beatLocation, String infoLocation, String songLocation){
+    public AssetFileDescriptor afd, afdPreview;
+
+    public Bitmap album;
+
+    /**
+     * Create a new beatmap
+     * @param beatLocation Location where the png file is located
+     * @param infoLocation Location where the ini file is located
+     * @param songLocation Location where the wav file is located
+     * @param previewLocation Location where the preview wav file is located
+     * @param album The album that the song will be put to
+     */
+    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album){
+
+        this.album = album;
 
         ArrayList<String> info = Reader.getTextContents(infoLocation);
         for (String line : info){
@@ -52,6 +68,9 @@ public class Beatmap {
                 case "notespeed":
                     noteSpeed = Double.parseDouble(value);
                     break;
+                case "difficulty":
+                    difficulty = Integer.parseInt(value);
+                    break;
 
             }
         }
@@ -59,11 +78,13 @@ public class Beatmap {
         this.beats = Reader.getBeatConfiguration(beatLocation);
         this.songLocation = songLocation;
         this.afd = Reader.getSoundFile(songLocation);
+        this.afdPreview = Reader.getSoundFile(previewLocation);
 
     }
     public AssetFileDescriptor getSongAFD(){
         return afd;
     }
+    public AssetFileDescriptor getPreviewAFD() {return afdPreview; }
     public String getSongLocation(){
         return songLocation;
     }
@@ -91,5 +112,7 @@ public class Beatmap {
     public String getArtist(){
         return artist;
     }
+    public int getDifficulty(){ return difficulty; }
+    public Bitmap getAlbumBitmap(){ return album; }
 
 }

@@ -3,9 +3,7 @@ package me.andrewpeng.cadence.music;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
 
@@ -15,27 +13,51 @@ import java.util.ArrayList;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.objects.Beatmap;
+import me.andrewpeng.cadence.objects.Combo;
 import me.andrewpeng.cadence.objects.Note;
+import me.andrewpeng.cadence.objects.Particle;
+import me.andrewpeng.cadence.managers.ParticleManager;
+import me.andrewpeng.cadence.objects.Score;
+import me.andrewpeng.cadence.objects.ScoreMessage;
+import me.andrewpeng.cadence.objects.ScoreMessageManager;
+import me.andrewpeng.cadence.util.AssetLoader;
 
 public class Conductor {
     int width, height;
     public static ArrayList<Note> activeNotes = new ArrayList<>();
     public MediaPlayer mp = new MediaPlayer();
     public int currentGeneralBeat = 0;
-    public Beatmap beatmap;
+    public Beatmap currentBeatmap;
     public double songLength;
     public double beatLength;
     public int noteTravelTicks;
     public boolean playing = false;
+    public boolean preview = false;
 
     public static int volume = 100;
     public static int fxVolume = 100;
 
     private Metronome metronome;
 
+    public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
+
     public Conductor(int width, int height){
         this.width = width;
         this.height = height;
+    }
+
+    // MUST INITIALIZE AFTER READER IS INITIALIZED
+    public void initBeatmaps(){
+        String[] names = {"popcornfunk", "shelter", "test"};
+        for (String name : names){
+            beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
+                    "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
+                    AssetLoader.getImageAsset("beatmaps/" + name + "/album.png")));
+        }
+    }
+
+    public static ArrayList<Beatmap> getBeatmapList(){
+        return beatmapList;
     }
 
     public double getSongLength(){
@@ -48,7 +70,7 @@ public class Conductor {
         return currentGeneralBeat;
     }
     public Beatmap getBeatmap(){
-        return beatmap;
+        return currentBeatmap;
     }
     public MediaPlayer getMediaPlayer(){
         return mp;
@@ -75,7 +97,7 @@ public class Conductor {
     public void nextNote(){
         // When called by the metronome, spawn the notes of the corresponding row of the beatmap,
         // increment the main beat count
-        int beats[][] = beatmap.getBeats();
+        int beats[][] = currentBeatmap.getBeats();
         if (currentGeneralBeat < beats.length){
             for (int i = 0; i < beats[currentGeneralBeat].length; i++){
                 if (beats[currentGeneralBeat][i] == 1){
@@ -118,13 +140,32 @@ public class Conductor {
         mp.reset();
         metronome = null;
         playing = false;
+        preview = false;
         activeNotes.clear();
         currentGeneralBeat = 0;
     }
 
+    public void playPreview(Beatmap beatmap){
+        this.currentBeatmap = beatmap;
+        // Load beatmap preview into media player
+        AssetFileDescriptor afd = beatmap.getPreviewAFD();
+        try{
+            if (mp.isPlaying()){
+                mp.stop();
+                mp.reset();
+            }
+            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mp.prepare();
+        }catch(IOException e){}
+
+        mp.setLooping(true);
+        mp.start();
+        preview = true;
+    }
+
     public void loadMap(Beatmap beatmap){
 
-        this.beatmap = beatmap;
+        this.currentBeatmap = beatmap;
         // Load beatmap song into media player
         AssetFileDescriptor afd = beatmap.getSongAFD();
         try{
@@ -140,6 +181,7 @@ public class Conductor {
 
         // Set up metronome to know when to spawn the next note
         metronome = new Metronome(this);
+        mp.setLooping(false);
         mp.start();
         playing = true;
 
@@ -186,19 +228,28 @@ public class Conductor {
         if (playing){
             // Check if touch in bounds of note
             ArrayList<Note> temp = new ArrayList<>(activeNotes);
+            ArrayList<Particle> temp1 = new ArrayList<>(ParticleManager.particles);
             for (Note note : temp){
                 // Touch within note
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
                         note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
 
-                    int pad = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
+                    int pad0 = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
                     // Note within score area (0.3 padding timing window)
-                    if (MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad)){
+                    if (scoreArea(note,pad0)) {
                         note.fadeOut(15);
+                        Combo.addCombo();
                     }
-
+                    else {
+                        Combo.combo = 0;
+                    }
                 }
             }
         }
+    }
+
+
+    public static boolean scoreArea(Note note, int pad) {
+        return MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad);
     }
 }

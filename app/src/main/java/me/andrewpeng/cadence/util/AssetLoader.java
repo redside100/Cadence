@@ -12,19 +12,24 @@ import java.util.HashMap;
 public class AssetLoader {
     private static AssetManager assets;
     private static HashMap<ImageAsset, Bitmap> images = new HashMap<>();
-    private int height, width;
-    private double originalWidth = 1080;
-    private double originalHeight = 1920;
+    private static int height, width;
+    private static double originalWidth = 1080;
+    private static double originalHeight = 1920;
     public AssetLoader(Context context, int width, int height){
-        this.assets = context.getAssets();
+        assets = context.getAssets();
         this.height = height;
         this.width = width;
         load();
     }
 
-    private void load(){
+    /**
+     * Loads the images so it can be accessed whenever we need to render
+     */
+    private void load() {
         // Backgrounds
         images.put(ImageAsset.HOME_BACKGROUND, getImageAsset("backgrounds/main_background.png"));
+        images.put(ImageAsset.SPINNER_BORDER, getImageAsset("backgrounds/spinnerBorder.png"));
+        images.put(ImageAsset.BLACK_BACKDROP, getImageAsset("backgrounds/blackBackdrop.png"));
 
         // Buttons
         images.put(ImageAsset.TEST_BUTTON, getImageAsset("buttons/testButton.png"));
@@ -38,10 +43,26 @@ public class AssetLoader {
         // Icons
         images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));
 
+        //Particle
+        images.put(ImageAsset.PARTICLE, getImageAsset("particles/star_pink.png"));
+
+        //Gradient
+        images.put(ImageAsset.GRADIENT, getImageAsset("particles/Gradient.png"));
+
+        //Score Messages
+        images.put(ImageAsset.SCORE0, getImageAsset("scores/hit0.png"));
+        images.put(ImageAsset.SCORE100, getImageAsset("scores/hit100.png"));
+        images.put(ImageAsset.SCORE200, getImageAsset("scores/hit200.png"));
+        images.put(ImageAsset.SCORE300, getImageAsset("scores/hit300.png"));
 
     }
 
-    private Bitmap getImageAsset(String url){
+    /**
+     * Creates the initial bitmap so that it can be stored into memory
+     * @param url Location where the bitmap is found
+     * @return
+     */
+    public static Bitmap getImageAsset(String url){
         Bitmap bitmap;
         int beats[][] = null;
         try {
@@ -57,6 +78,11 @@ public class AssetLoader {
         return null;
     }
 
+    /**
+     * Gets the bitmap that you want to use from memory (from the ImageAsset class)
+     * @param imageAsset Image from the ImageAsset class
+     * @return
+     */
     public static Bitmap getImageAssetFromMemory(ImageAsset imageAsset){
         return images.containsKey(imageAsset) ? images.get(imageAsset) : null;
     }
