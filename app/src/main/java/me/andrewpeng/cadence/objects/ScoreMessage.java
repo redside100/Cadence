@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 /**
+ * Prints out the success of the user who tapped on a note
  * Created by isaacleung on 2018-05-07.
  */
 

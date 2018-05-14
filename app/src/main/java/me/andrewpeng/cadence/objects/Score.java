@@ -5,6 +5,7 @@ import android.os.Handler;
 import me.andrewpeng.cadence.core.GameValues;
 
 /**
+ * Tracks the score that the user has in the song
  * Created by isaacleung on 2018-05-04.
  */
 

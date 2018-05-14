@@ -12,6 +12,7 @@ import me.andrewpeng.cadence.objects.Particle;
 
 
 /**
+ * Disperses a set amonunt of particles stored in an array list
  * Created by isaacleung on 2018-04-26.
  */
 
