@@ -136,7 +136,7 @@ public class Spinner{
                     text = "> " + text + " <";
                 }
                 // Finally draw
-                Renderer.centerText(text, graphics, middle, yPos, paint, 20, color);
+                Renderer.centerText(text, graphics, middle, yPos, paint, 20, color, 255);
             }
         }
     }

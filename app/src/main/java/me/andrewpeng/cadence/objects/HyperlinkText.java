@@ -41,7 +41,7 @@ public class HyperlinkText {
     public static void render(Canvas graphics, Paint paint) {
         int oldAlpha = paint.getAlpha();
         paint.setAlpha(alpha);
-        Renderer.centerText(test + "", graphics, x, y, paint, textSize, color);
+        Renderer.centerText(test + "", graphics, x, y, paint, textSize, color, 255);
         paint.setAlpha(oldAlpha);
     }
 }

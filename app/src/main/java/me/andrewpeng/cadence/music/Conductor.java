@@ -3,6 +3,7 @@ package me.andrewpeng.cadence.music;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.view.MotionEvent;
@@ -12,8 +13,11 @@ import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.managers.AnimatedTextManager;
+import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Combo;
+import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
@@ -33,9 +37,11 @@ public class Conductor {
     public int noteTravelTicks;
     public boolean playing = false;
     public boolean preview = false;
-
     public static int volume = 100;
     public static int fxVolume = 100;
+
+    public static int currentCombo = 0;
+    public static int currentScore = 0;
 
     private Metronome metronome;
 
@@ -89,6 +95,7 @@ public class Conductor {
                 note.tick();
                 if (note.getY1() > height) {
                     activeNotes.remove(note);
+                    currentCombo = 0;
                 }
             }
         }
@@ -143,6 +150,8 @@ public class Conductor {
         preview = false;
         activeNotes.clear();
         currentGeneralBeat = 0;
+        currentScore = 0;
+        currentCombo = 0;
     }
 
     public void playPreview(Beatmap beatmap){
@@ -238,10 +247,18 @@ public class Conductor {
                     // Note within score area (0.3 padding timing window)
                     if (scoreArea(note,pad0)) {
                         note.fadeOut(15);
-                        Combo.addCombo();
-                    }
-                    else {
-                        Combo.combo = 0;
+                        // TODO: Fix bug where two is actually added when one note is hit and another empty space is hit
+                        if (pointerIndex == 0){
+                            currentCombo++;
+                            if (currentCombo > 6){
+                                for (AnimatedText text : AnimatedTextManager.texts){
+                                    if (text instanceof FadingText){
+                                        text.destroy();
+                                    }
+                                }
+                                new FadingText("Combo: " + currentCombo, Renderer.width / 2, Renderer.height / 2, 18, Color.WHITE, 12, 15);
+                            }
+                        }
                     }
                 }
             }

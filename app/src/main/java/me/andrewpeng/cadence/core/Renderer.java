@@ -16,6 +16,7 @@ import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FadingImage;
+import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.GradientManager;
@@ -71,23 +72,23 @@ public class Renderer {
 
                 // Outer space background + title
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
+                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
                 break;
 
             case MENU:
 
                 // Outer space background, title, and footers
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
-                centerText("v1.0 Alpha", graphics, (int) (width * 0.155), (int) (height * 0.99), paint, 17, Color.WHITE);
-                centerText("ICS4U", graphics, (int) (width * 0.9), (int) (height * 0.99), paint, 17, Color.WHITE);
+                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
+                centerText("v1.0 Alpha", graphics, (int) (width * 0.155), (int) (height * 0.99), paint, 17, Color.WHITE, 255);
+                centerText("ICS4U", graphics, (int) (width * 0.9), (int) (height * 0.99), paint, 17, Color.WHITE, 255);
                 break;
 
             case SETTINGS:
 
                 // Outer space background, title, and options
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("SETTINGS", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
+                centerText("SETTINGS", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
                 writeText("Music Volume", graphics, (int) (width * 0.15), (int) (height * 0.3), paint, 20, Color.WHITE);
                 writeText("FX Volume", graphics, (int) (width * 0.15), (int) (height * 0.4), paint, 20, Color.WHITE);
                 writeText("Judge Difficulty", graphics, (int) (width * 0.15), (int) (height * 0.5), paint, 20, Color.WHITE);
@@ -95,23 +96,23 @@ public class Renderer {
                 writeText("Misc", graphics, (int) (width * 0.15), (int) (height * 0.7), paint, 20, Color.WHITE);
 
                 // Volume display
-                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 20, Color.WHITE);
+                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 20, Color.WHITE, 255);
 
                 // FX vol display
-                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 20, Color.WHITE);
+                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 20, Color.WHITE, 255);
                 break;
 
             case CREDITS:
 
                 // Outer space background, title, and credits
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CREDITS", graphics, width / 2, height / 4, paint, 45, Color.WHITE);
-                centerText("PROGRAMMING", graphics, width / 2, (int) (height * 0.35), paint, 20, Color.WHITE);
-                centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 15, Color.WHITE);
-                centerText("STORY", graphics, width / 2, (int) (height * 0.5), paint, 20, Color.WHITE);
-                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 15, Color.WHITE);
-                centerText("MANAGER", graphics, width / 2, (int) (height * 0.65), paint, 20, Color.WHITE);
-                centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 15, Color.WHITE);
+                centerText("CREDITS", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
+                centerText("PROGRAMMING", graphics, width / 2, (int) (height * 0.35), paint, 20, Color.WHITE, 255);
+                centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 15, Color.WHITE, 255);
+                centerText("STORY", graphics, width / 2, (int) (height * 0.5), paint, 20, Color.WHITE, 255);
+                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 15, Color.WHITE, 255);
+                centerText("MANAGER", graphics, width / 2, (int) (height * 0.65), paint, 20, Color.WHITE, 255);
+                centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 15, Color.WHITE, 255);
                 break;
 
 
@@ -192,7 +193,7 @@ public class Renderer {
                 }
 
                 //Score Value
-                centerText(Score.getScore() + "", graphics,width/2,height/16,paint,15,Color.WHITE);
+                centerText(Score.getScore() + "", graphics,width/2,height/16,paint,15,Color.WHITE, 255);
                 break;
         }
 
@@ -225,9 +226,9 @@ public class Renderer {
                 int position = (int) (width * (double) i / 100);
                 int hPosition = (int) (height * (double) i / 100);
                 graphics.drawLine(position, 0, position, height, paint);
-                centerText((double) i / 100 + "", graphics, position, (int) (height * 0.04), paint, 5, Color.BLACK);
+                centerText((double) i / 100 + "", graphics, position, (int) (height * 0.04), paint, 5, Color.BLACK, 255);
                 graphics.drawLine(0, hPosition, width, hPosition, paint);
-                centerText((double) i / 100 + "", graphics, (int) (width * 0.02), hPosition, paint, 5, Color.BLACK);
+                centerText((double) i / 100 + "", graphics, (int) (width * 0.02), hPosition, paint, 5, Color.BLACK, 255);
             }
         }
 
@@ -422,8 +423,10 @@ public class Renderer {
         }
     }
 
-    public static void centerText(String text, Canvas graphics, int x, int y, Paint paint, int textSize, int color){
+    public static void centerText(String text, Canvas graphics, int x, int y, Paint paint, int textSize, int color, int alpha){
 
+        Paint.Style oldStyle = paint.getStyle();
+        paint.setStyle(Paint.Style.FILL);
         // Modify text size and color
         float old = paint.getTextSize();
         int oldColor = paint.getColor();
@@ -440,11 +443,16 @@ public class Renderer {
         y -= bounds.height() / 2;
 
         // Draw text (now centered)
+        int oldAlpha = paint.getAlpha();
+        paint.setAlpha(alpha);
         graphics.drawText(text, x, y, paint);
+
+        paint.setAlpha(oldAlpha);
 
         // Reset paint
         paint.setTextSize(old);
         paint.setColor(oldColor);
+        paint.setStyle(oldStyle);
     }
 
     public static void writeText(String text, Canvas graphics, int x, int y, Paint paint, int textSize, int color){
