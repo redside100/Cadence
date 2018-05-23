@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
+import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.Combo;
+import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
@@ -25,6 +27,7 @@ import me.andrewpeng.cadence.objects.Score;
 import me.andrewpeng.cadence.objects.ScoreMessage;
 import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.util.AssetLoader;
+import me.andrewpeng.cadence.util.ImageAsset;
 
 public class Conductor {
     int width, height;
@@ -65,7 +68,6 @@ public class Conductor {
     public static ArrayList<Beatmap> getBeatmapList(){
         return beatmapList;
     }
-
     public double getSongLength(){
         return songLength;
     }
@@ -96,6 +98,9 @@ public class Conductor {
                 if (note.getY1() > height) {
                     activeNotes.remove(note);
                     currentCombo = 0;
+                    FadingImageManager.fadingImages.clear();
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                            0, 15, 10).automate();
                 }
             }
         }
@@ -138,6 +143,7 @@ public class Conductor {
     public void pause(){
         mp.pause();
     }
+
     public void resume(){
         mp.start();
     }
@@ -169,6 +175,8 @@ public class Conductor {
 
         mp.setLooping(true);
         mp.start();
+
+        // Make sure to flag it as the preview
         preview = true;
     }
 
@@ -192,27 +200,14 @@ public class Conductor {
         metronome = new Metronome(this);
         mp.setLooping(false);
         mp.start();
+
+        // Flag playing
         playing = true;
 
-
-        // Test beatmap loading
-//        String name = "popcornfunk";
-//        beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
     }
 
-    // TODO change note drawing to be handled in renderer
-    public void render(Canvas graphics, Paint paint){
-//        if (playing){
-//            paint.setStyle(Paint.Style.FILL);
-//            paint.setColor(Color.WHITE);
-//            for (Note note : activeNotes){
-//                paint.setAlpha(note.getAlpha());
-//                graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
-//                paint.setAlpha(255);
-//            }
-//            paint.setStyle(Paint.Style.STROKE);
-//        }
-    }
+    // Note drawing is now handled in renderer
+    public void render(Canvas graphics, Paint paint){}
 
 
     // Spawns a note within a lane
@@ -243,20 +238,59 @@ public class Conductor {
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
                         note.getX1(), note.getX2(), note.getPadY1(), note.getPadY2())){
 
-                    int pad0 = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.35);
-                    // Note within score area (0.3 padding timing window)
+                    int pad0 = (int) (Math.abs(Renderer.scoreY2 - Renderer.scoreY1) * 0.4);
+
+                    // Note within score area (0.4 padding timing window)
                     if (scoreArea(note,pad0)) {
-                        note.fadeOut(15);
-                        // TODO: Fix bug where two is actually added when one note is hit and another empty space is hit
-                        if (pointerIndex == 0){
+
+                        // Check if fading (repetition check due to random multi touch bug)
+                        if (!note.fading){
+
+                            // Calculate overlap percentage
+                            double overlap = scorePercentage(note,pad0);
+
+                            note.fadeOut(15);
+
+                            // Add combo
                             currentCombo++;
+
+                            // Display combo if above 6
                             if (currentCombo > 6){
+                                // Clear previous combo text
                                 for (AnimatedText text : AnimatedTextManager.texts){
                                     if (text instanceof FadingText){
                                         text.destroy();
                                     }
                                 }
-                                new FadingText("Combo: " + currentCombo, Renderer.width / 2, Renderer.height / 2, 18, Color.WHITE, 12, 15);
+
+                                // Make it green if they have a high combo (100+)
+                                int color = Color.WHITE;
+                                if (currentCombo >= 100){
+                                    color = Color.GREEN;
+                                }
+
+                                new FadingText("Combo: " + currentCombo, Renderer.width / 2, Renderer.height / 2, 18, color, 12, 15);
+                            }
+
+                            // Clear any previous fading images (perfect, great, good, miss)
+                            FadingImageManager.fadingImages.clear();
+
+                            // Add score and show rating for each note
+                            // 0 - 80% overlap, 150 points
+                            if (overlap > 0 && overlap <= 0.8){
+                                currentScore += 150;
+                                new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                                        0, 15, 10).automate();
+
+                            }else if (overlap > 0.8 && overlap <= 0.92){ // 80 - 92% overlap, 250 points
+                                currentScore += 250;
+                                new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                                        0, 15, 10).automate();
+
+                            }else if (overlap > 0.92 && overlap <= 1){ // 92% - 100% overlap, 300 points
+                                currentScore += 300;
+                                new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                                        0, 15, 10).automate();
                             }
                         }
                     }
@@ -268,5 +302,9 @@ public class Conductor {
 
     public static boolean scoreArea(Note note, int pad) {
         return MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad);
+}
+    public static double scorePercentage(Note note, int pad){
+        return MainView.overlapPercent(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2);
+
     }
 }

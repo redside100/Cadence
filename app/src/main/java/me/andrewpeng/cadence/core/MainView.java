@@ -139,6 +139,16 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
     public static boolean inBounds(int x1, int x2, int y1, int y2, int ax1, int ax2, int ay1, int ay2){
         return x1 >= ax1 && x1 <= ax2 && y1 >= ay1 && y1 <= ay2 && x2 > ax1 && x2 < ax2 && y2 >= ay1 && y2 <= ay2;
     }
+    public static double overlapPercent(int x1, int x2, int y1, int y2, int ax1, int ax2, int ay1, int ay2){
+
+        // Calculate overlap percentage using areas
+        double areaOverlap = (Math.max(x1, ax1) - Math.min(x2, ax2)) * (Math.max(y1,ay1) - Math.min(y2, ay2));
+        double selfArea = (x2 - x1) * (y2 - y1);
+        if (selfArea > 0){
+            return areaOverlap / selfArea;
+        }
+        return -1;
+    }
 
 
     @Override

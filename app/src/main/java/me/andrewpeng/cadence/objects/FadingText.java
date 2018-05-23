@@ -28,16 +28,21 @@ public class FadingText extends AnimatedText{
     @Override
     public void tick(){
         super.tick();
+        // Check if fading (should always be)
         if (fadingIn){
+            // Since it's started fading in, check if it has reached its max alpha
             if (super.alpha == super.maxAlpha){
+                // Increment the counter until it hits its duration
                 counter++;
                 if (counter == duration){
+                    // Start the fade out process, change fadingIn flag
                     super.fadeOut(fadeTicks);
                     counter = 0;
                     fadingIn = false;
                 }
             }
         }else{
+            // Remove once done fading out
             counter++;
             if (counter == fadeTicks){
                 AnimatedTextManager.texts.remove(this);
