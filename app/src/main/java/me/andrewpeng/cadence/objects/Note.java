@@ -7,7 +7,7 @@ public class Note {
     private int x1, y1, x2, y2, speed;
     private int boundY1, boundY2;
     private int alpha;
-    boolean fading = false;
+    public boolean fading = false;
     private int fadeTick = 0, maxFadeTicks = 0;
     public Note(int x1, int y1, int x2, int y2, double yPad, int speed){
         this.x1 = x1;

@@ -193,7 +193,7 @@ public class Renderer {
                 }
 
                 //Score Value
-                centerText(Score.getScore() + "", graphics,width/2,height/16,paint,15,Color.WHITE, 255);
+                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,16,Color.WHITE, 255);
                 break;
         }
 
