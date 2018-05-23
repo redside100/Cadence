@@ -195,6 +195,13 @@ public class Renderer {
                 //Score Value
                 centerText(Score.getScore() + "", graphics,width/2,height/16,paint,15,Color.WHITE, 255);
                 break;
+
+            case RESULTS:
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND),0,0,paint);
+                switch (Conductor.currentScore) {
+                    
+                }
+
         }
 
         // Render animated text objects and buttons
