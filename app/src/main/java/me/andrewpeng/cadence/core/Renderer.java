@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FadingImage;
-import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.GradientManager;
@@ -25,9 +25,6 @@ import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
-import me.andrewpeng.cadence.objects.Score;
-import me.andrewpeng.cadence.objects.ScoreMessage;
-import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.objects.Spinner;
 import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
@@ -170,8 +167,8 @@ public class Renderer {
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
 
                 // Lines
-                paint.setColor(Color.WHITE);
-                paint.setStrokeWidth(MainView.scale((float) 1.2, graphics));
+                paint.setColor(Color.GRAY);
+                paint.setStrokeWidth(MainView.scale((float) 1.18, graphics));
                 for (int i = 0; i < 3; i++){
                     int quarter = width / 4;
                     graphics.drawLine(quarter + (quarter * i), 0, quarter + (quarter * i), height, paint);
@@ -182,18 +179,37 @@ public class Renderer {
                 graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
                 
                 if (conductor.playing){
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setColor(Color.WHITE);
                     for (Note note : Conductor.activeNotes){
+                        paint.setStyle(Paint.Style.FILL);
+
+                        // Set to note color
+                        paint.setColor(note.getColor());
                         paint.setAlpha(note.getAlpha());
-                        graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
+
+                        // Draw a rounded rectangle for the note
+                        float round = 0.1F;
+                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+
+                        // Draw black outline for the note
+                        paint.setStyle(Paint.Style.STROKE);
+                        paint.setColor(Color.BLACK);
+
+                        // Set alpha again (this must be done for some reason)
+                        paint.setAlpha(note.getAlpha());
+                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+
+                        // Reset paint color to white and alpha to max
+                        paint.setColor(Color.WHITE);
                         paint.setAlpha(255);
                     }
-                    paint.setStyle(Paint.Style.STROKE);
+                    // Reset paint style to fill
+                    paint.setStyle(Paint.Style.FILL);
                 }
 
-                //Score Value
-                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,16,Color.WHITE, 255);
+                // Score Value
+                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.WHITE, 255);
                 break;
 
             case RESULTS:
@@ -281,7 +297,7 @@ public class Renderer {
         GradientManager.tick();
         ParticleManager.tick();
         SpinnerManager.tick();
-        ScoreMessageManager.tick();
+//        ScoreMessageManager.tick();
         FadingImageManager.tick();
 
     }
@@ -314,7 +330,7 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
-        ScoreMessageManager.scoreMessages.clear();
+//        ScoreMessageManager.scoreMessages.clear();
         SpinnerManager.spinners.clear();
         FadingImageManager.fadingImages.clear();
 
@@ -404,13 +420,6 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
-
-
-                //Creates the score message on the side
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.9),0);
 
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
