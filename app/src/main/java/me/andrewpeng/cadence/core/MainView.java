@@ -83,7 +83,6 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                 case MotionEvent.ACTION_POINTER_DOWN:
                     for (int i = 0; i < e.getPointerCount(); i++){
                         conductor.touch(e, i);
-//                        ScoreMessageManager.touch(e, i);
                         GradientManager.touch(e, i);
                     }
                     break;

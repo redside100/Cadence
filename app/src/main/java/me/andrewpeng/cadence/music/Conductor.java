@@ -228,9 +228,19 @@ public class Conductor {
         double yPad = 0.4;
 
         // - 1/11th of height to compensate for spawning the note slightly out of vision
-        int beat = (int) (currentGeneralBeat % currentBeatmap.getSubBeats());
-        int color = Color.WHITE;
-        // TODO Add different color of note for different subbeats
+        int beat = currentGeneralBeat % (int) currentBeatmap.getSubBeats();
+        int color;
+        switch(beat){
+            case 0:
+                color = Color.rgb(255, 70, 70);
+                break;
+            case 2:
+                color = Color.rgb(70, 70, 255);
+                break;
+            default:
+                color = Color.YELLOW;
+        }
+
         Note note = new Note(x1, y1, x2, y2, yPad, MainView.speed((int) (height * 0.75 - height / 11), noteTravelTicks), color);
         activeNotes.add(note);
     }
@@ -284,7 +294,7 @@ public class Conductor {
                             FadingImageManager.fadingImages.clear();
 
                             // Add score and show rating for each note
-                            // 0 - 80% overlap, 150 points
+                            // 0 - 80% overlap, 200 points
                             if (overlap > 0 && overlap <= 0.8){
                                 nextScore += 200;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),

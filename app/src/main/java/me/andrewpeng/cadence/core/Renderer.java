@@ -32,7 +32,10 @@ import me.andrewpeng.cadence.util.ImageAsset;
 
 public class Renderer {
     public static int width, height;
+    public static boolean songStarting = false;
     public static int scoreX1, scoreX2, scoreY1, scoreY2;
+    private static int lineAnimationProgress = 0;
+    private static int scoreRectAnimationProgress = 0;
     public static ScreenState state = ScreenState.HOME;
 
     public static boolean transition = false;
@@ -55,13 +58,14 @@ public class Renderer {
         scoreX2 = (int) (width * 0.995);
         scoreY1 = (int) (height * 0.69);
         scoreY2 = (int) (height * 0.81);
+        scoreRectAnimationProgress = scoreX1;
         Renderer.state = state;
         Renderer.conductor = conductor;
     }
 
     public void render(Canvas graphics, Paint paint){
 
-        // Background
+        // Base background
         paint.setColor(Color.WHITE);
         graphics.drawRect(new Rect(0, 0, width, height), paint);
         switch(state){
@@ -164,19 +168,27 @@ public class Renderer {
 
                 // Probably gonna change this later TODO
 
-                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.PLAY_BACKGROUND), 0, 0, paint);
 
                 // Lines
-                paint.setColor(Color.GRAY);
+                paint.setColor(Color.BLACK);
                 paint.setStrokeWidth(MainView.scale((float) 1.18, graphics));
                 for (int i = 0; i < 3; i++){
                     int quarter = width / 4;
-                    graphics.drawLine(quarter + (quarter * i), 0, quarter + (quarter * i), height, paint);
+                    int lineHeight = height;
+                    if (songStarting){
+                        lineHeight = (int) (lineAnimationProgress - ((height * 0.1) * i));
+                    }
+                    graphics.drawLine(quarter + (quarter * i), 0, quarter + (quarter * i), lineHeight, paint);
                 }
 
                 // Score area
                 paint.setStyle(Paint.Style.STROKE);
-                graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+                if (songStarting){
+                    graphics.drawRect(new Rect(scoreX1, scoreY1, scoreRectAnimationProgress, scoreY2), paint);
+                }else{
+                    graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+                }
                 
                 if (conductor.playing){
                     for (Note note : Conductor.activeNotes){
@@ -209,7 +221,7 @@ public class Renderer {
                 }
 
                 // Score Value
-                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.WHITE, 255);
+                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.BLACK, 255);
                 break;
 
             case RESULTS:
@@ -288,6 +300,19 @@ public class Renderer {
                     transition = false;
                     MainView.enableTouch();
                 }
+            }
+        }
+
+        if (songStarting){
+            if (lineAnimationProgress < height * 1.2){
+                lineAnimationProgress += MainView.speed(height, 90);
+                if (scoreRectAnimationProgress < scoreX2){
+                    scoreRectAnimationProgress += MainView.speed(scoreX2 - scoreX1, 90);
+                }
+            }else{
+                songStarting = false;
+                lineAnimationProgress = 0;
+                scoreRectAnimationProgress = 0;
             }
         }
 
@@ -422,6 +447,8 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
 
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
+
+                songStarting = true;
                 break;
         }
     }

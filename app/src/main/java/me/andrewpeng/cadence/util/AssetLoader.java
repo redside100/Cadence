@@ -28,6 +28,7 @@ public class AssetLoader {
     private void load() {
         // Backgrounds
         images.put(ImageAsset.HOME_BACKGROUND, getImageAsset("backgrounds/main_background.png"));
+        images.put(ImageAsset.PLAY_BACKGROUND, getImageAsset("backgrounds/play_background.png"));
         images.put(ImageAsset.SPINNER_BORDER, getImageAsset("backgrounds/spinnerBorder.png"));
         images.put(ImageAsset.BLACK_BACKDROP, getImageAsset("backgrounds/blackBackdrop.png"));
 
