@@ -41,29 +41,32 @@ public class GradientManager {
      */
     public static void touch(MotionEvent e, int pointerIndex) {
 
-        //Error Check to make sure that this does not go through when the array is empty
-        try {
+        if (!Renderer.songStarting){
 
-            //Checks which lane the touch happened, and sets the gradient to be shown relative to the lane touched
-            if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                index = 0;
-                gradients.get(index).animate();
-            } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
-                index = 1;
-                gradients.get(index).animate();
-            } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), 3 * Renderer.scoreX1 / 4, 3 * Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                index = 2;
-                gradients.get(index).animate();
-            } else {
-                if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)) {
-                    index = 3;
+            //Error Check to make sure that this does not go through when the array is empty
+            try {
+
+                //Checks which lane the touch happened, and sets the gradient to be shown relative to the lane touched
+                if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
+                    index = 0;
                     gradients.get(index).animate();
+                } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
+                    index = 1;
+                    gradients.get(index).animate();
+                } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), 3 * Renderer.scoreX1 / 4, 3 * Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
+                    index = 2;
+                    gradients.get(index).animate();
+                } else {
+                    if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)) {
+                        index = 3;
+                        gradients.get(index).animate();
+                    }
                 }
+            }catch (IndexOutOfBoundsException e1) {
+
             }
-        }catch (IndexOutOfBoundsException e1) {
 
         }
-
     }
 
     /**

@@ -17,15 +17,11 @@ import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.objects.AnimatedText;
 import me.andrewpeng.cadence.objects.Beatmap;
-import me.andrewpeng.cadence.objects.Combo;
 import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
-import me.andrewpeng.cadence.objects.Score;
-import me.andrewpeng.cadence.objects.ScoreMessage;
-import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -33,7 +29,7 @@ public class Conductor {
     int width, height;
     public static ArrayList<Note> activeNotes = new ArrayList<>();
     public MediaPlayer mp = new MediaPlayer();
-    public int currentGeneralBeat = 0;
+    public static int currentGeneralBeat = 0;
     public static Beatmap currentBeatmap;
     public double songLength;
     public double beatLength;
@@ -45,6 +41,7 @@ public class Conductor {
 
     public static int currentCombo = 0;
     public static int maxCombo = 0;
+    public static int nextScore = 0;
     public static int currentScore = 0;
     public static int perfcount = 0;
     public static int greatcount = 0;
@@ -102,12 +99,19 @@ public class Conductor {
                 note.tick();
                 if (note.getY1() > height) {
                     activeNotes.remove(note);
+                } else if (note.getY1() > Renderer.scoreY2 && note.isValid()){
+                    // Miss
                     currentCombo = 0;
                     FadingImageManager.fadingImages.clear();
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
                             0, 15, 10).automate();
                     misscount++;
+                    note.setValid(false);
                 }
+            }
+            // Animate score
+            if (currentScore < nextScore){
+                currentScore += 50;
             }
         }
     }
@@ -163,6 +167,7 @@ public class Conductor {
         activeNotes.clear();
         currentGeneralBeat = 0;
         currentScore = 0;
+        nextScore = 0;
         currentCombo = 0;
     }
 
@@ -229,7 +234,20 @@ public class Conductor {
         double yPad = 0.4;
 
         // - 1/11th of height to compensate for spawning the note slightly out of vision
-        Note note = new Note(x1, y1, x2, y2, yPad, MainView.speed((int) (height * 0.75 - height / 11), noteTravelTicks));
+        int beat = currentGeneralBeat % (int) currentBeatmap.getSubBeats();
+        int color;
+        switch(beat){
+            case 0:
+                color = Color.rgb(255, 70, 70);
+                break;
+            case 2:
+                color = Color.rgb(70, 70, 255);
+                break;
+            default:
+                color = Color.YELLOW;
+        }
+
+        Note note = new Note(x1, y1, x2, y2, yPad, MainView.speed((int) (height * 0.75 - height / 11), noteTravelTicks), color);
         activeNotes.add(note);
     }
 
@@ -288,21 +306,21 @@ public class Conductor {
                             FadingImageManager.fadingImages.clear();
 
                             // Add score and show rating for each note
-                            // 0 - 80% overlap, 150 points
+                            // 0 - 80% overlap, 200 points
                             if (overlap > 0 && overlap <= 0.8){
-                                currentScore += 150;
+                                nextScore += 200;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
                                 goodcount++;
 
                             }else if (overlap > 0.8 && overlap <= 0.92){ // 80 - 92% overlap, 250 points
-                                currentScore += 250;
+                                nextScore += 250;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
                                 greatcount++;
 
                             }else if (overlap > 0.92 && overlap <= 1){ // 92% - 100% overlap, 300 points
-                                currentScore += 300;
+                                nextScore += 300;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
                                 perfcount++;

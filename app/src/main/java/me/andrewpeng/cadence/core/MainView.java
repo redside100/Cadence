@@ -12,9 +12,6 @@ import me.andrewpeng.cadence.managers.GradientManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.SpinnerManager;
-import me.andrewpeng.cadence.objects.ScoreMessageManager;
-import me.andrewpeng.cadence.objects.Spinner;
-import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
 
@@ -86,7 +83,6 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                 case MotionEvent.ACTION_POINTER_DOWN:
                     for (int i = 0; i < e.getPointerCount(); i++){
                         conductor.touch(e, i);
-                        ScoreMessageManager.touch(e, i);
                         GradientManager.touch(e, i);
                     }
                     break;

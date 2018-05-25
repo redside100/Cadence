@@ -5,6 +5,7 @@ package me.andrewpeng.cadence.util;
  */
 public enum ImageAsset {
     HOME_BACKGROUND,
+    PLAY_BACKGROUND,
     HOME_TITLE,
     SPINNER_BORDER,
     BLACK_BACKDROP,

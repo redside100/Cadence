@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.Image;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FadingImage;
-import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.GradientManager;
@@ -26,9 +26,6 @@ import me.andrewpeng.cadence.buttons.StateChangeButton;
 import me.andrewpeng.cadence.buttons.VolumeControlButton;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
-import me.andrewpeng.cadence.objects.Score;
-import me.andrewpeng.cadence.objects.ScoreMessage;
-import me.andrewpeng.cadence.objects.ScoreMessageManager;
 import me.andrewpeng.cadence.objects.Spinner;
 import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
@@ -36,7 +33,10 @@ import me.andrewpeng.cadence.util.ImageAsset;
 
 public class Renderer {
     public static int width, height;
+    public static boolean songStarting = false;
     public static int scoreX1, scoreX2, scoreY1, scoreY2;
+    private static int lineAnimationProgress = 0;
+    private static int scoreRectAnimationProgress = 0;
     public static ScreenState state = ScreenState.HOME;
 
     public static boolean transition = false;
@@ -59,13 +59,14 @@ public class Renderer {
         scoreX2 = (int) (width * 0.995);
         scoreY1 = (int) (height * 0.69);
         scoreY2 = (int) (height * 0.81);
+        scoreRectAnimationProgress = scoreX1;
         Renderer.state = state;
         Renderer.conductor = conductor;
     }
 
     public void render(Canvas graphics, Paint paint){
 
-        // Background
+        // Base background
         paint.setColor(Color.WHITE);
         graphics.drawRect(new Rect(0, 0, width, height), paint);
         switch(state){
@@ -168,33 +169,60 @@ public class Renderer {
 
                 // Probably gonna change this later TODO
 
-                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
+                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.PLAY_BACKGROUND), 0, 0, paint);
 
                 // Lines
-                paint.setColor(Color.WHITE);
-                paint.setStrokeWidth(MainView.scale((float) 1.2, graphics));
+                paint.setColor(Color.BLACK);
+                paint.setStrokeWidth(MainView.scale((float) 1.18, graphics));
                 for (int i = 0; i < 3; i++){
                     int quarter = width / 4;
-                    graphics.drawLine(quarter + (quarter * i), 0, quarter + (quarter * i), height, paint);
+                    int lineHeight = height;
+                    if (songStarting){
+                        lineHeight = (int) (lineAnimationProgress - ((height * 0.1) * i));
+                    }
+                    graphics.drawLine(quarter + (quarter * i), 0, quarter + (quarter * i), lineHeight, paint);
                 }
 
                 // Score area
                 paint.setStyle(Paint.Style.STROKE);
-                graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+                if (songStarting){
+                    graphics.drawRect(new Rect(scoreX1, scoreY1, scoreRectAnimationProgress, scoreY2), paint);
+                }else{
+                    graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
+                }
                 
                 if (conductor.playing){
-                    paint.setStyle(Paint.Style.FILL);
-                    paint.setColor(Color.WHITE);
                     for (Note note : Conductor.activeNotes){
+                        paint.setStyle(Paint.Style.FILL);
+
+                        // Set to note color
+                        paint.setColor(note.getColor());
                         paint.setAlpha(note.getAlpha());
-                        graphics.drawRect(new Rect(note.getX1(), note.getY1(), note.getX2(), note.getY2()), paint);
+
+                        // Draw a rounded rectangle for the note
+                        float round = 0.1F;
+                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+
+                        // Draw black outline for the note
+                        paint.setStyle(Paint.Style.STROKE);
+                        paint.setColor(Color.BLACK);
+
+                        // Set alpha again (this must be done for some reason)
+                        paint.setAlpha(note.getAlpha());
+                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+
+                        // Reset paint color to white and alpha to max
+                        paint.setColor(Color.WHITE);
                         paint.setAlpha(255);
                     }
-                    paint.setStyle(Paint.Style.STROKE);
+                    // Reset paint style to fill
+                    paint.setStyle(Paint.Style.FILL);
                 }
 
-                //Score Value
-                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,16,Color.WHITE, 255);
+                // Score Value
+                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.BLACK, 255);
                 break;
 
             case RESULTS:
@@ -297,13 +325,26 @@ public class Renderer {
             }
         }
 
+        if (songStarting){
+            if (lineAnimationProgress < height * 1.2){
+                lineAnimationProgress += MainView.speed(height, 90);
+                if (scoreRectAnimationProgress < scoreX2){
+                    scoreRectAnimationProgress += MainView.speed(scoreX2 - scoreX1, 90);
+                }
+            }else{
+                songStarting = false;
+                lineAnimationProgress = 0;
+                scoreRectAnimationProgress = 0;
+            }
+        }
+
         // Don't forget to tick managers
         AnimatedTextManager.tick();
         ButtonManager.tick();
         GradientManager.tick();
         ParticleManager.tick();
         SpinnerManager.tick();
-        ScoreMessageManager.tick();
+//        ScoreMessageManager.tick();
         FadingImageManager.tick();
 
     }
@@ -335,7 +376,7 @@ public class Renderer {
         ButtonManager.buttons.clear();
         GradientManager.gradients.clear();
         ParticleManager.particles.clear();
-        ScoreMessageManager.scoreMessages.clear();
+//        ScoreMessageManager.scoreMessages.clear();
         SpinnerManager.spinners.clear();
         FadingImageManager.fadingImages.clear();
 
@@ -426,14 +467,9 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
 
-
-                //Creates the score message on the side
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200),(int)(width*0.7),(int)(height*0.9),0);
-                new ScoreMessage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300),(int)(width*0.7),(int)(height*0.9),0);
-
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
+
+                songStarting = true;
                 break;
 
             case RESULTS:
