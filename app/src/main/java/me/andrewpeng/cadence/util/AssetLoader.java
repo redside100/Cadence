@@ -55,6 +55,16 @@ public class AssetLoader {
         images.put(ImageAsset.SCORE200, getImageAsset("scores/hit200.png"));
         images.put(ImageAsset.SCORE300, getImageAsset("scores/hit300.png"));
 
+        //Grades
+        images.put(ImageAsset.RANKINGA,getImageAsset("grades/rankingA.png"));
+        images.put(ImageAsset.RANKINGB,getImageAsset("grades/rankingB.png"));
+        images.put(ImageAsset.RANKINGC,getImageAsset("grades/rankingC.png"));
+        images.put(ImageAsset.RANKINGD,getImageAsset("grades/rankingD.png"));
+        images.put(ImageAsset.RANKINGS,getImageAsset("grades/rankingS.png"));
+
+        //Note skins
+        images.put(ImageAsset.NOTE1,getImageAsset("noteskins/note1.png"));
+
     }
 
     /**

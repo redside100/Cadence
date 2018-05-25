@@ -21,5 +21,11 @@ public enum ImageAsset {
     SCORE0,
     SCORE100,
     SCORE200,
-    SCORE300
+    SCORE300,
+    RANKINGA,
+    RANKINGB,
+    RANKINGC,
+    RANKINGD,
+    RANKINGS,
+    NOTE1
 }

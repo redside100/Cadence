@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.Image;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -198,9 +199,31 @@ public class Renderer {
 
             case RESULTS:
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND),0,0,paint);
+                centerText(Conductor.currentBeatmap.getName(),graphics, width/2,height/16,paint,15,Color.WHITE,255);
+                centerText(Conductor.currentBeatmap.getArtist(),graphics, width/2,height/15,paint,15,Color.WHITE,255);
                 switch (Conductor.currentScore) {
-                    
+                    case 10000:
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2,height/4,0).fadeIn(8);
+                        break;
+                    case 9000:
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,height/4,0).fadeIn(8);
+                        break;
+                    case 8000:
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,height/4,0).fadeIn(8);
+                        break;
+                    case 7000:
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,height/4,0).fadeIn(8);
+                        break;
+                    case 6000:
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,height/4,0).fadeIn(8);
+                        break;
                 }
+                //TODO Find max score and adjust position of messages
+                writeText("Perfect: " + Conductor.perfcount, graphics,width/2,height/2,paint,15,Color.WHITE);
+                writeText("Great: " + Conductor.greatcount, graphics,width/2,height/3,paint,15,Color.WHITE);
+                writeText("Good: " + Conductor.goodcount + "", graphics,width/2,height/4,paint,15,Color.WHITE);
+                writeText("Miss: " + Conductor.misscount + "", graphics,width/2,height/5,paint,15,Color.WHITE);
+                writeText("Max Combo: " + Conductor.maxCombo + "", graphics,width/2,height/6,paint,15,Color.WHITE);
 
         }
 
@@ -210,7 +233,6 @@ public class Renderer {
         GradientManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
         FadingImageManager.render(graphics, paint);
-//        ScoreMessageManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -289,7 +311,6 @@ public class Renderer {
     // This touch event is for action down
     public static void touch(MotionEvent e){
         ButtonManager.touch(e);
-        ParticleManager.touch(e);
 
         switch(state){
             case HOME:
@@ -396,7 +417,7 @@ public class Renderer {
 
                 //Creates a set of 16 particles to be used for animation
                 for(int i = 0; i <= 16; i++) {
-                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0,1);
+                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0);
                 }
 
                 //Creates the gradients that will appear if a finger has touched the score area
@@ -414,6 +435,10 @@ public class Renderer {
 
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
                 break;
+
+            case RESULTS:
+                //Returns user to the song selection after the results
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON),width / 2, (int) (height * 0.85),255, ScreenState.SONG_SELECTION);
         }
     }
 

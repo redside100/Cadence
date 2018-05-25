@@ -32,9 +32,9 @@ public class ParticleManager {
         }
     }
 
-    public static void touch(MotionEvent e){
+    public static void touch(MotionEvent e, int pointerIndex){
         try {
-            for(Particle particle: particles) {
+            /*for(Particle particle: particles) {
                 if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
                     particle.animate();
                 } else if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
@@ -43,6 +43,23 @@ public class ParticleManager {
                     particle.animate();
                 } else {
                     if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)) {
+                        particle.animate();
+                    }
+                }
+            }*/
+            for(Particle particle: particles) {
+                if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
+                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
+                    particle.animate();
+                } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
+                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
+                    particle.animate();
+                } else if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), 3 * Renderer.scoreX1 / 4, 3 * Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
+                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
+                    particle.animate();
+                } else {
+                    if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)) {
+                        particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
                         particle.animate();
                     }
                 }

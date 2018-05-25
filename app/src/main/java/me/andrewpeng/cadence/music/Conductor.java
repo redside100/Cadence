@@ -34,7 +34,7 @@ public class Conductor {
     public static ArrayList<Note> activeNotes = new ArrayList<>();
     public MediaPlayer mp = new MediaPlayer();
     public int currentGeneralBeat = 0;
-    public Beatmap currentBeatmap;
+    public static Beatmap currentBeatmap;
     public double songLength;
     public double beatLength;
     public int noteTravelTicks;
@@ -44,7 +44,12 @@ public class Conductor {
     public static int fxVolume = 100;
 
     public static int currentCombo = 0;
+    public static int maxCombo = 0;
     public static int currentScore = 0;
+    public static int perfcount = 0;
+    public static int greatcount = 0;
+    public static int goodcount = 0;
+    public static int misscount = 0;
 
     private Metronome metronome;
 
@@ -101,6 +106,7 @@ public class Conductor {
                     FadingImageManager.fadingImages.clear();
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
                             0, 15, 10).automate();
+                    misscount++;
                 }
             }
         }
@@ -232,7 +238,6 @@ public class Conductor {
         if (playing){
             // Check if touch in bounds of note
             ArrayList<Note> temp = new ArrayList<>(activeNotes);
-            ArrayList<Particle> temp1 = new ArrayList<>(ParticleManager.particles);
             for (Note note : temp){
                 // Touch within note
                 if (MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex),
@@ -242,6 +247,8 @@ public class Conductor {
 
                     // Note within score area (0.4 padding timing window)
                     if (scoreArea(note,pad0)) {
+
+                        ParticleManager.touch(e,pointerIndex);
 
                         // Check if fading (repetition check due to random multi touch bug)
                         if (!note.fading){
@@ -253,6 +260,11 @@ public class Conductor {
 
                             // Add combo
                             currentCombo++;
+
+                            //Save the user's max combo
+                            if(currentCombo >= maxCombo) {
+                                maxCombo = currentCombo;
+                            }
 
                             // Display combo if above 6
                             if (currentCombo > 6){
@@ -281,16 +293,19 @@ public class Conductor {
                                 currentScore += 150;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
+                                goodcount++;
 
                             }else if (overlap > 0.8 && overlap <= 0.92){ // 80 - 92% overlap, 250 points
                                 currentScore += 250;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
+                                greatcount++;
 
                             }else if (overlap > 0.92 && overlap <= 1){ // 92% - 100% overlap, 300 points
                                 currentScore += 300;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
+                                perfcount++;
                             }
                         }
                     }
