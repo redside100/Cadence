@@ -1,6 +1,12 @@
 package me.andrewpeng.cadence.music;
 
 
+import android.graphics.Color;
+
+import me.andrewpeng.cadence.core.MainView;
+import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.objects.Pulse;
+
 public class Metronome {
 
     private Conductor conductor;

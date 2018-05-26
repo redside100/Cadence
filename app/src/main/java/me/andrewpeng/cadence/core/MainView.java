@@ -8,6 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.managers.GradientManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.objects.Gradient;
@@ -85,6 +86,8 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                         conductor.touch(e, i);
                         GradientManager.touch(e, i);
                     }
+                    // For button animations (alpha change)
+                    ButtonManager.preTouch(e);
                     break;
 
                 // For renderer purposes (when the user lets go of the screen), usually for buttons

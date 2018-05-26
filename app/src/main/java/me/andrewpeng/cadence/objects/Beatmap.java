@@ -28,7 +28,7 @@ public class Beatmap {
     // AFD of wav/mp3 file
     public AssetFileDescriptor afd, afdPreview;
 
-    public Bitmap album;
+    public Bitmap album, background;
 
     /**
      * Create a new beatmap
@@ -38,9 +38,10 @@ public class Beatmap {
      * @param previewLocation Location where the preview wav file is located
      * @param album The album that the song will be put to
      */
-    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album){
+    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album, Bitmap background){
 
         this.album = album;
+        this.background = background;
 
         ArrayList<String> info = Reader.getTextContents(infoLocation);
         for (String line : info){
@@ -114,5 +115,6 @@ public class Beatmap {
     }
     public int getDifficulty(){ return difficulty; }
     public Bitmap getAlbumBitmap(){ return album; }
+    public Bitmap getBackgroundBitmap(){ return background; }
 
 }

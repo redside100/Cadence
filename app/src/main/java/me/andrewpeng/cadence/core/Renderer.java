@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 import me.andrewpeng.cadence.managers.FadingImageManager;
+import me.andrewpeng.cadence.managers.PulseManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
@@ -168,11 +169,16 @@ public class Renderer {
             case PLAY:
 
                 // Probably gonna change this later TODO
-
-                graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.PLAY_BACKGROUND), 0, 0, paint);
+                // Draw beatmap background
+                if (conductor.currentBeatmap != null){
+                    Bitmap background = conductor.currentBeatmap.getBackgroundBitmap();
+                    graphics.drawBitmap(background, 0, 0, paint);
+                }else{
+                    graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.PLAY_BACKGROUND), 0, 0, paint);
+                }
 
                 // Lines
-                paint.setColor(Color.BLACK);
+                paint.setColor(Color.WHITE);
                 paint.setStrokeWidth(MainView.scale((float) 1.18, graphics));
                 for (int i = 0; i < 3; i++){
                     int quarter = width / 4;
@@ -222,13 +228,18 @@ public class Renderer {
                 }
 
                 // Score Value
-                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.BLACK, 255);
+                centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.WHITE, 255);
                 break;
 
             case RESULTS:
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND),0,0,paint);
                 centerText(Conductor.currentBeatmap.getName(),graphics, width/2,height/16,paint,15,Color.WHITE,255);
                 centerText(Conductor.currentBeatmap.getArtist(),graphics, width/2,height/15,paint,15,Color.WHITE,255);
+
+                double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
+
+                // Determine range use if statements TODO
+
                 switch (Conductor.currentScore) {
                     case 10000:
                         new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2,height/4,0).fadeIn(8);
@@ -261,6 +272,7 @@ public class Renderer {
         GradientManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
         FadingImageManager.render(graphics, paint);
+        PulseManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
@@ -346,6 +358,7 @@ public class Renderer {
         SpinnerManager.tick();
 //        ScoreMessageManager.tick();
         FadingImageManager.tick();
+        PulseManager.tick();
 
     }
 
@@ -379,6 +392,7 @@ public class Renderer {
 //        ScoreMessageManager.scoreMessages.clear();
         SpinnerManager.spinners.clear();
         FadingImageManager.fadingImages.clear();
+        PulseManager.pulses.clear();
 
 
         if (conductor.playing || conductor.preview){

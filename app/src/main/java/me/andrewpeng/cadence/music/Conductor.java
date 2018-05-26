@@ -22,6 +22,7 @@ import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.Note;
 import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
+import me.andrewpeng.cadence.objects.Pulse;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.ImageAsset;
 
@@ -43,6 +44,9 @@ public class Conductor {
     public static int maxCombo = 0;
     public static int nextScore = 0;
     public static int currentScore = 0;
+
+    public static int lastScore = 0;
+
     public static int perfcount = 0;
     public static int greatcount = 0;
     public static int goodcount = 0;
@@ -63,7 +67,7 @@ public class Conductor {
         for (String name : names){
             beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
                     "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
-                    AssetLoader.getImageAsset("beatmaps/" + name + "/album.png")));
+                    AssetLoader.getImageAsset("beatmaps/" + name + "/album.png"), AssetLoader.getImageAsset("beatmaps/" + name + "/background.png")));
         }
     }
 
@@ -117,8 +121,10 @@ public class Conductor {
     }
 
     public void nextNote(){
+
         // When called by the metronome, spawn the notes of the corresponding row of the beatmap,
         // increment the main beat count
+
         int beats[][] = currentBeatmap.getBeats();
         if (currentGeneralBeat < beats.length){
             for (int i = 0; i < beats[currentGeneralBeat].length; i++){
@@ -128,6 +134,27 @@ public class Conductor {
             }
             currentGeneralBeat++;
         }
+        // Spawn pulse
+        if (currentGeneralBeat % currentBeatmap.getSubBeats() == 2){
+            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 350), 15, Color.WHITE);
+        }else if(currentBeatmap.getSubBeats() == 1){
+            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 350), 15, Color.WHITE);
+        }
+    }
+
+    public static int getMaxScore(){
+        if (currentBeatmap != null){
+            int count = 0;
+            for (int[] row : currentBeatmap.getBeats()){
+                for (int note : row){
+                    if (note == 1){
+                        count++;
+                    }
+                }
+            }
+            return count * 300;
+        }
+        return -1;
     }
 
     public static void setVolume(int newVol){
@@ -165,6 +192,9 @@ public class Conductor {
         playing = false;
         preview = false;
         activeNotes.clear();
+
+        lastScore = nextScore;
+
         currentGeneralBeat = 0;
         currentScore = 0;
         nextScore = 0;
@@ -205,7 +235,7 @@ public class Conductor {
 
         this.songLength = mp.getDuration() - beatmap.getStartOffset() - beatmap.getEndOffset();
         this.beatLength = 60000 / beatmap.getBPM() / beatmap.getSubBeats();
-        this.noteTravelTicks = (int) (90 / beatmap.getNoteSpeed());
+        this.noteTravelTicks = (int) Math.round((90 / beatmap.getNoteSpeed()));
 
         // Set up metronome to know when to spawn the next note
         metronome = new Metronome(this);

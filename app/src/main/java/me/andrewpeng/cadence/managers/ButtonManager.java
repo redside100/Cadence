@@ -49,6 +49,22 @@ public class ButtonManager {
                 // Trigger
                 button.trigger();
             }
+
+            // Reset alpha in case button was touched beforehand
+            button.setAlpha(255);
+        }
+    }
+
+    public static void preTouch(MotionEvent e){
+        // Loop through all active buttons
+        for (Button button : buttons){
+            // Check if the current button is being touched (pre touched)
+            if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(),
+                    button.getBoundX1(), button.getBoundX2(), button.getBoundY1(), button.getBoundY2())){
+                // This isn't when we want to trigger the button, we just want some visual feedback of the button being pressed
+                // Set the alpha slightly lower to allow transparency
+                button.setAlpha(200);
+            }
         }
     }
 }
