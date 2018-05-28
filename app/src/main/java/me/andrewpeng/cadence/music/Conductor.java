@@ -69,6 +69,7 @@ public class Conductor {
                     "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
                     AssetLoader.getImageAsset("beatmaps/" + name + "/album.png"), AssetLoader.getImageAsset("beatmaps/" + name + "/background.png")));
         }
+        // Sort beatmap list by difficulty (easy to hard)
     }
 
     public static ArrayList<Beatmap> getBeatmapList(){
@@ -136,9 +137,9 @@ public class Conductor {
         }
         // Spawn pulse
         if (currentGeneralBeat % currentBeatmap.getSubBeats() == 2){
-            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 350), 15, Color.WHITE);
+            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 380), 10, Color.WHITE);
         }else if(currentBeatmap.getSubBeats() == 1){
-            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 350), 15, Color.WHITE);
+            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 380), 10, Color.WHITE);
         }
     }
 
