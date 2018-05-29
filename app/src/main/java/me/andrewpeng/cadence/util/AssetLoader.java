@@ -81,7 +81,7 @@ public class AssetLoader {
             if (bitmap != null){
                 double x = bitmap.getWidth() * (double) width / originalWidth;
                 double y = bitmap.getHeight() * (double) height / originalHeight;
-                return Bitmap.createScaledBitmap(bitmap, (int) x, (int) y, true);
+                return Bitmap.createScaledBitmap(bitmap, (int) Math.round(x), (int) Math.round(y), true);
             }
         }catch(IOException e){
             System.out.println("Error opening bitmap: " + url);
