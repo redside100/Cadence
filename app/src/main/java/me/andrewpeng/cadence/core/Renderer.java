@@ -12,12 +12,15 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import me.andrewpeng.cadence.buttons.PauseButton;
+import me.andrewpeng.cadence.buttons.PlayButton;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.managers.PulseManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
+import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
@@ -196,35 +199,50 @@ public class Renderer {
                 }else{
                     graphics.drawRect(new Rect(scoreX1, scoreY1, scoreX2, scoreY2), paint);
                 }
-                
-                if (conductor.playing){
-                    for (Note note : Conductor.activeNotes){
+
+                for (Note note : Conductor.activeNotes){
                         paint.setStyle(Paint.Style.FILL);
 
-                        // Set to note color
-                        paint.setColor(note.getColor());
-                        paint.setAlpha(note.getAlpha());
+                    // Set to note color
+                    paint.setColor(note.getColor());
+                    paint.setAlpha(note.getAlpha());
 
-                        // Draw a rounded rectangle for the note
-                        float round = 0.1F;
-                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                    // Draw a rounded rectangle for the note
+                    float round = 0.1F;
+                    graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
                                 (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
 
-                        // Draw black outline for the note
-                        paint.setStyle(Paint.Style.STROKE);
-                        paint.setColor(Color.BLACK);
+                    // Draw black outline for the note
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setColor(Color.BLACK);
 
-                        // Set alpha again (this must be done for some reason)
-                        paint.setAlpha(note.getAlpha());
-                        graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
+                    // Set alpha again (this must be done for some reason)
+                    paint.setAlpha(note.getAlpha());
+                    graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
                                 (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
 
-                        // Reset paint color to white and alpha to max
-                        paint.setColor(Color.WHITE);
-                        paint.setAlpha(255);
-                    }
+                    // Reset paint color to white and alpha to max
+                    paint.setColor(Color.WHITE);
+                    paint.setAlpha(255);
+                }
                     // Reset paint style to fill
                     paint.setStyle(Paint.Style.FILL);
+
+                new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width/2,height/2,0, true);
+
+                if(PauseButton.paused) {
+                    //Pause screen box
+                    paint.setColor(Color.GRAY);
+                    paint.setStyle(Paint.Style.FILL);
+                    graphics.drawRect((int) (width * 0.25), (int) (height * 0.35), (int) (width * 0.75), (int) (height * 0.55), paint);
+
+                    paint.setColor(Color.BLACK);
+                    paint.setStyle(Paint.Style.STROKE);
+                    graphics.drawRect((int) (width * 0.25), (int) (height * 0.35), (int) (width * 0.75), (int) (height * 0.55), paint);
+
+                    paint.setStyle(Paint.Style.FILL);
+
+                    new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width/2,height/2,255, true);
                 }
 
                 // Score Value
@@ -238,26 +256,24 @@ public class Renderer {
 
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
 
-                // Determine range use if statements TODO
-
-                switch (Conductor.currentScore) {
-                    case 10000:
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2,height/4,0).fadeIn(8);
-                        break;
-                    case 9000:
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,height/4,0).fadeIn(8);
-                        break;
-                    case 8000:
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,height/4,0).fadeIn(8);
-                        break;
-                    case 7000:
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,height/4,0).fadeIn(8);
-                        break;
-                    case 6000:
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,height/4,0).fadeIn(8);
-                        break;
+                if(Conductor.currentScore >= 10000) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2,height/4,0).fadeIn(8);
                 }
-                //TODO Find max score and adjust position of messages
+                else if(Conductor.currentScore < 10000 && Conductor.currentScore >= 9000) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,height/4,0).fadeIn(8);
+                }
+                else if(Conductor.currentScore < 9000 && Conductor.currentScore >= 8000) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,height/4,0).fadeIn(8);
+                }
+                else if(Conductor.currentScore < 8000 && Conductor.currentScore >= 7000) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,height/4,0).fadeIn(8);
+                }
+                else {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,height/4,0).fadeIn(8);
+                }
+
+                //TODO fix positions
+                writeText(percentage + "", graphics, width/2,height/2,paint,15,Color.WHITE);
                 writeText("Perfect: " + Conductor.perfcount, graphics,width/2,height/2,paint,15,Color.WHITE);
                 writeText("Great: " + Conductor.greatcount, graphics,width/2,height/3,paint,15,Color.WHITE);
                 writeText("Good: " + Conductor.goodcount + "", graphics,width/2,height/4,paint,15,Color.WHITE);
@@ -481,7 +497,8 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
 
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
+                //new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
+                new PauseButton((AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON)),(int)(width*0.08),(int)(height*0.05),255,false);
 
                 songStarting = true;
                 break;
