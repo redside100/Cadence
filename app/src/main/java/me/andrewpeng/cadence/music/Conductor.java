@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import me.andrewpeng.cadence.buttons.PauseButton;
+import me.andrewpeng.cadence.buttons.PlayButton;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
@@ -95,6 +97,10 @@ public class Conductor {
 
 
     public void tick() {
+        if(PauseButton.paused) {
+            playing = false;
+            pause();
+        }
         if (playing){
             // Update metronome, and look for any notes that are going out of bounds
             metronome.update();
@@ -118,6 +124,13 @@ public class Conductor {
                 currentScore += 50;
             }
         }
+        //TODO Smth wrong with play causing mp to be null
+        /*if(!PlayButton.paused) {
+            if(!mp.isPlaying()) {
+                resume();
+                playing = true;
+            }
+        }*/
     }
 
     public void nextNote(){
