@@ -11,8 +11,7 @@ import android.view.MotionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import me.andrewpeng.cadence.buttons.PauseButton;
-import me.andrewpeng.cadence.buttons.PlayButton;
+import me.andrewpeng.cadence.buttons.ActionButton;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
@@ -22,7 +21,6 @@ import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.Note;
-import me.andrewpeng.cadence.objects.Particle;
 import me.andrewpeng.cadence.managers.ParticleManager;
 import me.andrewpeng.cadence.objects.Pulse;
 import me.andrewpeng.cadence.util.AssetLoader;
@@ -98,9 +96,13 @@ public class Conductor {
 
 
     public void tick() {
-        if(PauseButton.paused) {
+        if(ActionButton.pause) {
             playing = false;
             pause();
+        }
+        if(ActionButton.resume) {
+            playing = true;
+            resume();
         }
         if (playing){
             // Update metronome, and look for any notes that are going out of bounds
@@ -255,6 +257,9 @@ public class Conductor {
         metronome = new Metronome(this);
         mp.setLooping(false);
         mp.start();
+
+        //For skipping music
+        mp.seekTo(62000);
 
         // Flag playing
         playing = true;

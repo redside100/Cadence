@@ -201,7 +201,7 @@ public class Renderer {
                 }
 
                 for (Note note : Conductor.activeNotes){
-                        paint.setStyle(Paint.Style.FILL);
+                    paint.setStyle(Paint.Style.FILL);
 
                     // Set to note color
                     paint.setColor(note.getColor());
@@ -210,7 +210,7 @@ public class Renderer {
                     // Draw a rounded rectangle for the note
                     float round = 0.1F;
                     graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
-                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+                            (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
 
                     // Draw black outline for the note
                     paint.setStyle(Paint.Style.STROKE);
@@ -219,14 +219,14 @@ public class Renderer {
                     // Set alpha again (this must be done for some reason)
                     paint.setAlpha(note.getAlpha());
                     graphics.drawRoundRect(new RectF(note.getX1(), note.getY1(), note.getX2(), note.getY2()),
-                                (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
+                            (note.getX2() - note.getX1()) * round, (note.getY2() - note.getY1()) * round, paint);
 
                     // Reset paint color to white and alpha to max
                     paint.setColor(Color.WHITE);
                     paint.setAlpha(255);
                 }
-                    // Reset paint style to fill
-                    paint.setStyle(Paint.Style.FILL);
+                // Reset paint style to fill
+                paint.setStyle(Paint.Style.FILL);
 
                 new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width/2,height/2,0, true);
 
@@ -458,7 +458,23 @@ public class Renderer {
                 //new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
 
                 // Get all the available beatmaps, and compile their names into a list
-               ArrayList<Beatmap> maps = Conductor.getBeatmapList();
+                ArrayList<Beatmap> maps = Conductor.getBeatmapList();
+
+                //Sort by difficulty
+                for(int i = 0;i < maps.size();i ++) {
+                    int smalldiff = i;
+                    for(int j = i + 1;j < maps.size(); j++) {
+                        if(maps.get(j).getDifficulty() < maps.get(smalldiff).getDifficulty()) {
+                            smalldiff = j;
+                        }
+                    }
+                    if(smalldiff != i) {
+                        Beatmap temp = maps.get(i);
+                        maps.set(i,maps.get(smalldiff));
+                        maps.set(smalldiff, temp);
+                    }
+                }
+
                 String[] list = new String[maps.size()];
 
                 for (int i = 0; i < Conductor.getBeatmapList().size(); i++){
