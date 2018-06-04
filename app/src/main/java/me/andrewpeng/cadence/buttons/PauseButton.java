@@ -12,11 +12,10 @@ import me.andrewpeng.cadence.objects.Button;
 
 public class PauseButton extends Button{
 
-    public static boolean paused;
+    public static boolean paused = false;
 
-    public PauseButton(Bitmap bitmap, int x, int y, int alpha, boolean paused) {
+    public PauseButton(Bitmap bitmap, int x, int y, int alpha) {
         super(bitmap,x,y,alpha);
-        this.paused = paused;
     }
 
     public void trigger() {
