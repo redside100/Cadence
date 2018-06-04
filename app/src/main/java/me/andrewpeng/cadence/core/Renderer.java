@@ -6,21 +6,18 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.media.Image;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import me.andrewpeng.cadence.buttons.PauseButton;
-import me.andrewpeng.cadence.buttons.PlayButton;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.managers.PulseManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
-import me.andrewpeng.cadence.objects.Button;
 import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
@@ -228,23 +225,6 @@ public class Renderer {
                 // Reset paint style to fill
                 paint.setStyle(Paint.Style.FILL);
 
-                new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width/2,height/2,0, true);
-
-                if(PauseButton.paused) {
-                    //Pause screen box
-                    paint.setColor(Color.GRAY);
-                    paint.setStyle(Paint.Style.FILL);
-                    graphics.drawRect((int) (width * 0.25), (int) (height * 0.35), (int) (width * 0.75), (int) (height * 0.55), paint);
-
-                    paint.setColor(Color.BLACK);
-                    paint.setStyle(Paint.Style.STROKE);
-                    graphics.drawRect((int) (width * 0.25), (int) (height * 0.35), (int) (width * 0.75), (int) (height * 0.55), paint);
-
-                    paint.setStyle(Paint.Style.FILL);
-
-                    new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width/2,height/2,255, true);
-                }
-
                 // Score Value
                 centerText(Conductor.currentScore + "", graphics,width/2,height/16,paint,18, Color.WHITE, 255);
                 break;
@@ -274,20 +254,20 @@ public class Renderer {
 
                 //TODO fix positions
                 writeText(percentage + "", graphics, width/2,height/2,paint,15,Color.WHITE);
-                writeText("Perfect: " + Conductor.perfcount, graphics,width/2,height/2,paint,15,Color.WHITE);
-                writeText("Great: " + Conductor.greatcount, graphics,width/2,height/3,paint,15,Color.WHITE);
-                writeText("Good: " + Conductor.goodcount + "", graphics,width/2,height/4,paint,15,Color.WHITE);
-                writeText("Miss: " + Conductor.misscount + "", graphics,width/2,height/5,paint,15,Color.WHITE);
+                writeText("Perfect: " + Conductor.perfCount, graphics,width/2,height/2,paint,15,Color.WHITE);
+                writeText("Great: " + Conductor.greatCount, graphics,width/2,height/3,paint,15,Color.WHITE);
+                writeText("Good: " + Conductor.goodCount + "", graphics,width/2,height/4,paint,15,Color.WHITE);
+                writeText("Miss: " + Conductor.missCount + "", graphics,width/2,height/5,paint,15,Color.WHITE);
                 writeText("Max Combo: " + Conductor.maxCombo + "", graphics,width/2,height/6,paint,15,Color.WHITE);
 
         }
 
         // Render animated text objects and buttons
+        FadingImageManager.render(graphics, paint);
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
-        FadingImageManager.render(graphics, paint);
         PulseManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
@@ -372,7 +352,6 @@ public class Renderer {
         GradientManager.tick();
         ParticleManager.tick();
         SpinnerManager.tick();
-//        ScoreMessageManager.tick();
         FadingImageManager.tick();
         PulseManager.tick();
 
@@ -514,7 +493,7 @@ public class Renderer {
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
 
                 //new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.08), (int) (height * 0.05), 255, ScreenState.HOME);
-                new PauseButton((AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON)),(int)(width*0.08),(int)(height*0.05),255,false);
+                new PauseButton(AssetLoader.getImageAssetFromMemory(ImageAsset.PAUSE_BUTTON),(int)(width*0.08),(int)(height*0.05),255);
 
                 songStarting = true;
                 break;

@@ -42,7 +42,8 @@ public class ButtonManager {
      */
     public static void touch(MotionEvent e){
         // Loop through all active buttons
-        for (Button button : buttons){
+        ArrayList<Button> activeButtons = new ArrayList<>(buttons);
+        for (Button button : activeButtons){
             // Check if the current button is being touched
             if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(),
                     button.getBoundX1(), button.getBoundX2(), button.getBoundY1(), button.getBoundY2())){
@@ -57,7 +58,8 @@ public class ButtonManager {
 
     public static void preTouch(MotionEvent e){
         // Loop through all active buttons
-        for (Button button : buttons){
+        ArrayList<Button> activeButtons = new ArrayList<>(buttons);
+        for (Button button : activeButtons){
             // Check if the current button is being touched (pre touched)
             if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(),
                     button.getBoundX1(), button.getBoundX2(), button.getBoundY1(), button.getBoundY2())){
