@@ -28,13 +28,13 @@ import me.andrewpeng.cadence.util.ImageAsset;
 public class Conductor {
     int width, height;
     public static ArrayList<Note> activeNotes = new ArrayList<>();
-    public MediaPlayer mp = new MediaPlayer();
+    public static MediaPlayer mp = new MediaPlayer();
     public static int currentGeneralBeat = 0;
     public static Beatmap currentBeatmap;
     public double songLength;
     public double beatLength;
     public int noteTravelTicks;
-    public boolean playing = false;
+    public static boolean playing = false;
     public boolean preview = false;
     public static int volume = 100;
     public static int fxVolume = 100;
@@ -46,12 +46,13 @@ public class Conductor {
 
     public static int lastScore = 0;
 
-    public static int perfcount = 0;
-    public static int greatcount = 0;
-    public static int goodcount = 0;
-    public static int misscount = 0;
+    public static int perfCount = 0;
+    public static int greatCount = 0;
+    public static int goodCount = 0;
+    public static int missCount = 0;
 
     private Metronome metronome;
+    public static boolean paused = false;
 
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
@@ -95,7 +96,11 @@ public class Conductor {
 
 
     public void tick() {
+<<<<<<< HEAD
         if (playing){
+=======
+        if (playing && !paused){
+>>>>>>> 1cde3f8a0a8bf40ca620ea5da00b6728d0e4df47
             // Update metronome, and look for any notes that are going out of bounds
             metronome.update();
             ArrayList<Note> temp = new ArrayList<>(activeNotes);
@@ -109,7 +114,7 @@ public class Conductor {
                     FadingImageManager.fadingImages.clear();
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
                             0, 15, 10).automate();
-                    misscount++;
+                    missCount++;
                     note.setValid(false);
                 }
             }
@@ -131,7 +136,6 @@ public class Conductor {
 
         // When called by the metronome, spawn the notes of the corresponding row of the beatmap,
         // increment the main beat count
-
         int beats[][] = currentBeatmap.getBeats();
         if (currentGeneralBeat < beats.length){
             for (int i = 0; i < beats[currentGeneralBeat].length; i++){
@@ -184,12 +188,14 @@ public class Conductor {
         return fxVolume;
     }
 
-    public void pause(){
+    public static void pause(){
         mp.pause();
+        paused = true;
     }
 
-    public void resume(){
+    public static void resume(){
         mp.start();
+        paused = false;
     }
 
     public void stop(){
@@ -199,6 +205,7 @@ public class Conductor {
         playing = false;
         preview = false;
         activeNotes.clear();
+        paused = false;
 
         lastScore = nextScore;
 
@@ -206,6 +213,10 @@ public class Conductor {
         currentScore = 0;
         nextScore = 0;
         currentCombo = 0;
+        missCount = 0;
+        goodCount = 0;
+        greatCount = 0;
+        perfCount = 0;
     }
 
     public void playPreview(Beatmap beatmap){
@@ -249,6 +260,12 @@ public class Conductor {
         mp.setLooping(false);
         mp.start();
 
+<<<<<<< HEAD
+=======
+        //For skipping music
+//        mp.seekTo(62000);
+
+>>>>>>> 1cde3f8a0a8bf40ca620ea5da00b6728d0e4df47
         // Flag playing
         playing = true;
 
@@ -290,7 +307,7 @@ public class Conductor {
 
 
     public void touch(MotionEvent e, int pointerIndex){
-        if (playing){
+        if (playing && !paused){
             // Check if touch in bounds of note
             ArrayList<Note> temp = new ArrayList<>(activeNotes);
             for (Note note : temp){
@@ -348,19 +365,19 @@ public class Conductor {
                                 nextScore += 200;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
-                                goodcount++;
+                                goodCount++;
 
                             }else if (overlap > 0.8 && overlap <= 0.92){ // 80 - 92% overlap, 250 points
                                 nextScore += 250;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
-                                greatcount++;
+                                greatCount++;
 
                             }else if (overlap > 0.92 && overlap <= 1){ // 92% - 100% overlap, 300 points
                                 nextScore += 300;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
-                                perfcount++;
+                                perfCount++;
                             }
                         }
                     }

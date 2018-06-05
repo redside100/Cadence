@@ -41,7 +41,7 @@ public class GradientManager {
      */
     public static void touch(MotionEvent e, int pointerIndex) {
 
-        if (!Renderer.songStarting){
+        if (!Renderer.songStarting && !Conductor.paused){
 
             //Error Check to make sure that this does not go through when the array is empty
             try {

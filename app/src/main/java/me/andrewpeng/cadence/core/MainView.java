@@ -110,11 +110,9 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
     }
 
     public void resume(){
-        conductor.resume();
         loop.paused = false;
     }
     public void pause(){
-        conductor.pause();
         loop.paused = true;
     }
 

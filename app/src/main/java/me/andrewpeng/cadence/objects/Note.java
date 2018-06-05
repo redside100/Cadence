@@ -31,10 +31,12 @@ public class Note {
                 destroy();
             }
         }else{
-            y1 += speed;
-            y2 += speed;
-            boundY1 += speed;
-            boundY2 += speed;
+            if (!Conductor.paused){
+                y1 += speed;
+                y2 += speed;
+                boundY1 += speed;
+                boundY2 += speed;
+            }
         }
     }
 

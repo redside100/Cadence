@@ -31,6 +31,7 @@ public class AssetLoader {
         images.put(ImageAsset.PLAY_BACKGROUND, getImageAsset("backgrounds/play_background.png"));
         images.put(ImageAsset.SPINNER_BORDER, getImageAsset("backgrounds/spinnerBorder.png"));
         images.put(ImageAsset.BLACK_BACKDROP, getImageAsset("backgrounds/blackBackdrop.png"));
+        images.put(ImageAsset.BLACK_TINT, getImageAsset("backgrounds/blackTint.png"));
 
         // Buttons
         images.put(ImageAsset.TEST_BUTTON, getImageAsset("buttons/testButton.png"));
@@ -40,6 +41,9 @@ public class AssetLoader {
         images.put(ImageAsset.OK_BUTTON, getImageAsset("buttons/ok.png"));
         images.put(ImageAsset.LEFT_ARROW_BUTTON, getImageAsset("buttons/leftArrow.png"));
         images.put(ImageAsset.RIGHT_ARROW_BUTTON, getImageAsset("buttons/rightArrow.png"));
+        images.put(ImageAsset.PAUSE_BUTTON, getImageAsset("buttons/pause.png"));
+        images.put(ImageAsset.RESUME_BUTTON, getImageAsset("buttons/resume.png"));
+        images.put(ImageAsset.EXIT_BUTTON, getImageAsset("buttons/exit.png"));
 
         // Icons
         images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));

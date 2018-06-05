@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import me.andrewpeng.cadence.music.Conductor;
+
 public class MainActivity extends Activity {
 
     private MainView mainView;
@@ -33,11 +35,17 @@ public class MainActivity extends Activity {
         super.onResume();
         refocus();
         mainView.resume();
+        if (Conductor.mp != null && Conductor.playing){
+            Conductor.mp.start();
+        }
     }
     @Override
     public void onPause(){
         super.onPause();
         mainView.pause();
+        if (Conductor.mp != null && Conductor.playing){
+            Conductor.mp.pause();
+        }
     }
 
     // Handle all back button presses for each screen state
