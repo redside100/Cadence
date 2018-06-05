@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import me.andrewpeng.cadence.buttons.ActionButton;
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
@@ -96,14 +95,6 @@ public class Conductor {
 
 
     public void tick() {
-        if(ActionButton.pause) {
-            playing = false;
-            pause();
-        }
-        if(ActionButton.resume) {
-            playing = true;
-            resume();
-        }
         if (playing){
             // Update metronome, and look for any notes that are going out of bounds
             metronome.update();
@@ -257,9 +248,6 @@ public class Conductor {
         metronome = new Metronome(this);
         mp.setLooping(false);
         mp.start();
-
-        //For skipping music
-        mp.seekTo(62000);
 
         // Flag playing
         playing = true;

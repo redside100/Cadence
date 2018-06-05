@@ -16,7 +16,7 @@ public class Particle extends Entity{
     public Bitmap bitmap;
     public int x, y;
     public int ax1, ax2, ay1, ay2;
-    public int speed;
+    public int speed,angle;
     public double directionx;
     public double directiony;
 
@@ -33,13 +33,18 @@ public class Particle extends Entity{
         this.bitmap = bitmap;
         this.x = x - bitmap.getWidth() / 2;
         this.y = y - bitmap.getHeight() / 2;
+
         ax1 = this.x;
         ay1 = this.y;
         ax2 = ax1 + bitmap.getWidth();
         ay2 = ay1 + bitmap.getHeight();
+
         this.speed = (int)(Math.random()*4+1);
-        this.directionx = Math.sin(Math.random())*speed;
-        this.directiony = Math.cos(Math.random())*speed;
+
+        angle = (int)(Math.random());
+        this.directionx = Math.sin(angle)*speed;
+        this.directiony = Math.cos(angle)*speed;
+
         ParticleManager.particles.add(this);
     }
 
@@ -91,7 +96,10 @@ public class Particle extends Entity{
     }
 
     public boolean isDead() {
-        return !alive;
+        if(getAlpha() <= 0) {
+            alive = false;
+        }
+        return alive;
     }
 
     public void destroy() {
