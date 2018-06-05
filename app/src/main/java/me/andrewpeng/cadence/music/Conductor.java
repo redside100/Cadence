@@ -96,40 +96,32 @@ public class Conductor {
 
 
     public void tick() {
-<<<<<<< HEAD
-        if (playing){
-=======
-        if (playing && !paused){
->>>>>>> 1cde3f8a0a8bf40ca620ea5da00b6728d0e4df47
-            // Update metronome, and look for any notes that are going out of bounds
-            metronome.update();
-            ArrayList<Note> temp = new ArrayList<>(activeNotes);
-            for (Note note : temp) {
-                note.tick();
-                if (note.getY1() > height) {
-                    activeNotes.remove(note);
-                } else if (note.getY1() > Renderer.scoreY2 && note.isValid()){
-                    // Miss
-                    currentCombo = 0;
-                    FadingImageManager.fadingImages.clear();
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
-                            0, 15, 10).automate();
-                    missCount++;
-                    note.setValid(false);
+
+        if (playing) {
+            if (playing && !paused) {
+                // Update metronome, and look for any notes that are going out of bounds
+                metronome.update();
+                ArrayList<Note> temp = new ArrayList<>(activeNotes);
+                for (Note note : temp) {
+                    note.tick();
+                    if (note.getY1() > height) {
+                        activeNotes.remove(note);
+                    } else if (note.getY1() > Renderer.scoreY2 && note.isValid()) {
+                        // Miss
+                        currentCombo = 0;
+                        FadingImageManager.fadingImages.clear();
+                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                                0, 15, 10).automate();
+                        missCount++;
+                        note.setValid(false);
+                    }
+                }
+                // Animate score
+                if (currentScore < nextScore) {
+                    currentScore += 50;
                 }
             }
-            // Animate score
-            if (currentScore < nextScore){
-                currentScore += 50;
-            }
         }
-        //TODO Smth wrong with play causing mp to be null
-        /*if(!PlayButton.paused) {
-            if(!mp.isPlaying()) {
-                resume();
-                playing = true;
-            }
-        }*/
     }
 
     public void nextNote(){
@@ -259,13 +251,11 @@ public class Conductor {
         metronome = new Metronome(this);
         mp.setLooping(false);
         mp.start();
-
-<<<<<<< HEAD
-=======
+        
         //For skipping music
 //        mp.seekTo(62000);
 
->>>>>>> 1cde3f8a0a8bf40ca620ea5da00b6728d0e4df47
+
         // Flag playing
         playing = true;
 
