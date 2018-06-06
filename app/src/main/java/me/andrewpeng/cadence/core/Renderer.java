@@ -231,34 +231,20 @@ public class Renderer {
 
             case RESULTS:
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND),0,0,paint);
-                centerText(Conductor.currentBeatmap.getName(),graphics, width/2,height/16,paint,15,Color.WHITE,255);
-                centerText(Conductor.currentBeatmap.getArtist(),graphics, width/2,height/15,paint,15,Color.WHITE,255);
+                centerText(Conductor.currentBeatmap.getName(),graphics, width/2, (int) (height * 0.08),paint,20,Color.WHITE,255);
+                centerText(Conductor.currentBeatmap.getArtist(),graphics, width/2, (int) (height * 0.11) ,paint,15,Color.WHITE,255);
 
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
 
-                if(Conductor.currentScore >= 10000) {
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2,height/4,0).fadeIn(8);
-                }
-                else if(Conductor.currentScore < 10000 && Conductor.currentScore >= 9000) {
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,height/4,0).fadeIn(8);
-                }
-                else if(Conductor.currentScore < 9000 && Conductor.currentScore >= 8000) {
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,height/4,0).fadeIn(8);
-                }
-                else if(Conductor.currentScore < 8000 && Conductor.currentScore >= 7000) {
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,height/4,0).fadeIn(8);
-                }
-                else {
-                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,height/4,0).fadeIn(8);
-                }
 
                 //TODO fix positions
-                writeText(percentage + "", graphics, width/2,height/2,paint,15,Color.WHITE);
-                writeText("Perfect: " + Conductor.perfCount, graphics,width/2,height/2,paint,15,Color.WHITE);
-                writeText("Great: " + Conductor.greatCount, graphics,width/2,height/3,paint,15,Color.WHITE);
-                writeText("Good: " + Conductor.goodCount + "", graphics,width/2,height/4,paint,15,Color.WHITE);
-                writeText("Miss: " + Conductor.missCount + "", graphics,width/2,height/5,paint,15,Color.WHITE);
-                writeText("Max Combo: " + Conductor.maxCombo + "", graphics,width/2,height/6,paint,15,Color.WHITE);
+                centerText("Score: " + Conductor.lastScore + "/" + Conductor.getMaxScore(), graphics, width / 2, (int) (height * 0.47), paint, 17, Color.WHITE, 255);
+                centerText("Percentage: " + (int) (percentage * 100) + "%", graphics, width/2,(int) (height * 0.52), paint,17,Color.WHITE, 255);
+                centerText("Perfect: " + Conductor.perfCount, graphics,width/2,(int) (height * 0.57), paint,17, Color.rgb(251, 251, 121), 255);
+                centerText("Great: " + Conductor.greatCount, graphics,width/2,(int) (height * 0.62), paint,17, Color.rgb(45, 253, 45), 255);
+                centerText("Good: " + Conductor.goodCount + "", graphics,width/2,(int) (height * 0.67), paint,17, Color.rgb(15, 107, 245), 255);
+                centerText("Miss: " + Conductor.missCount + "", graphics,width/2,(int) (height * 0.72), paint,17, Color.rgb(250, 81, 88), 255);
+                centerText("Max Combo: " + Conductor.maxCombo + "", graphics,width/2, (int) (height * 0.77), paint,17, Color.WHITE, 255);
 
         }
 
@@ -433,13 +419,11 @@ public class Renderer {
 
             case SONG_SELECTION:
 
-                // For now, just have a button that plays the only beatmap available (popcorn funk)
-                //new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, height / 2, 255, ScreenState.PLAY);
 
                 // Get all the available beatmaps, and compile their names into a list
                 ArrayList<Beatmap> maps = Conductor.getBeatmapList();
 
-                //Sort by difficulty
+                //Sort by difficulty (selection sort)
                 for(int i = 0;i < maps.size();i ++) {
                     int smalldiff = i;
                     for(int j = i + 1;j < maps.size(); j++) {
@@ -483,11 +467,11 @@ public class Renderer {
 
                 //Creates a set of 16 particles to be used for animation
                 for(int i = 0; i <= 16; i++) {
-                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0);
+                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),0,(int)(height*0.45),0);
                 }
 
                 //Creates the gradients that will appear if a finger has touched the score area
-                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width*0,(int)(height * 0.497),9,0, false);
+                new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 0,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/2,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 3*width/4,(int)(height * 0.497),9,0, false);
@@ -499,8 +483,25 @@ public class Renderer {
                 break;
 
             case RESULTS:
+                double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
+                if (percentage >= 0.95 && percentage <= 1) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2, (int) (height * 0.27),0).fadeIn(70);
+                }
+                else if (percentage >= 0.80 && percentage <= 0.94) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,(int) (height * 0.27),0).fadeIn(70);
+                }
+                else if (percentage >= 0.70 && percentage <= 0.79) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,(int) (height * 0.27),0).fadeIn(70);
+                }
+                else if (percentage >= 0.60 && percentage <= 0.69) {
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,(int) (height * 0.27),0).fadeIn(70);
+                }
+                else{
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,(int) (height * 0.27),0).fadeIn(70);
+                }
+
                 //Returns user to the song selection after the results
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON),width / 2, (int) (height * 0.85),255, ScreenState.SONG_SELECTION);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON),width / 2, (int) (height * 0.87),255, ScreenState.SONG_SELECTION);
         }
     }
 
