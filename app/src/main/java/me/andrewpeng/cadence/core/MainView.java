@@ -63,6 +63,7 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
 
         // Load beatmaps (add twice for now, to get a full list)
         conductor.initBeatmaps();
+<<<<<<< HEAD
         conductor.initBeatmaps();
 
         init();
@@ -129,6 +130,8 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         }catch (IOException e) {
 
         }
+=======
+>>>>>>> 810aefcff0b0f09d9f4b7d7a24da7969b7612b65
     }
 
 

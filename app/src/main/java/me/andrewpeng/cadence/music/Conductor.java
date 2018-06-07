@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
 import me.andrewpeng.cadence.core.Renderer;
+import me.andrewpeng.cadence.core.ScreenState;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.objects.AnimatedText;
@@ -95,30 +96,27 @@ public class Conductor {
 
 
     public void tick() {
-
-        if (playing) {
-            if (playing && !paused) {
-                // Update metronome, and look for any notes that are going out of bounds
-                metronome.update();
-                ArrayList<Note> temp = new ArrayList<>(activeNotes);
-                for (Note note : temp) {
-                    note.tick();
-                    if (note.getY1() > height) {
-                        activeNotes.remove(note);
-                    } else if (note.getY1() > Renderer.scoreY2 && note.isValid()) {
-                        // Miss
-                        currentCombo = 0;
-                        FadingImageManager.fadingImages.clear();
-                        new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
-                                0, 15, 10).automate();
-                        missCount++;
-                        note.setValid(false);
-                    }
+        if (playing && !paused) {
+            // Update metronome, and look for any notes that are going out of bounds
+            metronome.update();
+            ArrayList<Note> temp = new ArrayList<>(activeNotes);
+            for (Note note : temp) {
+                note.tick();
+                if (note.getY1() > height) {
+                    activeNotes.remove(note);
+                } else if (note.getY1() > Renderer.scoreY2 && note.isValid()) {
+                    // Miss
+                    currentCombo = 0;
+                    FadingImageManager.fadingImages.clear();
+                    new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE0), Renderer.width / 2, (int) (Renderer.height * 0.6),
+                            0, 15, 10).automate();
+                    missCount++;
+                    note.setValid(false);
                 }
-                // Animate score
-                if (currentScore < nextScore) {
-                    currentScore += 50;
-                }
+            }
+            // Animate score
+            if (currentScore < nextScore) {
+                currentScore += 50;
             }
         }
     }
@@ -192,22 +190,26 @@ public class Conductor {
     public void stop(){
         mp.stop();
         mp.reset();
+
+        // Remove completion listener
+        mp.setOnCompletionListener(null);
+
+        // Reset metronome, and flags
         metronome = null;
         playing = false;
         preview = false;
-        activeNotes.clear();
         paused = false;
+
+        // Clear any notes that are still active
+        activeNotes.clear();
 
         lastScore = nextScore;
 
+        // Reset all variables (except for last score, and note ranking counts)
         currentGeneralBeat = 0;
         currentScore = 0;
         nextScore = 0;
         currentCombo = 0;
-        missCount = 0;
-        goodCount = 0;
-        greatCount = 0;
-        perfCount = 0;
     }
 
     public void playPreview(Beatmap beatmap){
@@ -232,6 +234,13 @@ public class Conductor {
 
     public void loadMap(Beatmap beatmap){
 
+        // Reset counts
+        missCount = 0;
+        goodCount = 0;
+        greatCount = 0;
+        perfCount = 0;
+        maxCombo = 0;
+
         this.currentBeatmap = beatmap;
         // Load beatmap song into media player
         AssetFileDescriptor afd = beatmap.getSongAFD();
@@ -251,13 +260,29 @@ public class Conductor {
         mp.setLooping(false);
         mp.start();
 
+<<<<<<< HEAD
+=======
+        // Set the completion listener to auto clean up and proceed to results after a song is finished
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                cleanUp();
+            }
+        });
+        
+>>>>>>> 810aefcff0b0f09d9f4b7d7a24da7969b7612b65
         //For skipping music
-//        mp.seekTo(62000);
+//        mp.seekTo(240000);
 
 
         // Flag playing
         playing = true;
 
+    }
+
+    public void cleanUp(){
+        stop();
+        Renderer.changeState(ScreenState.RESULTS);
     }
 
     // Note drawing is now handled in renderer
