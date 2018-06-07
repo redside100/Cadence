@@ -8,16 +8,22 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Reader {
 
     private static AssetManager assets;
+    private static Context context;
 
     public Reader(Context context){
         assets = context.getAssets();
+        this.context = context;
     }
 
     /**
@@ -52,6 +58,45 @@ public class Reader {
             System.out.println("Error opening text file: " + url);
         }
         return lines;
+    }
+
+    public static void save(ArrayList<String> info, String fileName){
+        try{
+            // Create temp file
+            File temp = new File(context.getFilesDir(), "temp.ini");
+            if (!temp.exists()){
+                temp.createNewFile();
+            }else{
+                System.out.println("Error saving! Temp file already exists... weird.");
+                return;
+            }
+
+            // Open output stream, writer, and buffered writer
+            FileOutputStream outputStream = context.openFileOutput("temp.ini", Context.MODE_PRIVATE);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream, "UTF-8");
+            BufferedWriter bufferedWriter = new BufferedWriter(outputWriter);
+
+            for (String line : info){
+                bufferedWriter.write(line + "\n");
+            }
+
+            // Close writers and streams
+            bufferedWriter.close();
+            outputWriter.close();
+            outputStream.close();
+
+            // Delete old file, then rename the temp file to the new file
+            File save = new File(context.getFilesDir(), fileName);
+            if (save.exists()){
+                save.delete();
+                temp.renameTo(save);
+                System.out.println("File saved, named " + fileName);
+            }else{
+                System.out.println("Error saving, file doesn't exist!");
+                return;
+            }
+
+        }catch(IOException e){}
     }
 
     /**
