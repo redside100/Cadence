@@ -473,6 +473,10 @@ public class Renderer {
 
             case PLAY:
 
+                //Creates a set of 16 particles to be used for animation
+                /*for(int i = 0; i <= 16; i++) {
+                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width*0,(int)(height*0.45),0);
+                }*/
                 // TODO fix everything ;-;
 //                String name = "popcornfunk";
 //                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
@@ -480,11 +484,6 @@ public class Renderer {
 
                 Beatmap beatmap = Conductor.getBeatmapList().get(songSelectionPosition);
                 conductor.loadMap(beatmap);
-
-                //Creates a set of 16 particles to be used for animation
-                for(int i = 0; i <= 16; i++) {
-                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),width*0,(int)(height*0.45),0);
-                }
 
                 //Creates the gradients that will appear if a finger has touched the score area
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width*0,(int)(height * 0.497),9,0, false);

@@ -53,7 +53,7 @@ public class Conductor {
 
     private Metronome metronome;
     public static boolean paused = false;
-
+    public static String[] names = {"popcornfunk", "shelter", "test"};
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
     public Conductor(int width, int height){
@@ -63,7 +63,6 @@ public class Conductor {
 
     // MUST INITIALIZE AFTER READER IS INITIALIZED
     public void initBeatmaps(){
-        String[] names = {"popcornfunk", "shelter", "test"};
         for (String name : names){
             beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
                     "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
@@ -251,7 +250,7 @@ public class Conductor {
         metronome = new Metronome(this);
         mp.setLooping(false);
         mp.start();
-        
+
         //For skipping music
 //        mp.seekTo(62000);
 

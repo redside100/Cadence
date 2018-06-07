@@ -28,11 +28,6 @@ public class ParticleManager {
     public static void tick() {
         ArrayList<Particle> temp = new ArrayList<>(particles);
         for(Particle particle: temp) {
-            if(particle.isAnimating) {
-                if(particle.isDead()) {
-                    particle.destroy();
-                }
-            }
             particle.tick();
         }
     }
@@ -41,7 +36,8 @@ public class ParticleManager {
         try {
             if(MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
                 for(Particle particle: particles) {
-                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
+                    System.out.println(e.getX(pointerIndex) + ":" + e.getY(pointerIndex));
+                    particle.setPosition((int)e.getX(),(int)e.getY());
                     particle.animate();
                 }
             }
