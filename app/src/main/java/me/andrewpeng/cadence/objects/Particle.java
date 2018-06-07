@@ -73,7 +73,7 @@ public class Particle extends Entity{
                 super.alpha -= (255 / maxFadeTick);
                 fadeTick++;
             } else {
-                destroy();
+                super.alpha = 0;
                 isAnimating = false;
             }
             y += directiony;

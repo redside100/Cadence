@@ -8,10 +8,19 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import me.andrewpeng.cadence.util.IO;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.managers.GradientManager;
 import me.andrewpeng.cadence.music.Conductor;
-import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.SpinnerManager;
 import me.andrewpeng.cadence.util.AssetLoader;
 import me.andrewpeng.cadence.util.Reader;
@@ -20,7 +29,6 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
     int height, width;
     private Renderer renderer;
     private Conductor conductor;
-    private Gradient gradient;
     private Loop loop;
     public Typeface font;
     public static boolean canTouch = true;
@@ -55,6 +63,28 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
 
         // Load beatmaps (add twice for now, to get a full list)
         conductor.initBeatmaps();
+        conductor.initBeatmaps();
+
+        init();
+    }
+
+    private void init() {
+        File save = new File(getContext().getFilesDir(),"save.ini");
+
+        try {
+            if (save.exists()) {
+
+                save.createNewFile();
+                ArrayList<String> info = new ArrayList<String>();
+                for(int i = 0;i < Conductor.names.length;i ++) {
+                    String index = Conductor.names[i];
+                    info.add("beatmap_" + index + ": N/A");
+                }
+
+            }
+        }catch (IOException e) {
+
+        }
     }
 
     @Override

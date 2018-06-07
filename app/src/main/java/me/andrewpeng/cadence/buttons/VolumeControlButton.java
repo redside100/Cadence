@@ -32,12 +32,14 @@ public class VolumeControlButton extends Button {
                 Conductor.setFxVolume(Conductor.getFxVolume() + 10);
             }else{
                 Conductor.setVolume(Conductor.getVolume() + 10);
+                Conductor.mp.setVolume(Conductor.getVolume(),Conductor.getVolume());
             }
         }else{
             if (fx){
                 Conductor.setFxVolume(Conductor.getFxVolume() - 10);
             }else{
                 Conductor.setVolume(Conductor.getVolume() - 10);
+                Conductor.mp.setVolume(Conductor.getVolume(),Conductor.getVolume());
             }
         }
     }

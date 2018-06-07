@@ -54,7 +54,7 @@ public class Conductor {
 
     private Metronome metronome;
     public static boolean paused = false;
-
+    public static String[] names = {"popcornfunk", "shelter", "test"};
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
     public Conductor(int width, int height){
@@ -64,7 +64,6 @@ public class Conductor {
 
     // MUST INITIALIZE AFTER READER IS INITIALIZED
     public void initBeatmaps(){
-        String[] names = {"popcornfunk", "shelter", "test"};
         for (String name : names){
             beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
                     "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
@@ -261,6 +260,8 @@ public class Conductor {
         mp.setLooping(false);
         mp.start();
 
+<<<<<<< HEAD
+=======
         // Set the completion listener to auto clean up and proceed to results after a song is finished
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -269,6 +270,7 @@ public class Conductor {
             }
         });
         
+>>>>>>> 810aefcff0b0f09d9f4b7d7a24da7969b7612b65
         //For skipping music
 //        mp.seekTo(240000);
 
