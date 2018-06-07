@@ -80,57 +80,12 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                     String index = Conductor.names[i];
                     info.add("beatmap_" + index + ": N/A");
                 }
-                
-                save(getContext(), info);
-
 
             }
         }catch (IOException e) {
 
         }
     }
-
-    public static void save(Context context, ArrayList<String> info) {
-        try {
-            File temp = new File(context.getFilesDir(),"temp.ini");
-
-            if(!temp.exists()) {
-                temp.createNewFile();
-            }
-            else {
-                System.out.println("Temporary file exists...");
-                return;
-            }
-
-            FileOutputStream outputStream = context.openFileOutput("temp.ini",Context.MODE_PRIVATE);
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"UTF-8");
-            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
-
-            for(String line: info) {
-                if(line != null) {
-                    bufferedWriter.write(line + "\n");
-                }
-            }
-
-            bufferedWriter.close();
-            outputStream.close();
-            outputStreamWriter.close();
-
-            File save = new File(context.getFilesDir(),"save.ini");
-
-            if(save.exists()) {
-                save.delete();
-                temp.renameTo(save);
-            }
-            else {
-                System.out.println("Oh.");
-                return;
-            }
-        }catch (IOException e) {
-
-        }
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
