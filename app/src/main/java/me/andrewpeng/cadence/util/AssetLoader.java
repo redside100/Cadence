@@ -44,6 +44,10 @@ public class AssetLoader {
         images.put(ImageAsset.PAUSE_BUTTON, getImageAsset("buttons/pause.png"));
         images.put(ImageAsset.RESUME_BUTTON, getImageAsset("buttons/resume.png"));
         images.put(ImageAsset.EXIT_BUTTON, getImageAsset("buttons/exit.png"));
+        images.put(ImageAsset.BLUE_BUTTON, getImageAsset("buttons/blueButton.png"));
+        images.put(ImageAsset.ERASE_BUTTON, getImageAsset("buttons/eraseButton.png"));
+        images.put(ImageAsset.SELECT_BUTTON, getImageAsset("buttons/select.png"));
+        images.put(ImageAsset.BACK_BUTTON, getImageAsset("buttons/back.png"));
 
         // Icons
         images.put(ImageAsset.MUSIC_NOTE_ICON, getImageAsset("icons/musicNote.png"));

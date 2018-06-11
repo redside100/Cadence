@@ -85,6 +85,7 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                 info.add("level: 1");
                 info.add("musicVolume: 100");
                 info.add("fxVolume: 100");
+                info.add("judgeDifficulty: Normal");
 
                 Reader.save(info, "save.ini");
 
@@ -103,6 +104,8 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
                         Conductor.volume = Integer.parseInt(value);
                     } else if (key.equals("fxVolume")){
                         Conductor.fxVolume = Integer.parseInt(value);
+                    } else if (key.equals("judgeDifficulty")){
+                        Conductor.judgeDifficulty = value;
                     }
                 }
             }

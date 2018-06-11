@@ -11,9 +11,9 @@ public class PlayerData {
     public static int level = 1;
     public static void addXp(int amount){
         xp += amount;
-        if (xp >= 1000){
+        if (xp >= 100){
             level += 1;
-            xp -= 1000;
+            xp -= 100;
         }
     }
     public static void saveAll(){
@@ -26,7 +26,27 @@ public class PlayerData {
         info.add("level: " + level);
         info.add("musicVolume: " + Conductor.volume);
         info.add("fxVolume: " + Conductor.fxVolume);
+        info.add("judgeDifficulty: " + Conductor.judgeDifficulty);
         Reader.save(info, "save.ini");
+    }
+
+    public static void reset(){
+        Conductor.volume = 100;
+        Conductor.fxVolume = 100;
+        Conductor.judgeDifficulty = "Normal";
+
+        grades.clear();
+
+        ArrayList<String> info = new ArrayList<>();
+        for(int i = 0;i < Conductor.names.length;i ++) {
+            String index = Conductor.names[i];
+            info.add("beatmap_" + index + ": N/A");
+            grades.add("N/A");
+        }
+        xp = 0;
+        level = 0;
+
+        saveAll();
     }
 
 }

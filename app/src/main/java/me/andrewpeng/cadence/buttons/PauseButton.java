@@ -27,12 +27,18 @@ public class PauseButton extends Button{
     }
 
     public void trigger() {
+
+        // Set pause state
         if (!Conductor.paused){
+
             Conductor.pause();
+
+            // Create tint background, and buttons
             new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.BLACK_TINT), width / 2, height / 2, 0).fadeIn(25);
             new PlayButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RESUME_BUTTON),width / 2,height / 2, 255);
             new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.EXIT_BUTTON),width / 2,(int) (height * 0.65), 255, ScreenState.MENU);
-            // Floating text
+
+            // Floating title
             new FloatingText("Paused", width / 2, (int) (height * 0.3), 25, Color.WHITE, 240, (int) (height * 0.01), 255);
         }
     }

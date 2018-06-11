@@ -32,36 +32,5 @@ public class ParticleManager {
         }
     }
 
-    public static void touch(MotionEvent e, int pointerIndex){
-        try {
-            if(MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                for(Particle particle: particles) {
-                    System.out.println(e.getX(pointerIndex) + ":" + e.getY(pointerIndex));
-                    particle.setPosition((int)e.getX(),(int)e.getY());
-                    particle.animate();
-                }
-            }
-            else if(MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
-                for(Particle particle: particles) {
-                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
-                    particle.animate();
-                }
-            }
-            else if(MainView.inBounds((int) e.getX(pointerIndex), (int) e.getX(pointerIndex), (int) e.getY(pointerIndex), (int) e.getY(pointerIndex), 3 * Renderer.scoreX1 / 4, 3 * Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                for(Particle particle:particles) {
-                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
-                    particle.animate();
-                }
-            }
-            else if(MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)){
-                for(Particle particle: particles) {
-                    particle.setPosition((int)e.getX(pointerIndex),(int)e.getY(pointerIndex));
-                    particle.animate();
-                }
-            }
-        }catch (IndexOutOfBoundsException e1) {
-
-        }
-    }
     }
 

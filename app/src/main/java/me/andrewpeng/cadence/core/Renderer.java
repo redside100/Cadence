@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import me.andrewpeng.cadence.buttons.EraseDataButton;
+import me.andrewpeng.cadence.buttons.JudgeDifficultyButton;
 import me.andrewpeng.cadence.buttons.PauseButton;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.managers.PulseManager;
@@ -19,6 +21,7 @@ import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FadingImage;
+import me.andrewpeng.cadence.objects.FadingText;
 import me.andrewpeng.cadence.objects.FloatingText;
 import me.andrewpeng.cadence.objects.Gradient;
 import me.andrewpeng.cadence.managers.GradientManager;
@@ -53,6 +56,8 @@ public class Renderer {
     public static Spinner songSelectionSpinner = null;
     public static int songSelectionPosition = 0;
 
+    public static Context context;
+
     public Renderer(Context context, int width, int height, ScreenState state, Conductor conductor){
         Renderer.width = width;
         Renderer.height = height;
@@ -63,6 +68,7 @@ public class Renderer {
         scoreRectAnimationProgress = scoreX1;
         Renderer.state = state;
         Renderer.conductor = conductor;
+        this.context = context;
     }
 
     public void render(Canvas graphics, Paint paint){
@@ -75,45 +81,61 @@ public class Renderer {
 
                 // Outer space background + title
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
+                centerText("CADENCE", graphics, width / 2, height / 5, paint, 45, Color.WHITE, 255);
                 break;
 
             case MENU:
 
                 // Outer space background, title, and footers
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CADENCE", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
-                centerText("v1.0 Alpha", graphics, (int) (width * 0.155), (int) (height * 0.99), paint, 17, Color.WHITE, 255);
-                centerText("ICS4U", graphics, (int) (width * 0.9), (int) (height * 0.99), paint, 17, Color.WHITE, 255);
+                centerText("CADENCE", graphics, width / 2, height / 5, paint, 45, Color.WHITE, 255);
+                centerText("v1.1 Beta", graphics, (int) (width * 0.14), (int) (height * 0.98), paint, 17, Color.WHITE, 255);
+                centerText("ICS4U", graphics, (int) (width * 0.9), (int) (height * 0.98), paint, 17, Color.WHITE, 255);
                 break;
 
             case SETTINGS:
 
                 // Outer space background, title, and options
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("SETTINGS", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
-                writeText("Music Volume", graphics, (int) (width * 0.15), (int) (height * 0.3), paint, 20, Color.WHITE);
-                writeText("FX Volume", graphics, (int) (width * 0.15), (int) (height * 0.4), paint, 20, Color.WHITE);
-                writeText("Judge Difficulty", graphics, (int) (width * 0.15), (int) (height * 0.5), paint, 20, Color.WHITE);
-                writeText("Erase Data (!)", graphics, (int) (width * 0.15), (int) (height * 0.6), paint, 20, Color.rgb(255, 100, 100));
-                writeText("Misc", graphics, (int) (width * 0.15), (int) (height * 0.7), paint, 20, Color.WHITE);
+                centerText("SETTINGS", graphics, width / 2, height / 5, paint, 45, Color.WHITE, 255);
+                writeText("Music Volume", graphics, (int) (width * 0.12), (int) (height * 0.3), paint, 20, Color.WHITE);
+                writeText("FX Volume", graphics, (int) (width * 0.12), (int) (height * 0.4), paint, 20, Color.WHITE);
+                writeText("Judge Difficulty", graphics, (int) (width * 0.12), (int) (height * 0.5), paint, 20, Color.WHITE);
+                writeText("Erase Data (!)", graphics, (int) (width * 0.12), (int) (height * 0.6), paint, 20, Color.WHITE);
+                writeText("Misc", graphics, (int) (width * 0.12), (int) (height * 0.7), paint, 20, Color.WHITE);
 
                 // Volume display
-                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.315), paint, 20, Color.WHITE, 255);
+                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.3), paint, 20, Color.WHITE, 255);
 
                 // FX vol display
-                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.415), paint, 20, Color.WHITE, 255);
+                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.4), paint, 20, Color.WHITE, 255);
+
+                // Judge Difficulty display
+
+                int color = Color.YELLOW;
+                switch(Conductor.judgeDifficulty){
+                    case "Easy":
+                        color = Color.GREEN;
+                        break;
+                    case "Normal":
+                        color = Color.YELLOW;
+                        break;
+                    case "Hard":
+                        color = Color.RED;
+                        break;
+                }
+                centerText(Conductor.judgeDifficulty, graphics, (int) (width * 0.68), (int) (height * 0.5), paint, 20, color, 255);
                 break;
 
             case CREDITS:
 
                 // Outer space background, title, and credits
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
-                centerText("CREDITS", graphics, width / 2, height / 4, paint, 45, Color.WHITE, 255);
+                centerText("CREDITS", graphics, width / 2, height / 5, paint, 45, Color.WHITE, 255);
                 centerText("PROGRAMMING", graphics, width / 2, (int) (height * 0.35), paint, 20, Color.WHITE, 255);
                 centerText("Andrew Peng, Isaac Leung", graphics, width / 2, (int) (height * 0.4), paint, 15, Color.WHITE, 255);
-                centerText("STORY", graphics, width / 2, (int) (height * 0.5), paint, 20, Color.WHITE, 255);
-                centerText("Zelia Fang", graphics, width / 2, (int) (height * 0.55), paint, 15, Color.WHITE, 255);
+                centerText("CLIENT", graphics, width / 2, (int) (height * 0.5), paint, 20, Color.WHITE, 255);
+                centerText("Simon Zeng", graphics, width / 2, (int) (height * 0.55), paint, 15, Color.WHITE, 255);
                 centerText("MANAGER", graphics, width / 2, (int) (height * 0.65), paint, 20, Color.WHITE, 255);
                 centerText("Gordon Roller", graphics, width / 2, (int) (height * 0.7), paint, 15, Color.WHITE, 255);
                 break;
@@ -130,8 +152,7 @@ public class Renderer {
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.SPINNER_BORDER), 0, height / 2, paint);
 
                 // Note count
-                centerBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.MUSIC_NOTE_ICON), graphics, (int) (width * 0.08), (int) (height * 0.05), paint);
-                writeText(GameValues.getMusicNotes() + "/" + GameValues.getNextMusicNoteGoal(), graphics, (int) (width * 0.15), (int) (height * 0.065), paint, 20, Color.WHITE);
+                centerText("Lv. " + PlayerData.level + " [" + PlayerData.xp + "/100]", graphics, width / 2, (int) (height * 0.06), paint, 16, Color.WHITE, 255);
 
                 // Song name and artist
                 if (songSelectionSpinner != null){
@@ -142,26 +163,26 @@ public class Renderer {
 
                     paint.setTextAlign(Paint.Align.RIGHT);
                     String difficulty = "";
-                    int color = 0;
+                    int difficultyColor = 0;
                     switch(currentBeatmap.getDifficulty()){
                         case 0:
                             difficulty = "Novice";
-                            color = Color.MAGENTA;
+                            difficultyColor = Color.MAGENTA;
                             break;
                         case 1:
                             difficulty = "Easy";
-                            color = Color.GREEN;
+                            difficultyColor = Color.GREEN;
                             break;
                         case 2:
                             difficulty = "Medium";
-                            color = Color.YELLOW;
+                            difficultyColor = Color.YELLOW;
                             break;
                         case 3:
                             difficulty = "Hard";
-                            color = Color.RED;
+                            difficultyColor = Color.RED;
                             break;
                     }
-                    writeText(difficulty, graphics, (int) (width * 0.975), (int) (height * 0.45), paint, 16, color);
+                    writeText(difficulty, graphics, (int) (width * 0.975), (int) (height * 0.45), paint, 16, difficultyColor);
                     writeText("Grade: " + PlayerData.grades.get(songSelectionSpinner.getPosition()), graphics, (int) (width * 0.975), (int) (height * 0.49), paint, 16, Color.WHITE);
                     paint.setTextAlign(Paint.Align.LEFT);
                 }
@@ -415,6 +436,13 @@ public class Renderer {
                 // FX volume control buttons
                 new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.385), 255, false, true);
                 new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.385), 255, true, true);
+
+                // Judge difficulty control button
+                new JudgeDifficultyButton(AssetLoader.getImageAssetFromMemory(ImageAsset.BLUE_BUTTON), (int) (width * 0.88), (int) (height * 0.485), 255);
+
+                // Erase data button
+                new EraseDataButton(AssetLoader.getImageAssetFromMemory(ImageAsset.ERASE_BUTTON), (int) (width * 0.75), (int) (height * 0.585), 255, context);
+
                 break;
 
             case SONG_SELECTION:
@@ -450,8 +478,11 @@ public class Renderer {
                 // Be sure the update the spinner to make the conductor play the preview
                 updateSpinner();
 
+                // Select button
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.SELECT_BUTTON), (int) (width * 0.84), (int) (height * 0.05), 255, ScreenState.PLAY);
+
                 // Back button
-                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.92), (int) (height * 0.05), 255, ScreenState.PLAY);
+                new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.BACK_BUTTON), (int) (width * 0.16), (int) (height * 0.05), 255, ScreenState.MENU);
 
                 break;
 
@@ -469,11 +500,6 @@ public class Renderer {
                 Beatmap beatmap = Conductor.getBeatmapList().get(songSelectionPosition);
                 conductor.loadMap(beatmap);
 
-                //Creates a set of 16 particles to be used for animation
-                for(int i = 0; i <= 16; i++) {
-                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),0,(int)(height*0.45),0);
-                }
-
                 //Creates the gradients that will appear if a finger has touched the score area
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 0,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
@@ -489,31 +515,41 @@ public class Renderer {
             case RESULTS:
 
                 // TODO only set grades if they are higher than before
+
+                int xp = 3;
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
                 String previousGrade = PlayerData.grades.get(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap));
 
+                // Increase xp reward for difficulty of beatmap
+                xp += Conductor.currentBeatmap.getDifficulty() * 3;
+
                 // For each case, check for the percentage and only overwrite the user's best grade if it is higher
+                // Increase exp reward for each result
                 if (percentage >= 0.95 && percentage <= 1) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2, (int) (height * 0.27),0).fadeIn(70);
                     PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "S");
+                    xp += 5;
                 }
                 else if (percentage >= 0.80 && percentage <= 0.94) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "A");
                     }
+                    xp += 4;
                 }
                 else if (percentage >= 0.70 && percentage <= 0.79) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S") && !previousGrade.equals("A")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "B");
                     }
+                    xp += 3;
                 }
                 else if (percentage >= 0.60 && percentage <= 0.69) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S") && !previousGrade.equals("A") && !previousGrade.equals("B")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "C");
                     }
+                    xp += 2;
                 }
                 else{
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,(int) (height * 0.27),0).fadeIn(70);
@@ -522,8 +558,12 @@ public class Renderer {
                     }
                 }
 
+                PlayerData.addXp(xp);
+
                 // Save all the data
                 PlayerData.saveAll();
+
+                new FadingText("+" + xp + " XP", (int) (width * 0.12), (int) (height * 0.065), 15, Color.WHITE, 45, 60);
 
                 //Returns user to the song selection after the results
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON),width / 2, (int) (height * 0.87),255, ScreenState.SONG_SELECTION);
@@ -560,7 +600,7 @@ public class Renderer {
 
         // Centered x and y coords according to bounds
         x -= bounds.width() / 2;
-        y -= bounds.height() / 2;
+//        y -= bounds.height() / 2;
 
         // Draw text (now centered)
         int oldAlpha = paint.getAlpha();

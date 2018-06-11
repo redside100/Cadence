@@ -58,6 +58,8 @@ public class Conductor {
     public static String[] names = {"popcornfunk", "shelter", "test"};
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
+    public static String judgeDifficulty = "Normal";
+
     public Conductor(int width, int height){
         this.width = width;
         this.height = height;
@@ -159,7 +161,7 @@ public class Conductor {
     }
 
     public static void setVolume(int newVol){
-        if (newVol >= 0 && newVol <= 100){
+        if (newVol >= 10 && newVol <= 100){
             volume = newVol;
         }
     }
@@ -227,6 +229,12 @@ public class Conductor {
         }catch(IOException e){}
 
         mp.setLooping(true);
+
+        int max = 100;
+        // Scale volume logarithmically, and set to the volume vaalue
+        float scaledVolume = (float) (1 - (Math.log(max - volume) / Math.log(max)));
+        mp.setVolume(scaledVolume, scaledVolume);
+
         mp.start();
 
         // Make sure to flag it as the preview
@@ -259,6 +267,11 @@ public class Conductor {
         // Set up metronome to know when to spawn the next note
         metronome = new Metronome(this);
         mp.setLooping(false);
+
+        // Scale volume logarithmically, and set to the volume value
+        final float scaledVolume = (float) (1 - (Math.log(100 - volume) / 2));
+        mp.setVolume(scaledVolume, scaledVolume);
+
         mp.start();
 
         // Set the completion listener to auto clean up and proceed to results after a song is finished
@@ -332,8 +345,6 @@ public class Conductor {
                     // Note within score area (0.4 padding timing window)
                     if (scoreArea(note,pad0)) {
 
-                        ParticleManager.touch(e,pointerIndex);
-
                         // Check if fading (repetition check due to random multi touch bug)
                         if (!note.fading){
 
@@ -373,19 +384,34 @@ public class Conductor {
 
                             // Add score and show rating for each note
                             // 0 - 80% overlap, 200 points
-                            if (overlap > 0 && overlap <= 0.8){
+
+                            double pad = 0;
+                            switch(judgeDifficulty){
+                                case "Easy":
+                                    pad = 0.04;
+                                    break;
+                                case "Hard":
+                                    pad = -0.04;
+                                    break;
+                            }
+
+                            // Easy difficulty shifts all overlap percentages down by 4%
+                            // Hard difficulty shifts all overlap percentages up by 4%
+                            // In the case of normal difficulty, the overlap percentages are not changed
+
+                            if (overlap > 0 && overlap <= (0.8 - pad)){
                                 nextScore += 200;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE100), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
                                 goodCount++;
 
-                            }else if (overlap > 0.8 && overlap <= 0.92){ // 80 - 92% overlap, 250 points
+                            }else if (overlap > (0.8 - pad) && overlap <= (0.92 - pad)){ // 80 - 92% overlap, 250 points
                                 nextScore += 250;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE200), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
                                 greatCount++;
 
-                            }else if (overlap > 0.92 && overlap <= 1){ // 92% - 100% overlap, 300 points
+                            }else if (overlap > (0.92 - pad) && overlap <= 100){ // 92% - 100% overlap, 300 points
                                 nextScore += 300;
                                 new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.SCORE300), Renderer.width / 2, (int) (Renderer.height * 0.6),
                                         0, 15, 10).automate();
