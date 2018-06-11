@@ -57,6 +57,7 @@ public class ButtonManager {
             // Reset alpha in case button was touched beforehand
             button.setAlpha(255);
         }
+        preTouchButton = null;
     }
 
     public static void preTouch(MotionEvent e){
