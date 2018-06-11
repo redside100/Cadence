@@ -17,16 +17,22 @@ public class PlayerData {
         }
     }
     public static void saveAll(){
+
+        // Save all player and game values into the save file
+
+        // Compile grades for beatmaps
         ArrayList<String> info = new ArrayList<>();
         for(int i = 0; i < Conductor.names.length; i ++) {
             String index = Conductor.names[i];
             info.add("beatmap_" + index + ": " + grades.get(i));
         }
+        // Compile xp, level, music volume, fx volume, and judge difficulty
         info.add("xp: " + xp);
         info.add("level: " + level);
         info.add("musicVolume: " + Conductor.volume);
         info.add("fxVolume: " + Conductor.fxVolume);
         info.add("judgeDifficulty: " + Conductor.judgeDifficulty);
+
         Reader.save(info, "save.ini");
     }
 

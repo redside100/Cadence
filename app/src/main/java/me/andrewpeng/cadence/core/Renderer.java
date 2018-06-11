@@ -520,8 +520,10 @@ public class Renderer {
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
                 String previousGrade = PlayerData.grades.get(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap));
 
-                // Increase xp reward for difficulty of beatmap
-                xp += Conductor.currentBeatmap.getDifficulty() * 3;
+                // Increase xp reward for difficulty of beatmap (if passed)
+                if (percentage >= 0.60){
+                    xp += Conductor.currentBeatmap.getDifficulty() * 3;
+                }
 
                 // For each case, check for the percentage and only overwrite the user's best grade if it is higher
                 // Increase exp reward for each result

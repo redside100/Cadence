@@ -35,16 +35,20 @@ public class MainActivity extends Activity {
         super.onResume();
         refocus();
         mainView.resume();
-        if (Conductor.mp != null && Conductor.playing){
-            Conductor.mp.start();
+        if (Conductor.mp != null){
+            if (Conductor.playing || Conductor.preview){
+                Conductor.mp.start();
+            }
         }
     }
     @Override
     public void onPause(){
         super.onPause();
         mainView.pause();
-        if (Conductor.mp != null && Conductor.playing){
-            Conductor.mp.pause();
+        if (Conductor.mp != null){
+            if (Conductor.playing || Conductor.preview){
+                Conductor.mp.pause();
+            }
         }
     }
 

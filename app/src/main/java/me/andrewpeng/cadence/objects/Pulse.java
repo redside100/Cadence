@@ -12,18 +12,25 @@ public class Pulse extends Entity{
     public int speed, duration, color;
     public int counter = 0;
     public Pulse(int y, int speed, int duration, int color){
+
         super(0, y, 220);
         super.setMaxAlpha(220);
         this.speed = speed;
         this.duration = duration;
         this.color = color;
         PulseManager.pulses.add(this);
+
+        // Start fading out immediately
         super.fadeOut(duration);
     }
     @Override
     public void tick(){
         super.tick();
+
+        // Decrease y value according to speed
         y -= speed;
+
+        // Remove if hit its duration limit
         if (counter == duration){
             PulseManager.pulses.remove(this);
         }

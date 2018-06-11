@@ -28,6 +28,8 @@ public class Beatmap {
     public int difficulty;
     // AFD of wav/mp3 file
     public AssetFileDescriptor afd, afdPreview;
+    // Pulse value
+    public int pulse;
 
     public Bitmap album, background;
 
@@ -73,6 +75,9 @@ public class Beatmap {
                 case "difficulty":
                     difficulty = Integer.parseInt(value);
                     break;
+                case "pulse":
+                    pulse = Integer.parseInt(value);
+                    break;
 
             }
         }
@@ -90,7 +95,8 @@ public class Beatmap {
                 && this.startOffset == beatmap.startOffset && this.subBeats == beatmap.subBeats
                 && this.noteSpeed == beatmap.noteSpeed && this.name.equals(beatmap.name)
                 && this.artist == beatmap.artist && this.difficulty == beatmap.difficulty
-                && this.album == beatmap.album && this.background == beatmap.background;
+                && this.album == beatmap.album && this.background == beatmap.background
+                && this.pulse == beatmap.pulse;
     }
 
     public AssetFileDescriptor getSongAFD(){
@@ -127,5 +133,6 @@ public class Beatmap {
     public int getDifficulty(){ return difficulty; }
     public Bitmap getAlbumBitmap(){ return album; }
     public Bitmap getBackgroundBitmap(){ return background; }
+    public int getPulse() { return pulse; }
 
 }

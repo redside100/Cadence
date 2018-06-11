@@ -37,7 +37,7 @@ public class Conductor {
     public double beatLength;
     public int noteTravelTicks;
     public static boolean playing = false;
-    public boolean preview = false;
+    public static boolean preview = false;
     public static int volume = 100;
     public static int fxVolume = 100;
 
@@ -55,7 +55,7 @@ public class Conductor {
 
     private Metronome metronome;
     public static boolean paused = false;
-    public static String[] names = {"popcornfunk", "shelter", "test"};
+    public static String[] names = {"popcornfunk", "shelter", "test", "layitdown"};
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
     public static String judgeDifficulty = "Normal";
@@ -138,11 +138,9 @@ public class Conductor {
             currentGeneralBeat++;
         }
         // Spawn pulse
-        if (currentGeneralBeat % currentBeatmap.getSubBeats() == 2){
-            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 380), 10, Color.WHITE);
-        }else if(currentBeatmap.getSubBeats() == 1){
-            new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 380), 10, Color.WHITE);
-        }
+            if (currentGeneralBeat % currentBeatmap.getSubBeats() == currentBeatmap.getPulse()){
+                new Pulse(Renderer.scoreY1, MainView.speed(Renderer.height, 380), 10, Color.WHITE);
+            }
     }
 
     public static int getMaxScore(){
@@ -269,7 +267,8 @@ public class Conductor {
         mp.setLooping(false);
 
         // Scale volume logarithmically, and set to the volume value
-        final float scaledVolume = (float) (1 - (Math.log(100 - volume) / 2));
+        int max = 100;
+        final float scaledVolume = (float) (1 - (Math.log(max - volume) / Math.log(max)));
         mp.setVolume(scaledVolume, scaledVolume);
 
         mp.start();
@@ -283,7 +282,7 @@ public class Conductor {
         });
 
         //For skipping music
-//        mp.seekTo(240000);
+//        mp.seekTo(140000);
 
 
         // Flag playing

@@ -61,7 +61,12 @@ public class Reader {
         return lines;
     }
 
-    public static void save(final ArrayList<String> info, final String fileName){
+    /**
+     * Saves information into a file.
+     * @param info The list of info to be stored
+     * @param fileName The name of the file to be written to
+     */
+    public static void save(ArrayList<String> info, final String fileName){
         try{
             // Create temp file
             File temp = new File(context.getFilesDir(), "temp.ini");
@@ -99,6 +104,12 @@ public class Reader {
 
         }catch(IOException e){}
     }
+
+    /**
+     * Loads a save file into game values.
+     * @param fileName The file name of the save file
+     * @return
+     */
     public static ArrayList<String> getSave(String fileName){
         try {
 
