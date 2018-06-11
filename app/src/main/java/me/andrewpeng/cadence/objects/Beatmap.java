@@ -4,6 +4,7 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import me.andrewpeng.cadence.util.Reader;
 
@@ -82,6 +83,16 @@ public class Beatmap {
         this.afdPreview = Reader.getSoundFile(previewLocation);
 
     }
+
+    public boolean equals(Beatmap beatmap){
+        return this.bpm == beatmap.bpm && this.afd == beatmap.afd && this.afdPreview == beatmap.afdPreview
+                && Arrays.equals(this.beats, beatmap.beats) && this.songLocation.equals(beatmap.songLocation)
+                && this.startOffset == beatmap.startOffset && this.subBeats == beatmap.subBeats
+                && this.noteSpeed == beatmap.noteSpeed && this.name.equals(beatmap.name)
+                && this.artist == beatmap.artist && this.difficulty == beatmap.difficulty
+                && this.album == beatmap.album && this.background == beatmap.background;
+    }
+
     public AssetFileDescriptor getSongAFD(){
         return afd;
     }

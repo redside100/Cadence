@@ -162,7 +162,7 @@ public class Renderer {
                             break;
                     }
                     writeText(difficulty, graphics, (int) (width * 0.975), (int) (height * 0.45), paint, 16, color);
-                    writeText("Grade: N/A", graphics, (int) (width * 0.975), (int) (height * 0.49), paint, 16, Color.WHITE);
+                    writeText("Grade: " + PlayerData.grades.get(songSelectionSpinner.getPosition()), graphics, (int) (width * 0.975), (int) (height * 0.49), paint, 16, Color.WHITE);
                     paint.setTextAlign(Paint.Align.LEFT);
                 }
                 break;
@@ -469,14 +469,11 @@ public class Renderer {
                 Beatmap beatmap = Conductor.getBeatmapList().get(songSelectionPosition);
                 conductor.loadMap(beatmap);
 
-<<<<<<< HEAD
-=======
                 //Creates a set of 16 particles to be used for animation
                 for(int i = 0; i <= 16; i++) {
                     new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.PARTICLE),0,(int)(height*0.45),0);
                 }
 
->>>>>>> 810aefcff0b0f09d9f4b7d7a24da7969b7612b65
                 //Creates the gradients that will appear if a finger has touched the score area
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), 0,(int)(height * 0.497),9,0, false);
                 new Gradient(AssetLoader.getImageAssetFromMemory(ImageAsset.GRADIENT), width/4,(int)(height * 0.497),9,0, false);
@@ -490,22 +487,43 @@ public class Renderer {
                 break;
 
             case RESULTS:
+
+                // TODO only set grades if they are higher than before
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
+                String previousGrade = PlayerData.grades.get(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap));
+
+                // For each case, check for the percentage and only overwrite the user's best grade if it is higher
                 if (percentage >= 0.95 && percentage <= 1) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGS),width/2, (int) (height * 0.27),0).fadeIn(70);
+                    PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "S");
                 }
                 else if (percentage >= 0.80 && percentage <= 0.94) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,(int) (height * 0.27),0).fadeIn(70);
+                    if (!previousGrade.equals("S")){
+                        PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "A");
+                    }
                 }
                 else if (percentage >= 0.70 && percentage <= 0.79) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,(int) (height * 0.27),0).fadeIn(70);
+                    if (!previousGrade.equals("S") && !previousGrade.equals("A")){
+                        PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "B");
+                    }
                 }
                 else if (percentage >= 0.60 && percentage <= 0.69) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,(int) (height * 0.27),0).fadeIn(70);
+                    if (!previousGrade.equals("S") && !previousGrade.equals("A") && !previousGrade.equals("B")){
+                        PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "C");
+                    }
                 }
                 else{
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGD),width/2,(int) (height * 0.27),0).fadeIn(70);
+                    if (!previousGrade.equals("S") && !previousGrade.equals("A") && !previousGrade.equals("B") && !previousGrade.equals("C")){
+                        PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "D");
+                    }
                 }
+
+                // Save all the data
+                PlayerData.saveAll();
 
                 //Returns user to the song selection after the results
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON),width / 2, (int) (height * 0.87),255, ScreenState.SONG_SELECTION);

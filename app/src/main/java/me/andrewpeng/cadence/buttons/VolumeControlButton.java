@@ -2,6 +2,7 @@ package me.andrewpeng.cadence.buttons;
 
 import android.graphics.Bitmap;
 
+import me.andrewpeng.cadence.core.PlayerData;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.core.ScreenState;
 import me.andrewpeng.cadence.music.Conductor;
@@ -42,5 +43,7 @@ public class VolumeControlButton extends Button {
                 Conductor.mp.setVolume(Conductor.getVolume(),Conductor.getVolume());
             }
         }
+        PlayerData.saveAll();
+
     }
 }

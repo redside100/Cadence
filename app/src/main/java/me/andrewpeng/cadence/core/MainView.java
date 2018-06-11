@@ -61,10 +61,10 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         // Init gesture detector
         gestureDetector = new GestureDetector(this);
 
-        // Load beatmaps (add twice for now, to get a full list)
-        conductor.initBeatmaps();
+        // Load beatmaps
         conductor.initBeatmaps();
 
+        // Init save file and stuff
         init();
     }
 
@@ -72,15 +72,39 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         File save = new File(getContext().getFilesDir(),"save.ini");
 
         try {
-            if (save.exists()) {
+            if (!save.exists()) {
 
                 save.createNewFile();
-                ArrayList<String> info = new ArrayList<String>();
+                ArrayList<String> info = new ArrayList<>();
                 for(int i = 0;i < Conductor.names.length;i ++) {
                     String index = Conductor.names[i];
                     info.add("beatmap_" + index + ": N/A");
+                    PlayerData.grades.add("N/A");
                 }
+                info.add("xp: 0");
+                info.add("level: 1");
+                info.add("musicVolume: 100");
+                info.add("fxVolume: 100");
 
+                Reader.save(info, "save.ini");
+
+            }else{
+                ArrayList<String> load = Reader.getSave("save.ini");
+                for (String line : load){
+                    String key = line.split(": ")[0];
+                    String value = line.split(": ")[1];
+                    if (key.startsWith("beatmap_")){
+                        PlayerData.grades.add(value);
+                    } else if (key.equals("xp")){
+                        PlayerData.xp = Integer.parseInt(value);
+                    } else if (key.equals("level")){
+                        PlayerData.level = Integer.parseInt(value);
+                    } else if (key.equals("musicVolume")){
+                        Conductor.volume = Integer.parseInt(value);
+                    } else if (key.equals("fxVolume")){
+                        Conductor.fxVolume = Integer.parseInt(value);
+                    }
+                }
             }
         }catch (IOException e) {
 
@@ -162,9 +186,11 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
         return distance / time;
     }
 
+    // Math
     public static boolean inBounds(int x1, int x2, int y1, int y2, int ax1, int ax2, int ay1, int ay2){
         return x1 >= ax1 && x1 <= ax2 && y1 >= ay1 && y1 <= ay2 && x2 > ax1 && x2 < ax2 && y2 >= ay1 && y2 <= ay2;
     }
+    // More math
     public static double overlapPercent(int x1, int x2, int y1, int y2, int ax1, int ax2, int ay1, int ay2){
 
         // Calculate overlap percentage using areas

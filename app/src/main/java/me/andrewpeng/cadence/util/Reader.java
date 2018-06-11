@@ -10,6 +10,7 @@ import android.graphics.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,7 +61,7 @@ public class Reader {
         return lines;
     }
 
-    public static void save(ArrayList<String> info, String fileName){
+    public static void save(final ArrayList<String> info, final String fileName){
         try{
             // Create temp file
             File temp = new File(context.getFilesDir(), "temp.ini");
@@ -97,6 +98,29 @@ public class Reader {
             }
 
         }catch(IOException e){}
+    }
+    public static ArrayList<String> getSave(String fileName){
+        try {
+
+            FileInputStream inputStream = context.openFileInput(fileName);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            ArrayList<String> info = new ArrayList<>();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                info.add(line);
+            }
+
+            bufferedReader.close();
+            inputStreamReader.close();
+            inputStream.close();
+
+            return info;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     /**

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import me.andrewpeng.cadence.core.MainView;
+import me.andrewpeng.cadence.core.PlayerData;
 import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.core.ScreenState;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
@@ -260,8 +261,6 @@ public class Conductor {
         mp.setLooping(false);
         mp.start();
 
-<<<<<<< HEAD
-=======
         // Set the completion listener to auto clean up and proceed to results after a song is finished
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -269,8 +268,7 @@ public class Conductor {
                 cleanUp();
             }
         });
-        
->>>>>>> 810aefcff0b0f09d9f4b7d7a24da7969b7612b65
+
         //For skipping music
 //        mp.seekTo(240000);
 
