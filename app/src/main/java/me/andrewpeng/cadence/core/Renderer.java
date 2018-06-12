@@ -532,21 +532,21 @@ public class Renderer {
                     PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "S");
                     xp += 5;
                 }
-                else if (percentage >= 0.80 && percentage <= 0.94) {
+                else if (percentage >= 0.80 && percentage < 0.95) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGA),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "A");
                     }
                     xp += 4;
                 }
-                else if (percentage >= 0.70 && percentage <= 0.79) {
+                else if (percentage >= 0.70 && percentage < 0.80) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGB),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S") && !previousGrade.equals("A")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "B");
                     }
                     xp += 3;
                 }
-                else if (percentage >= 0.60 && percentage <= 0.69) {
+                else if (percentage >= 0.60 && percentage < 0.70) {
                     new FadingImage(AssetLoader.getImageAssetFromMemory(ImageAsset.RANKINGC),width/2,(int) (height * 0.27),0).fadeIn(70);
                     if (!previousGrade.equals("S") && !previousGrade.equals("A") && !previousGrade.equals("B")){
                         PlayerData.grades.set(Conductor.getBeatmapList().indexOf(Conductor.currentBeatmap), "C");
