@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import me.andrewpeng.cadence.managers.ButtonManager;
+import me.andrewpeng.cadence.music.FX;
 
 public class Button extends Entity{
     public Bitmap bitmap;
@@ -88,5 +89,5 @@ public class Button extends Entity{
     public void tick(){}
 
     // To be overridden
-    public void trigger(){}
+    public void trigger(){ FX.playSound(FX.SoundEffect.SELECT); }
 }

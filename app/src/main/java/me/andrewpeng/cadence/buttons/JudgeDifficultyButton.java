@@ -20,6 +20,7 @@ public class JudgeDifficultyButton extends Button {
     }
     @Override
     public void trigger(){
+        super.trigger();
         switch(Conductor.judgeDifficulty){
             case "Easy":
                 Conductor.judgeDifficulty = "Normal";

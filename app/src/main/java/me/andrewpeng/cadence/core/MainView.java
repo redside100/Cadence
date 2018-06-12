@@ -8,6 +8,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import me.andrewpeng.cadence.music.FX;
 import me.andrewpeng.cadence.util.IO;
 
 import java.io.BufferedInputStream;
@@ -66,6 +67,9 @@ public class MainView extends View implements GestureDetector.OnGestureListener 
 
         // Init save file and stuff
         init();
+
+        // Load sound effects
+        FX.loadSounds();
     }
 
     private void init() {

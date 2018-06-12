@@ -25,6 +25,7 @@ public class StateChangeButton extends Button {
     }
     @Override
     public void trigger(){
+        super.trigger();
         Renderer.changeState(newState);
     }
 }

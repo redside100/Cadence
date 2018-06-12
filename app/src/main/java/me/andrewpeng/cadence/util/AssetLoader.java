@@ -2,6 +2,7 @@ package me.andrewpeng.cadence.util;
 
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,9 +10,12 @@ import android.graphics.BitmapFactory;
 import java.io.IOException;
 import java.util.HashMap;
 
+import me.andrewpeng.cadence.music.FX;
+
 public class AssetLoader {
     private static AssetManager assets;
     private static HashMap<ImageAsset, Bitmap> images = new HashMap<>();
+    private static HashMap<FX.SoundEffect, AssetFileDescriptor> sounds = new HashMap<>();
     private static int height, width;
     private static double originalWidth = 1080;
     private static double originalHeight = 1920;
@@ -74,6 +78,9 @@ public class AssetLoader {
         //Note skins
         images.put(ImageAsset.NOTE1,getImageAsset("noteskins/note1.png"));
 
+        //Sound Effects
+        sounds.put(FX.SoundEffect.SELECT, getSound("fx/click.wav"));
+
     }
 
     /**
@@ -106,5 +113,27 @@ public class AssetLoader {
         return images.containsKey(imageAsset) ? images.get(imageAsset) : null;
     }
 
+    /**
+     * Gets a sound file.
+     * @param filePath The path of the sound file
+     * @return
+     */
+    public static AssetFileDescriptor getSound(String filePath){
+        try{
+            AssetFileDescriptor afd = assets.openFd(filePath);
+            return afd;
+        }catch(IOException e){
+            return null;
+        }
+    }
+
+    /**
+     * Gets the sound that you want to use form memory
+     * @param soundEffect Sound from the SoundEffect enum
+     * @return
+     */
+    public static AssetFileDescriptor getSoundAssetFromMemory(FX.SoundEffect soundEffect){
+        return sounds.containsKey(soundEffect) ? sounds.get(soundEffect) : null;
+    }
 
 }

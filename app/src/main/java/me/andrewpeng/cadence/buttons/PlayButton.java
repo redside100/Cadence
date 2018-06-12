@@ -24,6 +24,8 @@ public class PlayButton extends Button{
     }
 
     public void trigger() {
+        super.trigger();
+
         Conductor.resume();
         ArrayList<Button> activeButtons = new ArrayList<>(ButtonManager.buttons);
         ArrayList<FadingImage> activeImages = new ArrayList<>(FadingImageManager.fadingImages);

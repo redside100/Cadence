@@ -18,6 +18,7 @@ import me.andrewpeng.cadence.managers.FadingImageManager;
 import me.andrewpeng.cadence.managers.PulseManager;
 import me.andrewpeng.cadence.music.Conductor;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
+import me.andrewpeng.cadence.music.FX;
 import me.andrewpeng.cadence.objects.Beatmap;
 import me.andrewpeng.cadence.managers.ButtonManager;
 import me.andrewpeng.cadence.objects.FadingImage;
@@ -98,17 +99,16 @@ public class Renderer {
                 // Outer space background, title, and options
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND), 0, 0, paint);
                 centerText("SETTINGS", graphics, width / 2, height / 5, paint, 45, Color.WHITE, 255);
-                writeText("Music Volume", graphics, (int) (width * 0.12), (int) (height * 0.3), paint, 20, Color.WHITE);
-                writeText("FX Volume", graphics, (int) (width * 0.12), (int) (height * 0.4), paint, 20, Color.WHITE);
-                writeText("Judge Difficulty", graphics, (int) (width * 0.12), (int) (height * 0.5), paint, 20, Color.WHITE);
-                writeText("Erase Data (!)", graphics, (int) (width * 0.12), (int) (height * 0.6), paint, 20, Color.WHITE);
-                writeText("Misc", graphics, (int) (width * 0.12), (int) (height * 0.7), paint, 20, Color.WHITE);
+                writeText("Music Volume", graphics, (int) (width * 0.12), (int) (height * 0.35), paint, 20, Color.WHITE);
+                writeText("FX Volume", graphics, (int) (width * 0.12), (int) (height * 0.45), paint, 20, Color.WHITE);
+                writeText("Judge Difficulty", graphics, (int) (width * 0.12), (int) (height * 0.55), paint, 20, Color.WHITE);
+                writeText("Erase Data (!)", graphics, (int) (width * 0.12), (int) (height * 0.65), paint, 20, Color.WHITE);
 
                 // Volume display
-                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.3), paint, 20, Color.WHITE, 255);
+                centerText(Conductor.getVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.35), paint, 20, Color.WHITE, 255);
 
                 // FX vol display
-                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.4), paint, 20, Color.WHITE, 255);
+                centerText(Conductor.getFxVolume() + "", graphics, (int) (width * 0.75), (int) (height * 0.45), paint, 20, Color.WHITE, 255);
 
                 // Judge Difficulty display
 
@@ -124,7 +124,7 @@ public class Renderer {
                         color = Color.RED;
                         break;
                 }
-                centerText(Conductor.judgeDifficulty, graphics, (int) (width * 0.68), (int) (height * 0.5), paint, 20, color, 255);
+                centerText(Conductor.judgeDifficulty, graphics, (int) (width * 0.68), (int) (height * 0.55), paint, 20, color, 255);
                 break;
 
             case CREDITS:
@@ -371,6 +371,7 @@ public class Renderer {
         switch(state){
             case HOME:
                 changeState(ScreenState.MENU);
+                FX.playSound(FX.SoundEffect.SELECT);
                 break;
             case CUTSCENE:
                 // TODO
@@ -430,18 +431,18 @@ public class Renderer {
                 new StateChangeButton(AssetLoader.getImageAssetFromMemory(ImageAsset.OK_BUTTON), width / 2, (int) (height * 0.85), 255, ScreenState.MENU);
 
                 // Music volume control buttons
-                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.285), 255, false, false);
-                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.285), 255, true, false);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.335), 255, false, false);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.335), 255, true, false);
 
                 // FX volume control buttons
-                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.385), 255, false, true);
-                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.385), 255, true, true);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON), (int) (width * 0.62), (int) (height * 0.435), 255, false, true);
+                new VolumeControlButton(AssetLoader.getImageAssetFromMemory(ImageAsset.RIGHT_ARROW_BUTTON), (int) (width * 0.88), (int) (height * 0.435), 255, true, true);
 
                 // Judge difficulty control button
-                new JudgeDifficultyButton(AssetLoader.getImageAssetFromMemory(ImageAsset.BLUE_BUTTON), (int) (width * 0.88), (int) (height * 0.485), 255);
+                new JudgeDifficultyButton(AssetLoader.getImageAssetFromMemory(ImageAsset.BLUE_BUTTON), (int) (width * 0.88), (int) (height * 0.535), 255);
 
                 // Erase data button
-                new EraseDataButton(AssetLoader.getImageAssetFromMemory(ImageAsset.ERASE_BUTTON), (int) (width * 0.75), (int) (height * 0.585), 255, context);
+                new EraseDataButton(AssetLoader.getImageAssetFromMemory(ImageAsset.ERASE_BUTTON), (int) (width * 0.75), (int) (height * 0.635), 255, context);
 
                 break;
 

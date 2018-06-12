@@ -28,6 +28,7 @@ public class VolumeControlButton extends Button {
     }
     @Override
     public void trigger(){
+        super.trigger();
         if (increase){
             if (fx){
                 Conductor.setFxVolume(Conductor.getFxVolume() + 10);

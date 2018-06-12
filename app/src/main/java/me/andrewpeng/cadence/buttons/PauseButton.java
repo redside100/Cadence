@@ -28,6 +28,8 @@ public class PauseButton extends Button{
 
     public void trigger() {
 
+        super.trigger();
+
         // Set pause state
         if (!Conductor.paused){
 

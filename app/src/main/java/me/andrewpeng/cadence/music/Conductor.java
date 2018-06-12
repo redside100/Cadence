@@ -55,7 +55,7 @@ public class Conductor {
 
     private Metronome metronome;
     public static boolean paused = false;
-    public static String[] names = {"popcornfunk", "shelter", "test", "layitdown"};
+    public static String[] names = {"popcornfunk", "shelter", "layitdown", "onetwo"};
     public static ArrayList<Beatmap> beatmapList = new ArrayList<>();
 
     public static String judgeDifficulty = "Normal";
