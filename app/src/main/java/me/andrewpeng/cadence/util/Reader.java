@@ -8,16 +8,23 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class Reader {
 
     private static AssetManager assets;
+    private static Context context;
 
     public Reader(Context context){
         assets = context.getAssets();
+        this.context = context;
     }
 
     /**
@@ -52,6 +59,79 @@ public class Reader {
             System.out.println("Error opening text file: " + url);
         }
         return lines;
+    }
+
+    /**
+     * Saves information into a file.
+     * @param info The list of info to be stored
+     * @param fileName The name of the file to be written to
+     */
+    public static void save(ArrayList<String> info, final String fileName){
+        try{
+            // Create temp file
+            File temp = new File(context.getFilesDir(), "temp.ini");
+            if (!temp.exists()){
+                temp.createNewFile();
+            }else{
+                System.out.println("Error saving! Temp file already exists... weird.");
+                return;
+            }
+
+            // Open output stream, writer, and buffered writer
+            FileOutputStream outputStream = context.openFileOutput("temp.ini", Context.MODE_PRIVATE);
+            OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream, "UTF-8");
+            BufferedWriter bufferedWriter = new BufferedWriter(outputWriter);
+
+            for (String line : info){
+                bufferedWriter.write(line + "\n");
+            }
+
+            // Close writers and streams
+            bufferedWriter.close();
+            outputWriter.close();
+            outputStream.close();
+
+            // Delete old file, then rename the temp file to the new file
+            File save = new File(context.getFilesDir(), fileName);
+            if (save.exists()){
+                save.delete();
+                temp.renameTo(save);
+                System.out.println("File saved, named " + fileName);
+            }else{
+                System.out.println("Error saving, file doesn't exist!");
+                return;
+            }
+
+        }catch(IOException e){}
+    }
+
+    /**
+     * Loads a save file into game values.
+     * @param fileName The file name of the save file
+     * @return
+     */
+    public static ArrayList<String> getSave(String fileName){
+        try {
+
+            FileInputStream inputStream = context.openFileInput(fileName);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            ArrayList<String> info = new ArrayList<>();
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                info.add(line);
+            }
+
+            bufferedReader.close();
+            inputStreamReader.close();
+            inputStream.close();
+
+            return info;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     /**

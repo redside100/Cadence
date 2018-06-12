@@ -27,7 +27,9 @@ public class AnimatedText extends Entity{
         AnimatedTextManager.texts.add(this);
     }
     // To be overridden
-    public void tick(){}
+    public void tick(){
+        super.tick();
+    }
 
     /**
      * Renders the set of text into the canvas so that it can be seen
@@ -35,10 +37,7 @@ public class AnimatedText extends Entity{
      * @param paint Paint
      */
     public void render(Canvas graphics, Paint paint){
-        int oldAlpha = paint.getAlpha();
-        paint.setAlpha(super.alpha);
-        Renderer.centerText(text, graphics, x, y, paint, textSize, color);
-        paint.setAlpha(oldAlpha);
+        Renderer.centerText(text, graphics, x, y, paint, textSize, color, super.alpha);
     }
     public void destroy(){
         AnimatedTextManager.texts.remove(this);

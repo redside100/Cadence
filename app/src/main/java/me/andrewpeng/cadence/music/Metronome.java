@@ -1,6 +1,5 @@
 package me.andrewpeng.cadence.music;
 
-
 public class Metronome {
 
     private Conductor conductor;
@@ -12,8 +11,6 @@ public class Metronome {
         this.conductor = conductor;
         markers = new double[(int) (conductor.getSongLength() / conductor.getBeatLength() + 0.5)];
         noteDelayMs = (double) conductor.getNoteTravelTicks() / 60 * 1000;
-        System.out.println("Travel ticks: " + conductor.getNoteTravelTicks());
-        System.out.println(noteDelayMs);
         for (int i = 0; i < markers.length; i++){
             // This waits 8 beats before the first notes arrive
             int pad = (int) (7 * conductor.getBeatmap().getSubBeats());

@@ -4,6 +4,7 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import me.andrewpeng.cadence.util.Reader;
 
@@ -27,8 +28,10 @@ public class Beatmap {
     public int difficulty;
     // AFD of wav/mp3 file
     public AssetFileDescriptor afd, afdPreview;
+    // Pulse value
+    public int pulse;
 
-    public Bitmap album;
+    public Bitmap album, background;
 
     /**
      * Create a new beatmap
@@ -38,9 +41,10 @@ public class Beatmap {
      * @param previewLocation Location where the preview wav file is located
      * @param album The album that the song will be put to
      */
-    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album){
+    public Beatmap(String beatLocation, String infoLocation, String songLocation, String previewLocation, Bitmap album, Bitmap background){
 
         this.album = album;
+        this.background = background;
 
         ArrayList<String> info = Reader.getTextContents(infoLocation);
         for (String line : info){
@@ -71,6 +75,9 @@ public class Beatmap {
                 case "difficulty":
                     difficulty = Integer.parseInt(value);
                     break;
+                case "pulse":
+                    pulse = Integer.parseInt(value);
+                    break;
 
             }
         }
@@ -81,6 +88,17 @@ public class Beatmap {
         this.afdPreview = Reader.getSoundFile(previewLocation);
 
     }
+
+    public boolean equals(Beatmap beatmap){
+        return this.bpm == beatmap.bpm && this.afd == beatmap.afd && this.afdPreview == beatmap.afdPreview
+                && Arrays.equals(this.beats, beatmap.beats) && this.songLocation.equals(beatmap.songLocation)
+                && this.startOffset == beatmap.startOffset && this.subBeats == beatmap.subBeats
+                && this.noteSpeed == beatmap.noteSpeed && this.name.equals(beatmap.name)
+                && this.artist == beatmap.artist && this.difficulty == beatmap.difficulty
+                && this.album == beatmap.album && this.background == beatmap.background
+                && this.pulse == beatmap.pulse;
+    }
+
     public AssetFileDescriptor getSongAFD(){
         return afd;
     }
@@ -114,5 +132,7 @@ public class Beatmap {
     }
     public int getDifficulty(){ return difficulty; }
     public Bitmap getAlbumBitmap(){ return album; }
+    public Bitmap getBackgroundBitmap(){ return background; }
+    public int getPulse() { return pulse; }
 
 }

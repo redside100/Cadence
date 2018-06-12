@@ -7,9 +7,11 @@ public class Note {
     private int x1, y1, x2, y2, speed;
     private int boundY1, boundY2;
     private int alpha;
-    boolean fading = false;
+    public boolean fading = false;
+    public boolean valid = true;
     private int fadeTick = 0, maxFadeTicks = 0;
-    public Note(int x1, int y1, int x2, int y2, double yPad, int speed){
+    public int color;
+    public Note(int x1, int y1, int x2, int y2, double yPad, int speed, int color){
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -18,6 +20,7 @@ public class Note {
         this.boundY2 = (int) (y2 + (Math.abs(y2 - y1) * yPad));
         this.speed = speed;
         this.alpha = 255;
+        this.color = color;
     }
     public void tick(){
         if (fading){
@@ -28,13 +31,21 @@ public class Note {
                 destroy();
             }
         }else{
-            y1 += speed;
-            y2 += speed;
-            boundY1 += speed;
-            boundY2 += speed;
+            if (!Conductor.paused){
+                y1 += speed;
+                y2 += speed;
+                boundY1 += speed;
+                boundY2 += speed;
+            }
         }
     }
 
+    public boolean isValid(){
+        return valid;
+    }
+    public void setValid(boolean valid){
+        this.valid = valid;
+    }
     public void destroy(){
         Conductor.activeNotes.remove(this);
     }
@@ -61,6 +72,9 @@ public class Note {
     }
     public int getAlpha(){
         return alpha;
+    }
+    public int getColor(){
+        return color;
     }
     public void fadeOut(int ticks){
         fading = true;

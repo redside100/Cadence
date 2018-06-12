@@ -32,24 +32,5 @@ public class ParticleManager {
         }
     }
 
-    public static void touch(MotionEvent e){
-        try {
-            for(Particle particle: particles) {
-                if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1 / 4, Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                    particle.animate();
-                } else if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1 / 2, Renderer.scoreX2 / 2, Renderer.scoreY1, Renderer.scoreY2)) {
-                    particle.animate();
-                } else if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), 3 * Renderer.scoreX1 / 4, 3 * Renderer.scoreX2 / 4, Renderer.scoreY1, Renderer.scoreY2)) {
-                    particle.animate();
-                } else {
-                    if (MainView.inBounds((int) e.getX(), (int) e.getX(), (int) e.getY(), (int) e.getY(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2)) {
-                        particle.animate();
-                    }
-                }
-            }
-        }catch (IndexOutOfBoundsException e1) {
-
-        }
-    }
     }
 

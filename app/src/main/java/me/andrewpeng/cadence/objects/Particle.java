@@ -16,12 +16,9 @@ public class Particle extends Entity{
     public Bitmap bitmap;
     public int x, y;
     public int ax1, ax2, ay1, ay2;
-    public int speed;
-    public int UP = 1;
-    public int DOWN = 2;
-    public int RIGHT = 3;
-    public int LEFT = 4;
-    public int direction;
+    public int speed,angle;
+    public double directionx;
+    public double directiony;
 
     public int fadeTick = 0;
     public int maxFadeTick = 15;
@@ -31,17 +28,23 @@ public class Particle extends Entity{
     public boolean isAnimating = false;
 
 
-    public Particle(Bitmap bitmap, int x, int y, int alpha, int choice){
+    public Particle(Bitmap bitmap, int x, int y, int alpha){
         super(x, y, alpha);
         this.bitmap = bitmap;
         this.x = x - bitmap.getWidth() / 2;
         this.y = y - bitmap.getHeight() / 2;
+
         ax1 = this.x;
         ay1 = this.y;
         ax2 = ax1 + bitmap.getWidth();
         ay2 = ay1 + bitmap.getHeight();
+
         this.speed = (int)(Math.random()*4+1);
-        setDirection(choice);
+
+        angle = (int)(Math.random());
+        this.directionx = Math.sin(angle)*speed;
+        this.directiony = Math.cos(angle)*speed;
+
         ParticleManager.particles.add(this);
     }
 
@@ -64,47 +67,19 @@ public class Particle extends Entity{
 
     @Override
     public void tick() {
+        super.tick();
         if(isAnimating) {
             if (fadeTick < maxFadeTick) {
-                alpha -= (255 / maxFadeTick);
+                super.alpha -= (255 / maxFadeTick);
                 fadeTick++;
             } else {
-                destroy();
+                super.alpha = 0;
                 isAnimating = false;
             }
-            switch (getDirection()) {
-                case 1:
-                    y += speed;
-                    break;
-                case 2:
-                    y -= speed;
-                    break;
-                case 3:
-                    x += speed;
-                    break;
-                case 4:
-                    x -= speed;
-                    break;
-            }
+            y += directiony;
+            x += directionx;
         }
 
-    }
-
-    public void setDirection(int choice) {
-        switch (choice) {
-            case 1:
-                direction = UP;
-                break;
-            case 2:
-                direction = DOWN;
-                break;
-            case 3:
-                direction = RIGHT;
-                break;
-            case 4:
-                direction = LEFT;
-                break;
-        }
     }
 
     public void animate() {
@@ -112,12 +87,19 @@ public class Particle extends Entity{
         alpha = 255;
     }
 
-    public int getDirection() {
-        return direction;
+    public double getDirectionx() {
+        return directionx;
+    }
+
+    public double getDirectiony() {
+        return directiony;
     }
 
     public boolean isDead() {
-        return !alive;
+        if(getAlpha() <= 0) {
+            alive = false;
+        }
+        return alive;
     }
 
     public void destroy() {

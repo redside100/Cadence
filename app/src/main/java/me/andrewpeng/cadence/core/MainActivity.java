@@ -9,6 +9,8 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
+import me.andrewpeng.cadence.music.Conductor;
+
 public class MainActivity extends Activity {
 
     private MainView mainView;
@@ -33,13 +35,41 @@ public class MainActivity extends Activity {
         super.onResume();
         refocus();
         mainView.resume();
+        if (Conductor.mp != null){
+            if (Conductor.playing || Conductor.preview){
+                Conductor.mp.start();
+            }
+        }
     }
     @Override
     public void onPause(){
         super.onPause();
         mainView.pause();
+        if (Conductor.mp != null){
+            if (Conductor.playing || Conductor.preview){
+                Conductor.mp.pause();
+            }
+        }
     }
 
+    // Handle all back button presses for each screen state
+    @Override
+    public void onBackPressed(){
+        if (!Renderer.transition){
+            switch(Renderer.state){
+                case SONG_SELECTION:
+                case SETTINGS:
+                case CREDITS:
+                    Renderer.changeState(ScreenState.MENU);
+                    break;
+                case MENU:
+                    Renderer.changeState(ScreenState.HOME);
+                    break;
+            }
+        }
+    }
+
+    // Recall refocus() every time the focus is changed, so that the app maintains the navigation bar settings
     @Override
     public void onWindowFocusChanged(boolean changed){
         super.onWindowFocusChanged(changed);
