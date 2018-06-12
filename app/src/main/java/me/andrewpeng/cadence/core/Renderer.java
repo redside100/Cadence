@@ -270,12 +270,12 @@ public class Renderer {
         }
 
         // Render animated text objects and buttons
+        PulseManager.render(graphics, paint);
         FadingImageManager.render(graphics, paint);
         AnimatedTextManager.render(graphics, paint);
         ButtonManager.render(graphics, paint);
         GradientManager.render(graphics, paint);
         ParticleManager.render(graphics, paint);
-        PulseManager.render(graphics, paint);
 
         // Check for transitioning process (always last, since the white rectangle should draw over everything)
         if (transition){
