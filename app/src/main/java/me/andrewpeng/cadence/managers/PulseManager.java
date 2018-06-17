@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import me.andrewpeng.cadence.objects.FadingImage;
 import me.andrewpeng.cadence.objects.Pulse;
 
+/**
+ * Manages the pulses created on each beat of the song playing
+ */
 public class PulseManager {
 
     public static ArrayList<Pulse> pulses = new ArrayList<>();

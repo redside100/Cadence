@@ -37,21 +37,26 @@ public class PlayerData {
     }
 
     public static void reset(){
+        // Reset all local stored values
         Conductor.volume = 100;
         Conductor.fxVolume = 100;
         Conductor.judgeDifficulty = "Normal";
 
+        // Clear all grades
         grades.clear();
 
+        // Re add all grades to N/A
         ArrayList<String> info = new ArrayList<>();
         for(int i = 0;i < Conductor.names.length;i ++) {
             String index = Conductor.names[i];
             info.add("beatmap_" + index + ": N/A");
             grades.add("N/A");
         }
+        // Reset local xp and level
         xp = 0;
         level = 0;
 
+        // Save to file to overwrite
         saveAll();
     }
 

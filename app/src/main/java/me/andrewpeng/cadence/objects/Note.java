@@ -16,22 +16,28 @@ public class Note {
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
+        // Set bounds relative to the pad
         this.boundY1 = (int) (y1 - (Math.abs(y2 - y1) * yPad));
         this.boundY2 = (int) (y2 + (Math.abs(y2 - y1) * yPad));
+
         this.speed = speed;
         this.alpha = 255;
         this.color = color;
+
     }
     public void tick(){
+        // If it's fading, then increase fade tick until it reaches its max
         if (fading){
             fadeTick++;
             if (fadeTick < maxFadeTicks){
+                // Decrease alpha by portion of max fade ticks
                 alpha -= (255 / maxFadeTicks);
             }else{
                 destroy();
             }
         }else{
             if (!Conductor.paused){
+                // Increase y position and y bounds
                 y1 += speed;
                 y2 += speed;
                 boundY1 += speed;
