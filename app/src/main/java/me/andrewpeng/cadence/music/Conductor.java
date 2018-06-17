@@ -67,6 +67,7 @@ public class Conductor {
 
     // MUST INITIALIZE AFTER READER IS INITIALIZED
     public void initBeatmaps(){
+        // Add all beatmaps to according to the names list
         for (String name : names){
             beatmapList.add(new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini",
                     "beatmaps/" + name + "/" + name + ".wav", "beatmaps/" + name + "/preview.wav",
@@ -144,27 +145,33 @@ public class Conductor {
     }
 
     public static int getMaxScore(){
+        // Null check
         if (currentBeatmap != null){
             int count = 0;
+            // Loop through each row
             for (int[] row : currentBeatmap.getBeats()){
+                // Add 1 to count if a note in a row is 1
                 for (int note : row){
                     if (note == 1){
                         count++;
                     }
                 }
             }
+            // Multiply by 300 (amount from perfect rating)
             return count * 300;
         }
         return -1;
     }
 
     public static void setVolume(int newVol){
+        // Range from 10 to 100
         if (newVol >= 10 && newVol <= 100){
             volume = newVol;
         }
     }
 
     public static void setFxVolume(int newVol){
+        // Range from 0 to 100
         if (newVol >= 0 && newVol <= 100){
             fxVolume = newVol;
         }
@@ -179,16 +186,19 @@ public class Conductor {
     }
 
     public static void pause(){
+        // Pause media player and flag
         mp.pause();
         paused = true;
     }
 
     public static void resume(){
+        // Resume media player and flag
         mp.start();
         paused = false;
     }
 
     public void stop(){
+        // Stop the media player, and reset
         mp.stop();
         mp.reset();
 
@@ -281,7 +291,7 @@ public class Conductor {
             }
         });
 
-        //For skipping music
+        //For skipping music (debug purposes, leave commented)
 //        mp.seekTo(170000);
 
 
@@ -301,26 +311,34 @@ public class Conductor {
 
     // Spawns a note within a lane
     public void registerNote(int lane){
+
+        // Do nothing if the lane isn't 0 1 2 3
         if (lane > 3) return;
         int laneWidth = width / 4;
 
         int x1 = (int) ((laneWidth * 0.07) + (laneWidth * lane));
         int x2 = (int) ((laneWidth * 0.93) + (laneWidth * lane));
+
+        // - 1/11th of height to compensate for spawning the note slightly out of vision
         int y1 = -(height / 11);
         int y2 = 0;
 
+        // Y padding ratio (so the user can hit the note without actually hitting the note)
         double yPad = 0.4;
 
-        // - 1/11th of height to compensate for spawning the note slightly out of vision
+        // Get the current subbeat to determine downbeats / offbeats
         int beat = currentGeneralBeat % (int) currentBeatmap.getSubBeats();
         int color;
         switch(beat){
+            // Downbeat, red
             case 0:
                 color = Color.rgb(255, 70, 70);
                 break;
+            // Offbeat, blue
             case 2:
                 color = Color.rgb(70, 70, 255);
                 break;
+            // Neither, so yellow
             default:
                 color = Color.YELLOW;
         }
@@ -424,9 +442,11 @@ public class Conductor {
     }
 
 
+    // Checks if a note is within a score area
     public static boolean scoreArea(Note note, int pad) {
         return MainView.inBounds(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1 - pad, Renderer.scoreY2 + pad);
-}
+    }
+    // Gets the overlap percentage of a note and the score area
     public static double scorePercentage(Note note, int pad){
         return MainView.overlapPercent(note.getX1(), note.getX2(), note.getY1(), note.getY2(), Renderer.scoreX1, Renderer.scoreX2, Renderer.scoreY1, Renderer.scoreY2);
 

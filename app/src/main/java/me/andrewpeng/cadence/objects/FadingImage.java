@@ -8,12 +8,16 @@ import me.andrewpeng.cadence.core.Renderer;
 import me.andrewpeng.cadence.managers.AnimatedTextManager;
 import me.andrewpeng.cadence.managers.FadingImageManager;
 
+/**
+ * An image that fades in an out.
+ */
 public class FadingImage extends Entity{
     public Bitmap bitmap;
     public boolean fadingIn = false;
     private int counter = 0;
     private int duration;
     private int fadeTicks;
+    // Constructor for automated fading image (in and out)
     public FadingImage(Bitmap bitmap, int x, int y, int startingAlpha, int duration, int fadeTicks){
         super(x, y, startingAlpha);
         this.bitmap = bitmap;
@@ -21,6 +25,7 @@ public class FadingImage extends Entity{
         this.fadeTicks = fadeTicks;
         FadingImageManager.fadingImages.add(this);
     }
+    // Constructor for manually triggered fading image
     public FadingImage(Bitmap bitmap, int x, int y, int startingAlpha){
         super(x, y, startingAlpha);
         this.bitmap = bitmap;
@@ -38,18 +43,22 @@ public class FadingImage extends Entity{
     @Override
     public void tick(){
         super.tick();
+        // If it's fading in, increase the counter until it hits its duration
         if (fadingIn){
             if (super.alpha == super.maxAlpha){
                 counter++;
                 if (counter == duration){
+                    // Start fade out process, set flag and reset counter
                     super.fadeOut(fadeTicks);
                     counter = 0;
                     fadingIn = false;
                 }
             }
         }else{
+            // If it's fading out, increase counter until it reaches fade ticks
             counter++;
             if (counter == fadeTicks){
+                // Remove finally
                 FadingImageManager.fadingImages.remove(this);
             }
         }

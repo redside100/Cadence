@@ -251,14 +251,18 @@ public class Renderer {
                 break;
 
             case RESULTS:
+                // Outer space background
                 graphics.drawBitmap(AssetLoader.getImageAssetFromMemory(ImageAsset.HOME_BACKGROUND),0,0,paint);
+
+                // Song name and artist
                 centerText(Conductor.currentBeatmap.getName(),graphics, width/2, (int) (height * 0.08),paint,20,Color.WHITE,255);
                 centerText(Conductor.currentBeatmap.getArtist(),graphics, width/2, (int) (height * 0.11) ,paint,15,Color.WHITE,255);
 
+                // Get percentage
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();
 
 
-                //TODO fix positions
+                // Draw all the info on the screen
                 centerText("Score: " + Conductor.lastScore + "/" + Conductor.getMaxScore(), graphics, width / 2, (int) (height * 0.47), paint, 17, Color.WHITE, 255);
                 centerText("Percentage: " + (int) (percentage * 100) + "%", graphics, width/2,(int) (height * 0.52), paint,17,Color.WHITE, 255);
                 centerText("Perfect: " + Conductor.perfCount, graphics,width/2,(int) (height * 0.57), paint,17, Color.rgb(251, 251, 121), 255);
@@ -489,15 +493,6 @@ public class Renderer {
 
             case PLAY:
 
-                //Creates a set of 16 particles to be used for animation
-                /*for(int i = 0; i <= 16; i++) {
-                    new Particle(AssetLoader.getImageAssetFromMemory(ImageAsset.LEFT_ARROW_BUTTON),width*0,(int)(height*0.45),0);
-                }*/
-                // TODO fix everything ;-;
-//                String name = "popcornfunk";
-//                Beatmap beatmap = new Beatmap("beatmaps/" + name + "/" + name + ".png", "beatmaps/" + name + "/info.ini", "beatmaps/" + name + "/" + name + ".wav");
-//                conductor.loadMap(beatmap);
-
                 Beatmap beatmap = Conductor.getBeatmapList().get(songSelectionPosition);
                 conductor.loadMap(beatmap);
 
@@ -515,7 +510,6 @@ public class Renderer {
 
             case RESULTS:
 
-                // TODO only set grades if they are higher than before
 
                 int xp = 3;
                 double percentage = (double) Conductor.lastScore / Conductor.getMaxScore();

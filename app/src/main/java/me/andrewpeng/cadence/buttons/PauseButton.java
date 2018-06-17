@@ -21,7 +21,13 @@ import static me.andrewpeng.cadence.core.Renderer.width;
  */
 
 public class PauseButton extends Button{
-
+    /**
+     * Creates a button that will pause the game
+     * @param bitmap The image of the button
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param alpha Transparency of the image
+     */
     public PauseButton(Bitmap bitmap, int x, int y, int alpha) {
         super(bitmap,x,y,alpha);
     }
