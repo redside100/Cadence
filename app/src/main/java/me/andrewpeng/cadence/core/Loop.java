@@ -50,7 +50,7 @@ public class Loop {
                 if (framesSkipped > 0){
                     System.out.println("Can't keep up! Skipped " + framesSkipped + " frames");
                 }
-                // Recall this runnable for the next iteration of ticks and renders
+                // Call this runnable again for the next iteration of ticks and renders
                 handler.postDelayed(runnable, sleepTime);
             }
         };
